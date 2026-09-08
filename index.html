@@ -3,9 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Budget M&P</title>
 
-    <link rel="ss
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -19,21 +21,21 @@
             <div id="userInfo">
                 Non connecté
             </div>
-        
-            <button id="loginBtn"
-                    onclick="loginGoogle()">
+
+            <button id="loginBtn" onclick="loginGoogle()">
                 Connexion Google
             </button>
-        
+
             <button id="logoutBtn"
                     onclick="logout()"
                     style="display:none">
                 Déconnexion
             </button>
-        
+
         </div>
-        
+
         <div class="solde-card">
+
             <div class="titre">
                 Reste à dépenser
             </div>
@@ -41,23 +43,32 @@
             <div id="resteADepenser" class="montant">
                 0,00 €
             </div>
+
         </div>
 
         <div class="saisie">
+
             <h2>Nouvelle dépense</h2>
 
-            <input type="text" id="libelle" placeholder="Libellé">
+            <input
+                type="text"
+                id="libelle"
+                placeholder="Libellé">
 
-            <input type="date" id="dateDepense">
+            <input
+                type="date"
+                id="dateDepense">
 
-            <input type="number"
-                   id="montant"
-                   step="0.01"
-                   placeholder="Montant">
+            <input
+                type="number"
+                id="montant"
+                step="0.01"
+                placeholder="Montant">
 
             <button onclick="ajouterDepense()">
                 Ajouter
             </button>
+
         </div>
 
         <div class="actions">
@@ -75,8 +86,9 @@
         <div id="contenu"></div>
 
     </div>
-    
-    <script type="module <scriptjsscript>
+
+    <script type="module" src="js/auth.js"></script>
+    <scriptjsscript>
 
 </body>
 
