@@ -1,87 +1,77 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { app } from "./firebase-config.js";
 
 import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signOut,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-import { firebaseConfig } from "./firebase-config.js";
+const auth = getAuth(app);
 
-const app = initializeApp(firebaseConfig);
-
-export const auth = getAuth(app);
+export { auth };
 
 const provider = new GoogleAuthProvider();
 
+// Remplacer par vos vraies adresses Gmail
 const utilisateursAutorises = [
-  "ton.adresse@gmail.com",
-  "adresse.epouse@gmail.com"
+    "philippe@gmail.com",
+    "epouse@gmail.com"
 ];
 
 window.loginGoogle = async function () {
 
-  try {
+    try {
 
-    const result = await signInWithPopup(
-      auth,
-      provider
-    );
+        const result = await signInWithPopup(
+            auth,
+            provider
+        );
 
-    const email = result.user.email;
+        const email = result.user.email;
 
-    if (!utilisateursAutorises.includes(email)) {
+        if (!utilisateursAutorises.includes(email)) {
 
-      alert("Utilisateur non autorisé");
+            alert(
+                `L'adresse ${email} n'est pas autorisée.`
+            );
 
-      await signOut(auth);
+            await signOut(auth);
 
-      return;
+            return;
+        }
+
+    } catch (e) {
+
+        console.error("Erreur connexion :", e);
+
+        alert(
+            "Erreur lors de la connexion Google."
+        );
     }
-
-  } catch (e) {
-
-    console.error(e);
-  }
 };
 
 window.logout = async function () {
 
-  await signOut(auth);
+    try {
+
+        await signOut(auth);
+
+    } catch (e) {
+
+        console.error("Erreur déconnexion :", e);
+
+    }
 
 };
 
 onAuthStateChanged(auth, user => {
 
-  if (user) {
+    const userInfo =
+        document.getElementById("userInfo");
 
-    document.getElementById("userInfo").innerHTML =
-      `${user.displayName}`;
+    const loginBtn =
+        document.getElementById("loginBtn");
 
-    document.getElementById("loginBtn").style.display =
-      "none";
-
-    document.getElementById("logoutBtn").style.display =
-      "inline-block";
-
-    window.currentUser = user;
-
-  } else {
-
-    window.currentUser = null;
-
-    document.getElementById("userInfo").innerHTML =
-      "Non connecté";
-
-    document.getElementById("loginBtn").style.display =
-      "inline-block";
-
-    document.getElementById("logoutBtn").style.display =
-      "none";
-  }
-
-});
-``
+    const logoutBtn =
