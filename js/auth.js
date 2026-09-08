@@ -16,8 +16,8 @@ const provider = new GoogleAuthProvider();
 
 // Remplace ces adresses par les vraies
 const utilisateursAutorises = [
-    "ton.email@gmail.com",
-    "epouse.email@gmail.com"
+    "philippefrossard0093@gmail.com",
+    "marion.gathelier@laposte.net"
 ];
 
 window.loginGoogle = async function () {
