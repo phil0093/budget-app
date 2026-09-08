@@ -14,10 +14,10 @@ export { auth };
 
 const provider = new GoogleAuthProvider();
 
-// Remplacer par vos vraies adresses Gmail
+// Remplace ces adresses par les vraies
 const utilisateursAutorises = [
-    "philippe@gmail.com",
-    "epouse@gmail.com"
+    "ton.email@gmail.com",
+    "epouse.email@gmail.com"
 ];
 
 window.loginGoogle = async function () {
@@ -33,9 +33,7 @@ window.loginGoogle = async function () {
 
         if (!utilisateursAutorises.includes(email)) {
 
-            alert(
-                `L'adresse ${email} n'est pas autorisée.`
-            );
+            alert(`Adresse non autorisée : ${email}`);
 
             await signOut(auth);
 
@@ -46,10 +44,9 @@ window.loginGoogle = async function () {
 
         console.error("Erreur connexion :", e);
 
-        alert(
-            "Erreur lors de la connexion Google."
-        );
+        alert("Erreur lors de la connexion Google.");
     }
+
 };
 
 window.logout = async function () {
@@ -75,3 +72,60 @@ onAuthStateChanged(auth, user => {
         document.getElementById("loginBtn");
 
     const logoutBtn =
+        document.getElementById("logoutBtn");
+
+    if (user) {
+
+        window.currentUser = user;
+
+        if (userInfo) {
+
+            userInfo.innerHTML =
+                `${user.displayName}<br>${user.email}`;
+
+        }
+
+        if (loginBtn) {
+
+            loginBtn.style.display = "none";
+
+        }
+
+        if (logoutBtn) {
+
+            logoutBtn.style.display = "inline-block";
+
+        }
+
+        console.log(
+            "Connecté :",
+            user.displayName,
+            user.email,
+            user.uid
+        );
+
+    } else {
+
+        window.currentUser = null;
+
+        if (userInfo) {
+
+            userInfo.innerHTML = "Non connecté";
+
+        }
+
+        if (loginBtn) {
+
+            loginBtn.style.display = "inline-block";
+
+        }
+
+        if (logoutBtn) {
+
+            logoutBtn.style.display = "none";
+
+        }
+
+    }
+
+});
