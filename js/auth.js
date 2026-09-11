@@ -16,7 +16,7 @@ const provider = new GoogleAuthProvider();
 
 // Remplace ces adresses par les vraies
 const utilisateursAutorises = [
-    "philippefrossard0093@hotmail.fr",
+    "philippefrossard0093@gmail.com",
     "marion.gathelier@laposte.net"
 ];
 
