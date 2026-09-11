@@ -1,5 +1,5 @@
 import { calculerBudget } from "./budget.js";
-import { ajouterDepenseFirestore } from "./depenses.js";
+import { ajouterDepenseFirestore, chargerDepenses } from "./depenses.js";
 
 const moisCourant =
     new Date()
@@ -52,13 +52,21 @@ async function () {
     await majSolde();
 };
 
-window.afficherDepenses =
-function () {
+window.afficherDepenses = async function () {
+    const depenses = await chargerDepenses(moisCourant);
 
-    document.getElementById(
-        "contenu"
-    ).innerHTML =
-    "<h2>Liste des dépenses</h2>";
+    if (depenses.length === 0) {
+        document.getElementById("contenu").innerHTML =
+            "<h2>Liste des dépenses</h2><p>Aucune dépense ce mois-ci.</p>";
+        return;
+    }
+
+    const lignes = depenses.map(d =>
+        `<li>${d.date} — ${d.libelle} : ${d.montant.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €</li>`
+    ).join("");
+
+    document.getElementById("contenu").innerHTML =
+        `<h2>Liste des dépenses</h2><ul>${lignes}</ul>`;
 };
 
 window.afficherRecurrentes =
