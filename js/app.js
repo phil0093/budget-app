@@ -19,7 +19,8 @@ import {
     moisExiste,
     creerMois,
     ajouterMouvementMois,
-    chargerMouvementsMois
+    chargerMouvementsMois,
+    modifierMouvement
 } from "./mois.js";
 
 let nbDepensesAffichees = 30;
@@ -737,10 +738,47 @@ window.modifierMois = async function() {
 window.modifierMouvementMois =
 async function(id) {
 
-    alert(
-        "Modification du mouvement : " +
-        id
+    const mouvements =
+        await chargerMouvementsMois(
+            moisCourant
+        );
+
+    const mouvement =
+        mouvements.find(
+            m => m.id === id
+        );
+
+    if (!mouvement) {
+        return;
+    }
+
+    const nouveauMontant =
+        prompt(
+            `Nouveau montant pour ${mouvement.libelle}`,
+            mouvement.montant
+        );
+
+    if (
+        nouveauMontant === null ||
+        nouveauMontant === ""
+    ) {
+        return;
+    }
+
+    await modifierMouvement(
+        moisCourant,
+        id,
+        {
+            montant:
+                parseFloat(
+                    nouveauMontant
+                )
+        }
     );
+
+    await modifierMois();
+
+    await majSolde();
 
 };
 
