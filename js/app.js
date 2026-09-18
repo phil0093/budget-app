@@ -18,7 +18,8 @@ from "./recurrentes.js";
 import {
     moisExiste,
     creerMois,
-    ajouterMouvementMois
+    ajouterMouvementMois,
+    chargerMouvementsMois
 } from "./mois.js";
 
 let nbDepensesAffichees = 30;
@@ -654,9 +655,92 @@ async function() {
 
 window.modifierMois = async function() {
 
+    const mouvements =
+        await chargerMouvementsMois(
+            moisCourant
+        );
+
+    if (mouvements.length === 0) {
+
+        document.getElementById("contenu").innerHTML = `
+            <h2>${moisCourant}</h2>
+            <p>Aucun mouvement trouvé.</p>
+        `;
+
+        return;
+    }
+
+    const html = mouvements.map(m => `
+
+        <div class="depense-ligne">
+
+            <div class="depense-infos">
+
+                <div class="depense-libelle">
+                    ${m.libelle}
+                </div>
+
+                <div class="depense-details">
+
+                    <span class="${m.type}">
+                        ${m.type === "recette"
+                            ? "💰 Recette"
+                            : "💸 Dépense"}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="depense-montant ${m.type}">
+
+                ${m.type === "recette"
+                    ? "+"
+                    : "-"}
+
+                ${m.montant.toLocaleString(
+                    "fr-FR",
+                    {
+                        minimumFractionDigits: 2
+                    }
+                )} €
+
+            </div>
+
+            <div class="depense-actions">
+
+                <button
+                    class="btn-action"
+                    onclick="modifierMouvementMois('${m.id}')">
+
+                    ✏️
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `).join("");
+
+    document.getElementById("contenu").innerHTML = `
+
+        <h2>
+            Mois ${moisCourant}
+        </h2>
+
+        ${html}
+
+    `;
+};
+window.modifierMouvementMois =
+async function(id) {
+
     alert(
-        "Modification du mois à développer"
+        "Modification du mouvement : " +
+        id
     );
 
 };
+
 majSolde();
