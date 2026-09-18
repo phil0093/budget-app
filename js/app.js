@@ -31,6 +31,17 @@ const moisCourant =
     .toISOString()
     .substring(0, 7);
 
+function initialiserDateDuJour() {
+
+    const aujourdHui =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+
+    document.getElementById("dateDepense").value =
+        aujourdHui;
+}
+
 async function majSolde() {
 
     const solde =
@@ -47,18 +58,25 @@ async function majSolde() {
         ) + " €";
 }
 
-window.ajouterDepense =
-async function () {
+window.ajouterDepense = async function () {
 
     const libelle =
         document.getElementById(
             "libelle"
         ).value;
 
-    const date =
+    let date =
         document.getElementById(
             "dateDepense"
         ).value;
+    
+    if (!date) {
+    
+        date = new Date()
+            .toISOString()
+            .split("T")[0];
+    
+    }
 
     const montant =
         parseFloat(
@@ -74,6 +92,11 @@ async function () {
         mois: moisCourant
     });
 
+    document.getElementById("libelle").value = "";
+    document.getElementById("montant").value = "";
+    
+    initialiserDateDuJour();
+    
     await majSolde();
 };
 
@@ -783,3 +806,4 @@ async function(id) {
 };
 
 majSolde();
+initialiserDateDuJour();
