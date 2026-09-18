@@ -7,6 +7,14 @@ import {
     modifierDepenseFirestore
 } from "./depenses.js";
 
+import {
+    chargerRecurrentes,
+    ajouterRecurrente,
+    supprimerRecurrente,
+    modifierRecurrente
+}
+from "./recurrentes.js";
+
 let nbDepensesAffichees = 30;
 
 const moisCourant =
@@ -154,13 +162,214 @@ window.afficherDepenses = async function(reset = true) {
     `;
 };
 
-window.afficherRecurrentes =
-function () {
+window.afficherRecurrentes = async function() {
 
-    document.getElementById(
-        "contenu"
-    ).innerHTML =
-    "<h2>Dépenses récurrentes</h2>";
+    const recurrentes =
+        await chargerRecurrentes();
+
+    const html = recurrentes.map(r => `
+
+        <div class="depense-ligne">
+
+            <div class="depense-infos">
+
+                <div class="depense-libelle">
+                    ${r.libelle}
+                </div>
+
+                <div class="depense-details">
+
+                    ${r.type === "recette"
+                        ? "💰 Recette"
+                        : "💸 Dépense"}
+
+                    •
+
+                    ${r.actif
+                        ? "✅ Active"
+                        : "⛔ Désactivée"}
+
+                </div>
+
+            </div>
+
+            <div class="depense-montant">
+
+                ${r.montantDefaut.toLocaleString(
+                    "fr-FR",
+                    {
+                        minimumFractionDigits: 2
+                    }
+                )} €
+
+            </div>
+
+            <div class="depense-actions">
+
+                <button
+                    class="btn-action"
+                    onclick="modifierRecurrenteUI('${r.id}')">
+                    ✏️
+                </button>
+
+                <button
+                    class="btn-action"
+                    onclick="toggleRecurrente('${r.id}')">
+
+                    ${r.actif ? "⏸️" : "▶️"}
+
+                </button>
+
+                <button
+                    class="btn-action"
+                    onclick="supprimerRecurrenteUI('${r.id}')">
+                    🗑️
+                </button>
+
+            </div>
+
+        </div>
+
+    `).join("");
+
+    document.getElementById("contenu").innerHTML = `
+
+        <h2>Dépenses récurrentes</h2>
+
+        <button
+            onclick="ajouterRecurrenteUI()"
+            class="btn-plus">
+
+            ➕ Ajouter une récurrence
+
+        </button>
+
+        <br><br>
+
+        <div class="liste-depenses">
+
+            ${html}
+
+        </div>
+
+    `;
+};
+
+window.ajouterRecurrenteUI =
+async function() {
+
+    const libelle =
+        prompt("Libellé");
+
+    if (!libelle) return;
+
+    const montant =
+        parseFloat(
+            prompt(
+                "Montant"
+            )
+        );
+
+    const type =
+        prompt(
+            "Type (recette/depense)"
+        );
+
+    await ajouterRecurrente({
+
+        libelle,
+
+        montantDefaut: montant,
+
+        type,
+
+        actif: true
+
+    });
+
+    await afficherRecurrentes();
+
+};
+
+window.modifierRecurrenteUI =
+async function(id) {
+
+    const recurrentes =
+        await chargerRecurrentes();
+
+    const r =
+        recurrentes.find(
+            x => x.id === id
+        );
+
+    const libelle =
+        prompt(
+            "Libellé",
+            r.libelle
+        );
+
+    if (libelle === null)
+        return;
+
+    const montant =
+        prompt(
+            "Montant",
+            r.montantDefaut
+        );
+
+    await modifierRecurrente(
+        id,
+        {
+            libelle,
+            montantDefaut:
+                parseFloat(
+                    montant
+                )
+        }
+    );
+
+    await afficherRecurrentes();
+
+};
+
+window.toggleRecurrente =
+async function(id) {
+
+    const recurrentes =
+        await chargerRecurrentes();
+
+    const r =
+        recurrentes.find(
+            x => x.id === id
+        );
+
+    await modifierRecurrente(
+        id,
+        {
+            actif:
+                !r.actif
+        }
+    );
+
+    await afficherRecurrentes();
+
+};
+
+window.supprimerRecurrenteUI =
+async function(id) {
+
+    if (
+        !confirm(
+            "Supprimer cette récurrence ?"
+        )
+    ) {
+        return;
+    }
+
+    await supprimerRecurrente(id);
+
+    await afficherRecurrentes();
+
 };
 
 window.modifierDepense = async function(id) {
