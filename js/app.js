@@ -143,5 +143,5 @@ window.supprimerDepense = function(id) {
     alert("Suppression : " + id);
 
 };
-`
+
 majSolde();
