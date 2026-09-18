@@ -44,3 +44,20 @@ export async function creerMois(mois) {
     );
 
 }
+
+export async function chargerMouvementsMois(mois) {
+
+    const snapshot = await getDocs(
+        collection(
+            db,
+            "mois",
+            mois,
+            "mouvements"
+        )
+    );
+
+    return snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    }));
+}
