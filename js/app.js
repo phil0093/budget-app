@@ -1,13 +1,15 @@
 import { calculerBudget } from "./budget.js";
-import { ajouterDepenseFirestore, chargerDepenses } from "./depenses.js";
+import {
+    ajouterDepenseFirestore,
+    chargerDepenses,
+    supprimerDepenseFirestore,
+    modifierDepenseFirestore
+} from "./depenses.js";
 
 const moisCourant =
     new Date()
     .toISOString()
     .substring(0, 7);
-
-
-
 
 async function majSolde() {
 
@@ -128,19 +130,91 @@ function () {
 };
 
 
-window.modifierDepense = function(id) {
+window.modifierDepense = async function(id) {
 
-    alert("Modification : " + id);
+    const depenses =
+        await chargerDepenses(
+            moisCourant
+        );
 
-};
+    const depense =
+        depenses.find(
+            d => d.id === id
+        );
 
-window.supprimerDepense = function(id) {
-
-    if (!confirm("Supprimer cette dépense ?")) {
+    if (!depense) {
         return;
     }
 
-    alert("Suppression : " + id);
+    const nouveauLibelle =
+        prompt(
+            "Libellé :",
+            depense.libelle
+        );
+
+    if (nouveauLibelle === null) {
+        return;
+    }
+
+    const nouveauMontant =
+        prompt(
+            "Montant :",
+            depense.montant
+        );
+
+    if (nouveauMontant === null) {
+        return;
+    }
+
+    await modifierDepenseFirestore(
+        moisCourant,
+        id,
+        {
+            libelle: nouveauLibelle,
+            montant:
+                parseFloat(
+                    nouveauMontant
+                )
+        }
+    );
+
+    await majSolde();
+
+    await afficherDepenses();
+
+};
+
+window.supprimerDepense = async function(id) {
+
+    const confirmation =
+        confirm(
+            "Supprimer cette dépense ?"
+        );
+
+    if (!confirmation) {
+        return;
+    }
+
+    try {
+
+        await supprimerDepenseFirestore(
+            moisCourant,
+            id
+        );
+
+        await majSolde();
+
+        await afficherDepenses();
+
+    } catch (e) {
+
+        console.error(e);
+
+        alert(
+            "Erreur lors de la suppression."
+        );
+
+    }
 
 };
 
