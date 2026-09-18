@@ -3,9 +3,11 @@ import { db } from "./firebase-config.js";
 import {
     collection,
     addDoc,
-    getDocs
-} from
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+    getDocs,
+    deleteDoc,
+    doc,
+    updateDoc
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 export async function ajouterDepenseFirestore(depense) {
 
@@ -35,4 +37,40 @@ export async function chargerDepenses(mois) {
         id: doc.id,
         ...doc.data()
     }));
+}
+
+export async function supprimerDepenseFirestore(
+    mois,
+    depenseId
+) {
+
+    await deleteDoc(
+        doc(
+            db,
+            "budgets",
+            mois,
+            "depenses",
+            depenseId
+        )
+    );
+
+}
+
+export async function modifierDepenseFirestore(
+    mois,
+    depenseId,
+    nouvellesValeurs
+) {
+
+    await updateDoc(
+        doc(
+            db,
+            "budgets",
+            mois,
+            "depenses",
+            depenseId
+        ),
+        nouvellesValeurs
+    );
+
 }
