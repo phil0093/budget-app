@@ -17,10 +17,12 @@ from "./recurrentes.js";
 
 import {
     moisExiste,
-    creerMois
+    creerMois,
+    ajouterMouvementMois
 } from "./mois.js";
 
 let nbDepensesAffichees = 30;
+let recurrentesInitialisation = [];
 
 const moisCourant =
     new Date()
@@ -545,12 +547,105 @@ window.gererMois = async function() {
 
 window.initialiserMois = async function() {
 
+    recurrentesInitialisation =
+        recurrentes;
+    const recurrentes =
+        await chargerRecurrentes();
+
+    const html = recurrentes.map(r => `
+
+        <div class="depense-ligne">
+
+            <input
+                type="checkbox"
+                checked
+                id="check-${r.id}">
+
+            <div class="depense-infos">
+
+                <div class="depense-libelle">
+
+                    ${r.libelle}
+
+                </div>
+
+            </div>
+
+            <input
+                type="number"
+                id="montant-${r.id}"
+                value="${r.montantDefaut}"
+                step="0.01">
+
+        </div>
+
+    `).join("");
+
+    document.getElementById(
+        "contenu"
+    ).innerHTML = `
+
+        <h2>
+            Initialisation ${moisCourant}
+        </h2>
+
+        ${html}
+
+        <br>
+
+        <button
+            class="btn-plus"
+            onclick="validerInitialisationMois()">
+
+            Créer le mois
+
+        </button>
+
+    `;
+
+};
+
+window.validerInitialisationMois =
+async function() {
+
     await creerMois(
         moisCourant
     );
 
+    for (const r of recurrentesInitialisation) {
+
+        const coche =
+            document.getElementById(
+                `check-${r.id}`
+            ).checked;
+
+        if (!coche)
+            continue;
+
+        const montant =
+            parseFloat(
+                document.getElementById(
+                    `montant-${r.id}`
+                ).value
+            );
+
+        await ajouterMouvementMois(
+            moisCourant,
+            {
+                libelle: r.libelle,
+                montant,
+                type: r.type,
+                origine: "recurrente",
+                dateCreation:
+                    new Date()
+                    .toISOString()
+            }
+        );
+
+    }
+
     alert(
-        "Mois créé"
+        "Mois initialisé avec succès"
     );
 
     await gererMois();
