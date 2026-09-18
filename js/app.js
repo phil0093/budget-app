@@ -15,6 +15,11 @@ import {
 }
 from "./recurrentes.js";
 
+import {
+    moisExiste,
+    creerMois
+} from "./mois.js";
+
 let nbDepensesAffichees = 30;
 
 const moisCourant =
@@ -487,10 +492,76 @@ window.chargerPlusDepenses = async function() {
 
 window.gererMois = async function() {
 
-    alert(
-        "Gestion du mois à développer"
-    );
+    const existe =
+        await moisExiste(moisCourant);
+
+    if (!existe) {
+
+        document.getElementById(
+            "contenu"
+        ).innerHTML = `
+
+            <h2>📅 ${moisCourant}</h2>
+
+            <p>
+                Ce mois n'est pas encore initialisé.
+            </p>
+
+            <button
+                class="btn-plus"
+                onclick="initialiserMois()">
+
+                Initialiser le mois
+
+            </button>
+
+        `;
+
+    } else {
+
+        document.getElementById(
+            "contenu"
+        ).innerHTML = `
+
+            <h2>📅 ${moisCourant}</h2>
+
+            <p>
+                Ce mois est déjà initialisé.
+            </p>
+
+            <button
+                class="btn-plus"
+                onclick="modifierMois()">
+
+                Modifier le mois
+
+            </button>
+
+        `;
+
+    }
 
 };
 
+window.initialiserMois = async function() {
+
+    await creerMois(
+        moisCourant
+    );
+
+    alert(
+        "Mois créé"
+    );
+
+    await gererMois();
+
+};
+
+window.modifierMois = async function() {
+
+    alert(
+        "Modification du mois à développer"
+    );
+
+};
 majSolde();
