@@ -548,10 +548,11 @@ window.gererMois = async function() {
 
 window.initialiserMois = async function() {
 
-    recurrentesInitialisation =
-        recurrentes;
     const recurrentes =
         await chargerRecurrentes();
+
+    recurrentesInitialisation =
+        recurrentes;
 
     const html = recurrentes.map(r => `
 
