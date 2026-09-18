@@ -6,7 +6,9 @@ import {
     getDocs,
     deleteDoc,
     doc,
-    updateDoc
+    updateDoc,
+    query,
+    orderBy
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 export async function ajouterDepenseFirestore(depense) {
@@ -24,14 +26,17 @@ export async function ajouterDepenseFirestore(depense) {
 
 export async function chargerDepenses(mois) {
 
-    const snapshot = await getDocs(
+    const q = query(
         collection(
             db,
             "budgets",
             mois,
             "depenses"
-        )
+        ),
+        orderBy("date", "desc")
     );
+
+    const snapshot = await getDocs(q);
 
     return snapshot.docs.map(doc => ({
         id: doc.id,
