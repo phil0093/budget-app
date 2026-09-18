@@ -81,9 +81,9 @@ onAuthStateChanged(auth, user => {
 
         if (userInfo) {
 
-            userInfo.innerHTML =
-                `${user.displayName}<br>${user.email}`;
-
+            userInfo.textContent =
+                user.displayName;
+        
         }
 
         if (loginBtn) {
