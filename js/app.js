@@ -164,8 +164,16 @@ window.afficherDepenses = async function(reset = true) {
 
 window.afficherRecurrentes = async function() {
 
-    const recurrentes =
-        await chargerRecurrentes();
+    const recurrentes = await chargerRecurrentes();
+
+    recurrentes.sort((a, b) => {
+    
+        if (a.type === b.type) {
+            return a.libelle.localeCompare(b.libelle);
+        }
+    
+        return a.type === "recette" ? -1 : 1;
+    });
 
     const html = recurrentes.map(r => `
 
@@ -195,6 +203,7 @@ window.afficherRecurrentes = async function() {
 
             <div class="depense-montant">
 
+                ${r.type === "recette" ? "+" : "-"}
                 ${r.montantDefaut.toLocaleString(
                     "fr-FR",
                     {
