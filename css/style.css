@@ -74,3 +74,57 @@ h1 {
     background: white;
     padding: 15px;
 }
+.liste-depenses {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.depense-ligne {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: white;
+    border-radius: 10px;
+
+    padding: 12px;
+
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.depense-infos {
+    flex: 1;
+}
+
+.depense-libelle {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.depense-details {
+    font-size: 13px;
+    color: #666;
+}
+
+.depense-montant {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.depense-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-action {
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.btn-action:hover {
+    transform: scale(1.15);
+}
