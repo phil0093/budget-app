@@ -1,35 +1,53 @@
 import { chargerDepenses } from "./depenses.js";
 import { chargerRecurrentes } from "./recurrentes.js";
+import { chargerMouvementsMois } from "./mois.js";
+import { chargerDepenses } from "./depenses.js";
 
 export async function calculerBudget(mois) {
 
-    let revenus = 0;
+    let recettes = 0;
+
     let recurrentes = 0;
-    let depenses = 0;
 
-    const listeRec =
-        await chargerRecurrentes(mois);
+    let depensesCourantes = 0;
 
-    listeRec.forEach(item => {
+    const mouvements =
+        await chargerMouvementsMois(
+            mois
+        );
 
-        if (item.type === "revenu") {
-            revenus += item.montant;
-        }
+    mouvements.forEach(m => {
 
-        if (item.type === "charge") {
-            recurrentes += item.montant;
+        if (m.type === "recette") {
+
+            recettes += m.montant;
+
+        } else {
+
+            recurrentes += m.montant;
+
         }
 
     });
 
-    const listeDep =
-        await chargerDepenses(mois);
+    const depenses =
+        await chargerDepenses(
+            mois
+        );
 
-    listeDep.forEach(item => {
-        depenses += item.montant;
+    depenses.forEach(d => {
+
+        depensesCourantes +=
+            d.montant;
+
     });
 
-    return revenus
-        - recurrentes
-        - depenses;
+    return (
+        recettes
+        -
+        recurrentes
+        -
+        depensesCourantes
+    );
+
 }
