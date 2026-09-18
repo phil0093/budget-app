@@ -6,7 +6,8 @@ import {
     getDocs,
     setDoc,
     collection,
-    addDoc
+    addDoc,
+    updateDoc
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 export async function ajouterMouvementMois(
@@ -61,4 +62,23 @@ export async function chargerMouvementsMois(mois) {
         id: doc.id,
         ...doc.data()
     }));
+}
+
+export async function modifierMouvement(
+    mois,
+    id,
+    valeurs
+) {
+
+    await updateDoc(
+        doc(
+            db,
+            "mois",
+            mois,
+            "mouvements",
+            id
+        ),
+        valeurs
+    );
+
 }
