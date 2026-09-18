@@ -485,4 +485,12 @@ window.chargerPlusDepenses = async function() {
 
 };
 
+window.gererMois = async function() {
+
+    alert(
+        "Gestion du mois à développer"
+    );
+
+};
+
 majSolde();
