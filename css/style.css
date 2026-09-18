@@ -128,3 +128,21 @@ h1 {
 .btn-action:hover {
     transform: scale(1.15);
 }
+.bouton-plus-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-plus {
+    border: none;
+    background: #14597a;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-plus:hover {
+    background: #0e425a;
+}
