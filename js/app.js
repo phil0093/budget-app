@@ -6,6 +6,8 @@ import {
     modifierDepenseFirestore
 } from "./depenses.js";
 
+let nbDepensesAffichees = 30;
+
 const moisCourant =
     new Date()
     .toISOString()
@@ -57,9 +59,14 @@ async function () {
     await majSolde();
 };
 
-window.afficherDepenses = async function () {
+window.afficherDepenses = async function(reset = true) {
 
-    const depenses = await chargerDepenses(moisCourant);
+    if (reset) {
+    nbDepensesAffichees = 30;
+    }
+    
+    const depenses =
+        await chargerDepenses(moisCourant);
 
     if (depenses.length === 0) {
 
@@ -71,7 +78,10 @@ window.afficherDepenses = async function () {
         return;
     }
 
-    const html = depenses.map(d => `
+    const depensesAfficher =
+        depenses.slice(0, nbDepensesAffichees);
+
+    const html = depensesAfficher.map(d => `
 
         <div class="depense-ligne">
 
@@ -113,13 +123,36 @@ window.afficherDepenses = async function () {
 
     `).join("");
 
+    let boutonPlus = "";
+
+    if (depenses.length > nbDepensesAffichees) {
+
+        boutonPlus = `
+            <div class="bouton-plus-container">
+
+                <button
+                    class="btn-plus"
+                    onclick="chargerPlusDepenses()">
+
+                    ⬇️ Afficher 30 de plus
+
+                </button>
+
+            </div>
+        `;
+    }
+
     document.getElementById("contenu").innerHTML = `
         <h2>Liste des dépenses</h2>
+
         <div class="liste-depenses">
             ${html}
         </div>
+
+        ${boutonPlus}
     `;
 };
+
 window.afficherRecurrentes =
 function () {
 
@@ -128,7 +161,6 @@ function () {
     ).innerHTML =
     "<h2>Dépenses récurrentes</h2>";
 };
-
 
 window.modifierDepense = async function(id) {
 
@@ -215,6 +247,22 @@ window.supprimerDepense = async function(id) {
         );
 
     }
+
+};
+
+window.chargerPlusDepenses = async function () {
+
+    nbDepensesAffichees += 30;
+
+    await afficherDepenses();
+
+};
+
+window.chargerPlusDepenses = async function() {
+
+    nbDepensesAffichees += 30;
+
+    await afficherDepenses(false);
 
 };
 
