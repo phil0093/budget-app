@@ -55,22 +55,68 @@ async function () {
 };
 
 window.afficherDepenses = async function () {
+
     const depenses = await chargerDepenses(moisCourant);
 
     if (depenses.length === 0) {
-        document.getElementById("contenu").innerHTML =
-            "<h2>Liste des dépenses</h2><p>Aucune dépense ce mois-ci.</p>";
+
+        document.getElementById("contenu").innerHTML = `
+            <h2>Liste des dépenses</h2>
+            <p>Aucune dépense ce mois-ci.</p>
+        `;
+
         return;
     }
 
-    const lignes = depenses.map(d =>
-        `<li>${d.date} — ${d.libelle} : ${d.montant.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €</li>`
-    ).join("");
+    const html = depenses.map(d => `
 
-    document.getElementById("contenu").innerHTML =
-        `<h2>Liste des dépenses</h2><ul>${lignes}</ul>`;
+        <div class="depense-ligne">
+
+            <div class="depense-infos">
+
+                <div class="depense-libelle">
+                    ${d.libelle}
+                </div>
+
+                <div class="depense-details">
+                    ${d.date}
+                </div>
+
+            </div>
+
+            <div class="depense-montant">
+                ${d.montant.toLocaleString("fr-FR", {
+                    minimumFractionDigits: 2
+                })} €
+            </div>
+
+            <div class="depense-actions">
+
+                <button
+                    class="btn-action"
+                    onclick="modifierDepense('${d.id}')">
+                    ✏️
+                </button>
+
+                <button
+                    class="btn-action"
+                    onclick="supprimerDepense('${d.id}')">
+                    🗑️
+                </button>
+
+            </div>
+
+        </div>
+
+    `).join("");
+
+    document.getElementById("contenu").innerHTML = `
+        <h2>Liste des dépenses</h2>
+        <div class="liste-depenses">
+            ${html}
+        </div>
+    `;
 };
-
 window.afficherRecurrentes =
 function () {
 
@@ -80,4 +126,21 @@ function () {
     "<h2>Dépenses récurrentes</h2>";
 };
 
+
+window.modifierDepense = function(id) {
+
+    alert("Modification : " + id);
+
+};
+
+window.supprimerDepense = function(id) {
+
+    if (!confirm("Supprimer cette dépense ?")) {
+        return;
+    }
+
+    alert("Suppression : " + id);
+
+};
+`
 majSolde();
