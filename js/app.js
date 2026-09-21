@@ -519,8 +519,43 @@ window.chargerPlusDepenses = async function() {
 
 window.gererMois = async function() {
 
+    document.getElementById("contenu").innerHTML = `
+
+        <h2>Gestion du mois</h2>
+
+        <div class="selection-mois">
+
+            <label for="moisSelectionne">
+                Mois :
+            </label>
+
+            <input
+                type="month"
+                id="moisSelectionne"
+                value="${moisCourant}">
+
+        </div>
+
+        <br>
+
+        <button onclick="ouvrirMoisSelectionne()">
+            Ouvrir
+        </button>
+
+    `;
+};
+
+window.ouvrirMoisSelectionne = async function() {
+
+    moisCourant =
+        document.getElementById(
+            "moisSelectionne"
+        ).value;
+
     const existe =
-        await moisExiste(moisCourant);
+        await moisExiste(
+            moisCourant
+        );
 
     if (!existe) {
 
@@ -528,7 +563,7 @@ window.gererMois = async function() {
             "contenu"
         ).innerHTML = `
 
-            <h2>📅 ${moisCourant}</h2>
+            <h2>${moisCourant}</h2>
 
             <p>
                 Ce mois n'est pas encore initialisé.
@@ -550,7 +585,7 @@ window.gererMois = async function() {
             "contenu"
         ).innerHTML = `
 
-            <h2>📅 ${moisCourant}</h2>
+            <h2>${moisCourant}</h2>
 
             <p>
                 Ce mois est déjà initialisé.
