@@ -79,6 +79,10 @@ onAuthStateChanged(auth, user => {
 
         window.currentUser = user;
 
+        document.getElementById(
+            "application"
+        ).style.display = "block";
+
         if (userInfo) {
 
             userInfo.textContent =
@@ -109,6 +113,10 @@ onAuthStateChanged(auth, user => {
 
         window.currentUser = null;
 
+        document.getElementById(
+            "application"
+        ).style.display = "none";
+        
         if (userInfo) {
 
             userInfo.innerHTML = "Non connecté";
