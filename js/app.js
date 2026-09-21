@@ -26,10 +26,13 @@ import {
 let nbDepensesAffichees = 30;
 let recurrentesInitialisation = [];
 
-let moisCourant =
+const moisCourant =
     new Date()
     .toISOString()
     .substring(0, 7);
+
+let moisGestion =
+    moisCourant;
 
 function initialiserDateDuJour() {
 
@@ -547,14 +550,14 @@ window.gererMois = async function() {
 
 window.ouvrirMoisSelectionne = async function() {
 
-    moisCourant =
+    moisGestion =
         document.getElementById(
             "moisSelectionne"
         ).value;
 
     const existe =
         await moisExiste(
-            moisCourant
+            moisGestion
         );
 
     if (!existe) {
@@ -563,7 +566,7 @@ window.ouvrirMoisSelectionne = async function() {
             "contenu"
         ).innerHTML = `
 
-            <h2>${moisCourant}</h2>
+            <h2>${moisGestion}</h2>
 
             <p>
                 Ce mois n'est pas encore initialisé.
@@ -585,7 +588,7 @@ window.ouvrirMoisSelectionne = async function() {
             "contenu"
         ).innerHTML = `
 
-            <h2>${moisCourant}</h2>
+            <h2>${moisGestion}</h2>
 
             <p>
                 Ce mois est déjà initialisé.
@@ -647,7 +650,7 @@ window.initialiserMois = async function() {
     ).innerHTML = `
 
         <h2>
-            Initialisation ${moisCourant}
+            Initialisation ${moisGestion}
         </h2>
 
         ${html}
@@ -670,7 +673,7 @@ window.validerInitialisationMois =
 async function() {
 
     await creerMois(
-        moisCourant
+        moisGestion
     );
 
     for (const r of recurrentesInitialisation) {
@@ -691,7 +694,7 @@ async function() {
             );
 
         await ajouterMouvementMois(
-            moisCourant,
+            moisGestion,
             {
                 libelle: r.libelle,
                 montant,
