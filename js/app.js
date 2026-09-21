@@ -26,7 +26,7 @@ import {
 let nbDepensesAffichees = 30;
 let recurrentesInitialisation = [];
 
-const moisCourant =
+let moisCourant =
     new Date()
     .toISOString()
     .substring(0, 7);
