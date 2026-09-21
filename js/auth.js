@@ -83,6 +83,8 @@ onAuthStateChanged(auth, user => {
             "application"
         ).style.display = "block";
 
+        window.majSolde?.();
+        
         if (userInfo) {
 
             userInfo.textContent =
