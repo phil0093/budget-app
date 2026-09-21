@@ -46,7 +46,8 @@ function initialiserDateDuJour() {
 }
 
 async function majSolde() {
-
+    window.majSolde = majSolde;
+    
     const solde =
         await calculerBudget(moisCourant);
 
@@ -720,13 +721,13 @@ window.modifierMois = async function() {
 
     const mouvements =
         await chargerMouvementsMois(
-            moisCourant
+            moisGestion
         );
 
     if (mouvements.length === 0) {
 
         document.getElementById("contenu").innerHTML = `
-            <h2>${moisCourant}</h2>
+            <h2>${moisGestion}</h2>
             <p>Aucun mouvement trouvé.</p>
         `;
 
@@ -789,7 +790,7 @@ window.modifierMois = async function() {
     document.getElementById("contenu").innerHTML = `
 
         <h2>
-            Mois ${moisCourant}
+            Mois ${moisGestion}
         </h2>
 
         ${html}
@@ -801,7 +802,7 @@ async function(id) {
 
     const mouvements =
         await chargerMouvementsMois(
-            moisCourant
+            moisGestion
         );
 
     const mouvement =
@@ -827,7 +828,7 @@ async function(id) {
     }
 
     await modifierMouvement(
-        moisCourant,
+        moisGestion,
         id,
         {
             montant:
