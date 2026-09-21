@@ -46,7 +46,6 @@ function initialiserDateDuJour() {
 }
 
 async function majSolde() {
-    window.majSolde = majSolde;
     
     const solde =
         await calculerBudget(moisCourant);
@@ -61,6 +60,8 @@ async function majSolde() {
             }
         ) + " €";
 }
+
+window.majSolde = majSolde;
 
 window.ajouterDepense = async function () {
 
@@ -844,11 +845,4 @@ async function(id) {
 
 };
 
-window.addEventListener("load", () => {
-
-    if (window.currentUser) {
-        majSolde();
-    }
-
-});
 initialiserDateDuJour();
