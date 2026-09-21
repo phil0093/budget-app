@@ -805,5 +805,11 @@ async function(id) {
 
 };
 
-majSolde();
+window.addEventListener("load", () => {
+
+    if (window.currentUser) {
+        majSolde();
+    }
+
+});
 initialiserDateDuJour();
