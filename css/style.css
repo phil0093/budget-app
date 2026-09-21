@@ -146,12 +146,12 @@ body {
 
 .titre-budget {
     text-align: center;
-    font-size: 36px;
+    font-size: 27px;
     font-weight: bold;
 }
 
 .coeur {
     color: #e60026;
-    margin: 0 10px;
-    font-size: 40px;
+    margin: 0 7px;
+    font-size: 30px;
 }
