@@ -724,6 +724,22 @@ window.modifierMois = async function() {
         await chargerMouvementsMois(
             moisGestion
         );
+    
+    mouvements.sort((a, b) => {
+    
+        // Recettes avant dépenses
+        if (a.type !== b.type) {
+            return a.type === "recette" ? -1 : 1;
+        }
+    
+        // Puis ordre alphabétique
+        return a.libelle.localeCompare(
+            b.libelle,
+            "fr"
+        );
+    
+    });
+
 
     if (mouvements.length === 0) {
 
