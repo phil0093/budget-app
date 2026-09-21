@@ -1,0 +1,20 @@
+{
+  "name": "Budget M&P",
+  "short_name": "Budget M&P",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#d1242f",
+  "icons": [
+    {
+      "src": "assets/Image1.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/Image1.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
