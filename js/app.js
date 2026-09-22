@@ -1449,11 +1449,15 @@ async function chargerRdvsCalendrier() {
                 <div
                     class="miniRdv"
                     onclick="
-                        event.stopPropagation()
+                        event.stopPropagation();
+                        modifierRdvCalendrier(
+                            '${dateIso}',
+                            '${r.id}'
+                        );
                     ">
-
+                
                     ${r.nom}
-
+                
                 </div>
 
             `).join("");
@@ -1473,6 +1477,25 @@ async function chargerRdvsCalendrier() {
     }
 
 }
+
+window.modifierRdvCalendrier =
+async function(date, id) {
+
+    const rdvs =
+        await chargerRdvJour(date);
+
+    const rdv =
+        rdvs.find(
+            r => r.id === id
+        );
+
+    if (!rdv) {
+        return;
+    }
+
+    ouvrirRdv(date, rdv);
+
+};
 
 window.moisPrecedent =
 function() {
@@ -1496,7 +1519,7 @@ function() {
 
 };
 
-window.ouvrirRdv = function(date) {
+window.ouvrirRdv = function(date, rdv = null) {
 
     const html = `
 
@@ -1516,7 +1539,8 @@ window.ouvrirRdv = function(date) {
                 </label>
 
                 <input
-                    id="rdvNom">
+                    id="rdvNom"
+                    value="${rdv?.nom || ""}">
 
                 <label>
                     Date début
@@ -1525,7 +1549,7 @@ window.ouvrirRdv = function(date) {
                 <input
                     type="date"
                     id="rdvDateDebut"
-                    value="${date}">
+                    value="${rdv?.dateDebut || date}">
 
                 <label>
                     Heure début
@@ -1533,8 +1557,9 @@ window.ouvrirRdv = function(date) {
 
                 <input
                     type="time"
-                    id="rdvHeureDebut">
-
+                    id="rdvHeureDebut"
+                    value="${rdv?.heureDebut || ""}">
+                    
                 <label>
                     Date fin
                 </label>
@@ -1542,7 +1567,7 @@ window.ouvrirRdv = function(date) {
                 <input
                     type="date"
                     id="rdvDateFin"
-                    value="${date}">
+                    value="${rdv?.dateFin || date}">
 
                 <label>
                     Heure fin
@@ -1550,35 +1575,52 @@ window.ouvrirRdv = function(date) {
 
                 <input
                     type="time"
-                    id="rdvHeureFin">
+                    id="rdvHeureFin"
+                    value="${rdv?.heureFin || ""}">
 
                 <label>
                     Lieu
                 </label>
 
                 <input
-                    id="rdvLieu">
+                    id="rdvLieu"
+                    value="${rdv?.lieu || ""}">
 
                 <div class="participants">
 
                     <label>
                         <input
                             type="checkbox"
-                            id="philippe">
+                            id="philippe"
+                            ${
+                                rdv?.participants?.includes("Philippe")
+                                    ? "checked"
+                                    : ""
+                            }>
                         Philippe
                     </label>
 
                     <label>
                         <input
                             type="checkbox"
-                            id="marion">
+                            id="marion"
+                            ${
+                                rdv?.participants?.includes("Marion")
+                                    ? "checked"
+                                    : ""
+                            }>
                         Marion
                     </label>
 
                     <label>
                         <input
                             type="checkbox"
-                            id="louis">
+                            id="louis"
+                            ${
+                                rdv?.participants?.includes("Louis")
+                                    ? "checked"
+                                    : ""
+                            }>
                         Louis
                     </label>
 
@@ -1587,11 +1629,32 @@ window.ouvrirRdv = function(date) {
                 <div class="actionsRdv">
 
                     <button
-                        onclick="sauverRdv('${date}')">
-
+                        onclick="
+                            sauverRdv(
+                                '${date}',
+                                '${rdv?.id || ""}'
+                            )
+                        ">
+                    
                         Enregistrer
-
+                    
                     </button>
+
+                    ${
+                        rdv
+                        ? `
+                            <button
+                                onclick="
+                                    supprimerRdvCalendrier(
+                                        '${date}',
+                                        '${rdv.id}'
+                                    )
+                                ">
+                                🗑️ Supprimer
+                            </button>
+                          `
+                        : ""
+                    }
 
                     <button
                         onclick="fermerRdv()">
@@ -2067,7 +2130,7 @@ async function(id) {
 };
 
 window.sauverRdv =
-async function(date) {
+async function(date, id="") {
 
     const participants = [];
 
@@ -2143,9 +2206,43 @@ async function(date) {
 
     };
 
-    await ajouterRdv(
+    if (id) {
+
+            await modifierRdv(
+                date,
+                id,
+                rdv
+            );
+        
+        } else {
+        
+            await ajouterRdv(
+                date,
+                rdv
+            );
+        
+        }
+
+    fermerRdv();
+
+    dessinerCalendrier();
+
+};
+
+window.supprimerRdvCalendrier =
+async function(date, id) {
+
+    if (
+        !confirm(
+            "Supprimer ce rendez-vous ?"
+        )
+    ) {
+        return;
+    }
+
+    await supprimerRdv(
         date,
-        rdv
+        id
     );
 
     fermerRdv();
@@ -2153,3 +2250,4 @@ async function(date) {
     dessinerCalendrier();
 
 };
+``
