@@ -294,3 +294,31 @@ body {
 
     background-color: #f9f9f9;
 }
+
+.ligneCourse {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 10px;
+
+}
+
+.ligneCourse input[type="text"] {
+
+    flex: 1;
+
+    padding: 12px;
+
+    font-size: 16px;
+
+}
+
+.ligneCourse input[type="checkbox"] {
+
+    transform: scale(1.4);
+
+}
