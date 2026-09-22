@@ -156,3 +156,82 @@ body {
     margin: 0 7px;
     font-size: 30px;
 }
+#menuButton {
+
+    position: fixed;
+
+    top: 10px;
+    left: 10px;
+
+    z-index: 1001;
+
+    border: none;
+
+    background: #14597a;
+
+    color: white;
+
+    padding: 10px 15px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 22px;
+
+}
+
+.sidebar {
+
+    position: fixed;
+
+    top: 0;
+    left: -260px;
+
+    width: 250px;
+
+    height: 100%;
+
+    background: white;
+
+    box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+
+    transition: left 0.3s;
+
+    padding-top: 60px;
+
+    z-index: 1000;
+
+}
+
+.sidebar.open {
+
+    left: 0;
+
+}
+
+.sidebar button {
+
+    display: block;
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    background: white;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+}
+
+.sidebar button:hover {
+
+    background: #f0f0f0;
+
+}
