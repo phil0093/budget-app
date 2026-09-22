@@ -1096,10 +1096,9 @@ async function() {
         .classList
         .remove("open");
 
-    document
-        .getElementById("zoneBudget")
-        .style.display =
-        "none";
+    document.getElementById(
+        "zoneBudget"
+    ).style.display = "none";
 
     document.getElementById(
         "budgetActions"
@@ -1108,18 +1107,11 @@ async function() {
     listesCourses =
         await chargerListesCourses();
 
-    if (
-        listesCourses.length === 0
-    ) {
+    if (listesCourses.length === 0) {
 
         await sauvegarderListeCourses(
             "Ma liste",
-            Array(20)
-                .fill()
-                .map(() => ({
-                    texte: "",
-                    coche: false
-                }))
+            Array(20).fill("")
         );
 
         listesCourses =
@@ -1127,11 +1119,17 @@ async function() {
 
     }
 
-    listeCourseActive =
-        listesCourses[0].nom;
+    if (!listeCourseActive) {
+
+        listeCourseActive =
+            listesCourses[0].nom;
+
+    }
 
     afficherListeCourses();
+
 };
+
 window.afficherTodo = function() {
 
     document
@@ -1198,84 +1196,78 @@ function afficherListeCourses() {
 
     const liste =
         listesCourses.find(
-            l =>
-            l.nom ===
-            listeCourseActive
+            x => x.nom === listeCourseActive
         );
 
     const options =
         listesCourses.map(l => `
 
-    <option
-    value="${l.nom}">
-    
-    ${l.nom}
-    
-    </option>
-    
-    `).join("");
-    
-        const lignes =
-            liste.lignes.map(
-                (ligne, i) => `
-    
-    <div class="ligneCourse">
-    
-    ${
-    ligne.texte.trim()
-    ?
-    `
-    <input
-    type="checkbox"
-    ${ligne.coche ? "checked" : ""}
-    onchange="sauvegarderCourses()">
-    `
-    :
-    ""
-    }
-    
-    <input
-    type="text"
-    value="${ligne.texte}"
-    id="course-${i}"
-    onblur="sauvegarderCourses()">
-    
-    </div>
-    
-    `
-            ).join("");
-    
-        document
-            .getElementById(
-                "contenu"
-            ).innerHTML = `
-    
-    <h2>
-    Liste de courses
-    </h2>
-    
-    <select
-    onchange="
-    changerListe(this.value)
-    ">
-    
-    ${options}
-    
-    </select>
-    
-    <button
-    onclick="
-    nouvelleListeCourses()
-    ">
-    
-    ➕ Nouvelle liste
-    
-    </button>
-    
-    <br><br>
-    
-    ${lignes}
-    
+            <option
+                value="${l.nom}"
+                ${l.nom === listeCourseActive ? "selected" : ""}>
+                ${l.nom}
+            </option>
+
+        `).join("");
+
+    const lignes =
+        liste.lignes.map((texte, index) => {
+
+            const checkbox =
+                texte.trim() !== ""
+                ? `
+                    <input
+                        type="checkbox"
+                        id="check-${index}">
+                  `
+                : "";
+
+            return `
+
+                <div class="ligneCourse">
+
+                    ${checkbox}
+
+                    <input
+                        type="text"
+                        id="ligne-${index}"
+                        value="${texte}"
+                        oninput="sauvegarderCourses()">
+
+                </div>
+
+            `;
+
+        }).join("");
+
+    document.getElementById(
+        "contenu"
+    ).innerHTML = `
+
+        <h2>Liste de courses</h2>
+
+        <select
+            class="selectListeCourses"
+            onchange="changerListe(this.value)">
+
+            ${options}
+
+        </select>
+
+        <button
+            class="btnNouvelleListe"
+            onclick="nouvelleListeCourses()">
+
+            ➕ Nouvelle liste
+
+        </button>
+
+        <div class="listeCoursesContainer">
+
+            ${lignes}
+
+        </div>
+
     `;
 
 }
@@ -1302,52 +1294,44 @@ async function() {
 
     await sauvegarderListeCourses(
         nom,
-        Array(20)
-        .fill()
-        .map(() => ({
-            texte: "",
-            coche: false
-        }))
+        Array(20).fill("")
     );
 
-    await afficherCourses();
+    listesCourses =
+        await chargerListesCourses();
+
+    listeCourseActive =
+        nom;
+
+    afficherListeCourses();
 
 };
 
 window.sauvegarderCourses =
 async function() {
 
-    const liste =
-        listesCourses.find(
-            l =>
-            l.nom ===
-            listeCourseActive
-        );
+    const lignes = [];
 
-    const nouvellesLignes =
-        liste.lignes.map(
-            (_, i) => ({
+    document
+        .querySelectorAll(
+            "[id^='ligne-']"
+        )
+        .forEach(input => {
 
-                texte:
-                    document
-                    .getElementById(
-                        `course-${i}`
-                    )
-                    .value,
+            lignes.push(
+                input.value
+            );
 
-                coche:
-                    document
-                    .querySelectorAll(
-                        ".ligneCourse input[type='checkbox']"
-                    )[i]?.checked
-                    || false
-
-            })
-        );
+        });
 
     await sauvegarderListeCourses(
         listeCourseActive,
-        nouvellesLignes
+        lignes
     );
+
+    listesCourses =
+        await chargerListesCourses();
+
+    afficherListeCourses();
 
 };
