@@ -48,6 +48,8 @@ let nbDepensesAffichees = 30;
 let recurrentesInitialisation = [];
 let listesCourses = [];
 let listeCourseActive = "";
+let moisCalendrier =
+    new Date();
 
 const moisCourant =
     new Date()
@@ -1205,13 +1207,14 @@ async function() {
 
 };
 
-window.afficherCalendrier = function() {
+window.afficherCalendrier =
+async function() {
 
     document
         .getElementById("sidebar")
         .classList
         .remove("open");
-    
+
     document.getElementById(
         "zoneBudget"
     ).style.display = "none";
@@ -1219,11 +1222,8 @@ window.afficherCalendrier = function() {
     document.getElementById(
         "budgetActions"
     ).style.display = "none";
-
-    document.getElementById(
-        "contenu"
-    ).innerHTML =
-        "<h2>Calendrier</h2>";
+    
+    dessinerCalendrier();
 
 };
 
@@ -1244,6 +1244,171 @@ document.addEventListener("click", function(event) {
     }
 
 });
+
+function dessinerCalendrier() {
+
+    const annee =
+        moisCalendrier.getFullYear();
+
+    const mois =
+        moisCalendrier.getMonth();
+
+    const premierJour =
+        new Date(
+            annee,
+            mois,
+            1
+        );
+
+    let decalage =
+        premierJour.getDay();
+
+    decalage =
+        decalage === 0
+            ? 6
+            : decalage - 1;
+
+    const nbJours =
+        new Date(
+            annee,
+            mois + 1,
+            0
+        ).getDate();
+
+    const aujourdHui =
+        new Date();
+
+    let html = "";
+
+    const joursSemaine = [
+        "Lun",
+        "Mar",
+        "Mer",
+        "Jeu",
+        "Ven",
+        "Sam",
+        "Dim"
+    ];
+
+    joursSemaine.forEach(jour => {
+
+        html += `
+            <div class="numeroJour">
+                ${jour}
+            </div>
+        `;
+
+    });
+
+    for (
+        let i = 0;
+        i < decalage;
+        i++
+    ) {
+
+        html += "<div></div>";
+
+    }
+
+    for (
+        let jour = 1;
+        jour <= nbJours;
+        jour++
+    ) {
+
+        const date =
+            new Date(
+                annee,
+                mois,
+                jour
+            );
+
+        const passe =
+            date <
+            new Date(
+                aujourdHui.getFullYear(),
+                aujourdHui.getMonth(),
+                aujourdHui.getDate()
+            );
+
+        html += `
+
+            <div
+                class="
+                    jourCalendrier
+                    ${passe ? "jourPassee" : ""}
+                "
+            >
+
+                <div class="numeroJour">
+                    ${jour}
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+    document.getElementById(
+        "contenu"
+    ).innerHTML = `
+
+        <div class="calendrierHeader">
+
+            <button onclick="moisPrecedent()">
+                ◀
+            </button>
+
+            <h2>
+
+                ${moisCalendrier.toLocaleDateString(
+                    "fr-FR",
+                    {
+                        month: "long",
+                        year: "numeric"
+                    }
+                )}
+
+            </h2>
+
+            <button onclick="moisSuivant()">
+                ▶
+            </button>
+
+        </div>
+
+        <div class="grilleCalendrier">
+
+            ${html}
+
+        </div>
+
+    `;
+
+}
+
+window.moisPrecedent =
+function() {
+
+    moisCalendrier.setMonth(
+        moisCalendrier.getMonth() - 1
+    );
+
+    dessinerCalendrier();
+
+};
+
+window.moisSuivant =
+function() {
+
+    moisCalendrier.setMonth(
+        moisCalendrier.getMonth() + 1
+    );
+
+    dessinerCalendrier();
+
+};
 
 function afficherListeCourses() {
 
