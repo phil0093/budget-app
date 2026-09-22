@@ -1495,15 +1495,20 @@ window.majAffichageLigne = function(index) {
 };
 
 window.supprimerListeActive =
-async function() {
+window.supprimerListeActive =
+async function(confirmer = true) {
 
-    const confirmation =
-        confirm(
-            `Supprimer la liste "${listeCourseActive}" ?`
-        );
+    if (confirmer) {
 
-    if (!confirmation) {
-        return;
+        const confirmation =
+            confirm(
+                `Supprimer la liste "${listeCourseActive}" ?`
+            );
+
+        if (!confirmation) {
+            return;
+        }
+
     }
 
     await supprimerListeCourses(
@@ -1527,6 +1532,7 @@ async function() {
 
         listesCourses =
             await chargerListesCourses();
+
     }
 
     listeCourseActive =
@@ -1587,6 +1593,6 @@ async function verifierSuppressionAuto() {
         return;
     }
 
-    await supprimerListeActive();
+    await supprimerListeActive(false);
 
 }
