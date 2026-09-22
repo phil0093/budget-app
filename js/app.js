@@ -30,8 +30,16 @@ import {
 }
 from "./menus.js";
 
+import {
+    chargerListesCourses,
+    sauvegarderListeCourses
+}
+from "./courses.js";
+
 let nbDepensesAffichees = 30;
 let recurrentesInitialisation = [];
+let listesCourses = [];
+let listeCourseActive = "";
 
 const moisCourant =
     new Date()
@@ -1080,28 +1088,50 @@ async function(date) {
 
 };
 
-window.afficherCourses = function() {
+window.afficherCourses =
+async function() {
 
     document
         .getElementById("sidebar")
         .classList
         .remove("open");
-    
-    document.getElementById(
-        "zoneBudget"
-    ).style.display = "none";
+
+    document
+        .getElementById("zoneBudget")
+        .style.display =
+        "none";
 
     document.getElementById(
         "budgetActions"
     ).style.display = "none";
+    
+    listesCourses =
+        await chargerListesCourses();
 
-    document.getElementById(
-        "contenu"
-    ).innerHTML =
-        "<h2>Liste de Courses</h2>";
+    if (
+        listesCourses.length === 0
+    ) {
 
+        await sauvegarderListeCourses(
+            "Ma liste",
+            Array(20)
+                .fill()
+                .map(() => ({
+                    texte: "",
+                    coche: false
+                }))
+        );
+
+        listesCourses =
+            await chargerListesCourses();
+
+    }
+
+    listeCourseActive =
+        listesCourses[0].nom;
+
+    afficherListeCourses();
 };
-
 window.afficherTodo = function() {
 
     document
@@ -1163,3 +1193,161 @@ document.addEventListener("click", function(event) {
     }
 
 });
+
+function afficherListeCourses() {
+
+    const liste =
+        listesCourses.find(
+            l =>
+            l.nom ===
+            listeCourseActive
+        );
+
+    const options =
+        listesCourses.map(l => `
+
+    <option
+    value="${l.nom}">
+    
+    ${l.nom}
+    
+    </option>
+    
+    `).join("");
+    
+        const lignes =
+            liste.lignes.map(
+                (ligne, i) => `
+    
+    <div class="ligneCourse">
+    
+    ${
+    ligne.texte.trim()
+    ?
+    `
+    <input
+    type="checkbox"
+    ${ligne.coche ? "checked" : ""}
+    onchange="sauvegarderCourses()">
+    `
+    :
+    ""
+    }
+    
+    <input
+    type="text"
+    value="${ligne.texte}"
+    id="course-${i}"
+    onblur="sauvegarderCourses()">
+    
+    </div>
+    
+    `
+            ).join("");
+    
+        document
+            .getElementById(
+                "contenu"
+            ).innerHTML = `
+    
+    <h2>
+    Liste de courses
+    </h2>
+    
+    <select
+    onchange="
+    changerListe(this.value)
+    ">
+    
+    ${options}
+    
+    </select>
+    
+    <button
+    onclick="
+    nouvelleListeCourses()
+    ">
+    
+    ➕ Nouvelle liste
+    
+    </button>
+    
+    <br><br>
+    
+    ${lignes}
+    
+    `;
+
+}
+
+window.changerListe =
+function(nom) {
+
+    listeCourseActive =
+        nom;
+
+    afficherListeCourses();
+
+};
+
+window.nouvelleListeCourses =
+async function() {
+
+    const nom =
+        prompt(
+            "Nom de la liste"
+        );
+
+    if (!nom) return;
+
+    await sauvegarderListeCourses(
+        nom,
+        Array(20)
+        .fill()
+        .map(() => ({
+            texte: "",
+            coche: false
+        }))
+    );
+
+    await afficherCourses();
+
+};
+
+window.sauvegarderCourses =
+async function() {
+
+    const liste =
+        listesCourses.find(
+            l =>
+            l.nom ===
+            listeCourseActive
+        );
+
+    const nouvellesLignes =
+        liste.lignes.map(
+            (_, i) => ({
+
+                texte:
+                    document
+                    .getElementById(
+                        `course-${i}`
+                    )
+                    .value,
+
+                coche:
+                    document
+                    .querySelectorAll(
+                        ".ligneCourse input[type='checkbox']"
+                    )[i]?.checked
+                    || false
+
+            })
+        );
+
+    await sauvegarderListeCourses(
+        listeCourseActive,
+        nouvellesLignes
+    );
+
+};
