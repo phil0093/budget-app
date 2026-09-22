@@ -238,16 +238,59 @@ body {
 .tableMenus {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
 }
 
-.tableMenus th,
+.tableMenus th {
+    background-color: #14597a;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+}
+
 .tableMenus td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 4px;
+    vertical-align: top;
 }
 
 .tableMenus input {
     width: 100%;
+    min-height: 70px;
+
     border: none;
     outline: none;
+
+    font-size: 16px;
+
+    padding: 10px;
+
+    box-sizing: border-box;
+
+    background-color: #f9f9f9;
+}
+
+.tableMenus td:first-child {
+    width: 90px;
+    font-weight: bold;
+    text-transform: capitalize;
+    text-align: center;
+    vertical-align: middle;
+}
+.tableMenus textarea {
+    width: 100%;
+    min-height: 80px;
+
+    resize: vertical;
+
+    border: none;
+    outline: none;
+
+    padding: 10px;
+
+    font-size: 16px;
+
+    box-sizing: border-box;
+
+    background-color: #f9f9f9;
 }
