@@ -1218,21 +1218,27 @@ function afficherListeCourses() {
                 ? texte
                 : "";
 
+        const vide =
+            valeur.trim() === "";
+
         return `
 
             <div class="ligneCourse">
 
                 ${
-                    valeur.trim() !== ""
+                    !vide
                     ? `
                         <input
-                            type="checkbox">
+                            type="checkbox"
+                            id="check-${index}"
+                            onchange="toggleCourse(${index})">
                       `
                     : ""
                 }
 
                 <textarea
                     id="ligne-${index}"
+                    class="${vide ? 'ligneVide' : ''}"
                     onblur="sauvegarderCourses()"
                     onkeydown="
                         gererEntreeCourse(
@@ -1278,6 +1284,37 @@ function afficherListeCourses() {
     `;
 
 }
+
+window.toggleCourse =
+function(index) {
+
+    const checkbox =
+        document.getElementById(
+            `check-${index}`
+        );
+
+    const textarea =
+        document.getElementById(
+            `ligne-${index}`
+        );
+
+    if (checkbox.checked) {
+
+        textarea.classList.add(
+            "courseCochee"
+        );
+
+    } else {
+
+        textarea.classList.remove(
+            "courseCochee"
+        );
+
+    }
+
+    sauvegarderCourses();
+
+};
 
 window.gererEntreeCourse =
 function(event, index) {
