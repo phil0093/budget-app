@@ -68,6 +68,25 @@ const moisCourant =
 let moisGestion =
     moisCourant;
 
+function formatDateLocale(date) {
+
+    const annee =
+        date.getFullYear();
+
+    const mois =
+        String(
+            date.getMonth() + 1
+        ).padStart(2, "0");
+
+    const jour =
+        String(
+            date.getDate()
+        ).padStart(2, "0");
+
+    return `${annee}-${mois}-${jour}`;
+
+}
+
 function initialiserDateDuJour() {
 
     const aujourdHui =
@@ -1341,8 +1360,7 @@ function dessinerCalendrier() {
             );
 
         const dateIso =
-            date.toISOString()
-                .split("T")[0];
+            formatDateLocale(date);
         
         html += `
         
@@ -1430,13 +1448,13 @@ async function chargerRdvsCalendrier() {
     ) {
 
         const dateIso =
-            new Date(
-                annee,
-                mois,
-                jour
-            )
-            .toISOString()
-            .split("T")[0];
+            formatDateLocale(
+                new Date(
+                    annee,
+                    mois,
+                    jour
+                )
+            );
 
         const rdvs =
             await chargerRdvJour(
