@@ -564,3 +564,27 @@ body {
 
     flex: 1;
 }
+.zoneRdvs {
+    margin-top: 4px;
+}
+
+.miniRdv {
+
+    background: #14597a;
+
+    color: white;
+
+    font-size: 10px;
+
+    padding: 2px 4px;
+
+    border-radius: 4px;
+
+    margin-bottom: 2px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
