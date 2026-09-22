@@ -871,11 +871,16 @@ window.toggleMenu = function() {
         .toggle("open");
 
 };
+
 window.afficherAccueil = function() {
 
     document.getElementById(
         "zoneBudget"
     ).style.display = "block";
+
+    document.getElementById(
+        "budgetActions"
+    ).style.display = "none";
 
     document.getElementById(
         "contenu"
@@ -887,41 +892,25 @@ window.afficherAccueil = function() {
         .remove("open");
 
 };
+
 window.afficherBudget = function() {
 
     document
         .getElementById("sidebar")
         .classList
         .remove("open");
-    
+
     document.getElementById(
         "zoneBudget"
     ).style.display = "block";
 
     document.getElementById(
+        "budgetActions"
+    ).style.display = "block";
+
+    document.getElementById(
         "contenu"
-    ).innerHTML = `
-
-        <h2>Budget</h2>
-
-        <button onclick="afficherDepenses()">
-            Toutes les dépenses
-        </button>
-
-        <button onclick="afficherRecurrentes()">
-            Dépenses récurrentes
-        </button>
-
-        <button onclick="gererMois()">
-            📅 Gérer le mois
-        </button>
-
-    `;
-
-    document
-        .getElementById("sidebar")
-        .classList
-        .remove("open");
+    ).innerHTML = "";
 
 };
 
@@ -934,6 +923,10 @@ window.afficherMenus = function() {
     
     document.getElementById(
         "zoneBudget"
+    ).style.display = "none";
+
+    document.getElementById(
+        "budgetActions"
     ).style.display = "none";
 
     document.getElementById(
@@ -955,6 +948,10 @@ window.afficherCourses = function() {
     ).style.display = "none";
 
     document.getElementById(
+        "budgetActions"
+    ).style.display = "none";
+
+    document.getElementById(
         "contenu"
     ).innerHTML =
         "<h2>Liste de Courses</h2>";
@@ -973,6 +970,10 @@ window.afficherTodo = function() {
     ).style.display = "none";
 
     document.getElementById(
+        "budgetActions"
+    ).style.display = "none";
+
+    document.getElementById(
         "contenu"
     ).innerHTML =
         "<h2>To Do List</h2>";
@@ -988,6 +989,10 @@ window.afficherCalendrier = function() {
     
     document.getElementById(
         "zoneBudget"
+    ).style.display = "none";
+
+    document.getElementById(
+        "budgetActions"
     ).style.display = "none";
 
     document.getElementById(
