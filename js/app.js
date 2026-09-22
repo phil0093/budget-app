@@ -1211,34 +1211,41 @@ function afficherListeCourses() {
         `).join("");
 
     const lignes =
-        liste.lignes.map((texte, index) => {
+    liste.lignes.map((texte, index) => {
 
-            const checkbox =
-                texte.trim() !== ""
-                ? `
-                    <input
-                        type="checkbox"
-                        id="check-${index}">
-                  `
+        const valeur =
+            typeof texte === "string"
+                ? texte
                 : "";
 
-            return `
+        return `
 
-                <div class="ligneCourse">
+            <div class="ligneCourse">
 
-                    ${checkbox}
+                ${
+                    valeur.trim() !== ""
+                    ? `
+                        <input
+                            type="checkbox">
+                      `
+                    : ""
+                }
 
-                    <input
-                        type="text"
-                        id="ligne-${index}"
-                        value="${texte}"
-                        oninput="sauvegarderCourses()">
+                <textarea
+                    id="ligne-${index}"
+                    onblur="sauvegarderCourses()"
+                    onkeydown="
+                        gererEntreeCourse(
+                            event,
+                            ${index}
+                        )"
+                >${valeur}</textarea>
 
-                </div>
+            </div>
 
-            `;
+        `;
 
-        }).join("");
+    }).join("");
 
     document.getElementById(
         "contenu"
@@ -1272,6 +1279,59 @@ function afficherListeCourses() {
 
 }
 
+window.gererEntreeCourse =
+function(event, index) {
+
+    if (event.key !== "Enter") {
+        return;
+    }
+
+    event.preventDefault();
+
+    const zone =
+        document.getElementById(
+            `ligne-${index}`
+        );
+
+    const lignes =
+        document.querySelectorAll(
+            "[id^='ligne-']"
+        );
+
+    const nouveauIndex =
+        lignes.length;
+
+    const div =
+        document.createElement("div");
+
+    div.className =
+        "ligneCourse";
+
+    div.innerHTML = `
+
+        <textarea
+            id="ligne-${nouveauIndex}"
+            onblur="sauvegarderCourses()"
+            onkeydown="
+                gererEntreeCourse(
+                    event,
+                    ${nouveauIndex}
+                )"></textarea>
+
+    `;
+
+    zone
+        .closest(".ligneCourse")
+        .after(div);
+
+    document
+        .getElementById(
+            `ligne-${nouveauIndex}`
+        )
+        .focus();
+
+};
+
 window.changerListe =
 function(nom) {
 
@@ -1294,7 +1354,7 @@ async function() {
 
     await sauvegarderListeCourses(
         nom,
-        Array(20).fill("")
+        [""]
     );
 
     listesCourses =
@@ -1316,10 +1376,10 @@ async function() {
         .querySelectorAll(
             "[id^='ligne-']"
         )
-        .forEach(input => {
+        .forEach(zone => {
 
             lignes.push(
-                input.value
+                zone.value
             );
 
         });
@@ -1328,10 +1388,5 @@ async function() {
         listeCourseActive,
         lignes
     );
-
-    listesCourses =
-        await chargerListesCourses();
-
-    afficherListeCourses();
 
 };
