@@ -933,7 +933,11 @@ window.afficherMenus =
             .getElementById("zoneBudget")
             .style.display =
             "none";
-    
+
+        document.getElementById(
+            "budgetActions"
+        ).style.display = "none";
+        
         await supprimerMenusAnciens();
     
         const menus =
