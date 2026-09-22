@@ -862,3 +862,73 @@ async function(id) {
 };
 
 initialiserDateDuJour();
+
+window.toggleMenu = function() {
+
+    document
+        .getElementById("sidebar")
+        .classList
+        .toggle("open");
+
+};
+window.afficherAccueil = function() {
+
+    document.getElementById(
+        "contenu"
+    ).innerHTML = "";
+
+    document
+        .getElementById("sidebar")
+        .classList
+        .remove("open");
+
+};
+window.afficherBudget = function() {
+
+    document.getElementById(
+        "contenu"
+    ).innerHTML = `
+        <h2>Budget</h2>
+    `;
+
+};
+
+window.afficherMenus = function() {
+
+    document.getElementById(
+        "contenu"
+    ).innerHTML = `
+        <h2>Menus</h2>
+    `;
+
+};
+
+window.afficherCourses = function() {
+
+    document.getElementById(
+        "contenu"
+    ).innerHTML = `
+        <h2>Liste de courses</h2>
+    `;
+
+};
+
+window.afficherTodo = function() {
+
+    document.getElementById(
+        "contenu"
+    ).innerHTML = `
+        <h2>To Do List</h2>
+    `;
+
+};
+
+window.afficherCalendrier = function() {
+
+    document.getElementById(
+        "contenu"
+    ).innerHTML = `
+        <h2>Calendrier</h2>
+    `;
+
+};
