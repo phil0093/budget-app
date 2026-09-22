@@ -3,6 +3,7 @@ import { db } from "./firebase-config.js";
 import {
     collection,
     getDocs,
+    deleteDoc,
     doc,
     setDoc
 } from
@@ -44,3 +45,14 @@ export async function sauvegarderListeCourses(
 
 }
 
+export async function supprimerListeCourses(nom) {
+
+    await deleteDoc(
+        doc(
+            db,
+            "listesCourses",
+            nom
+        )
+    );
+
+}
