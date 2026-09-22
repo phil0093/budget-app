@@ -2150,6 +2150,95 @@ async function(id) {
 window.sauverRdv =
 async function(date, id="") {
 
+    const nom =
+        document.getElementById(
+            "rdvNom"
+        ).value.trim();
+
+    const dateDebut =
+        document.getElementById(
+            "rdvDateDebut"
+        ).value;
+
+    const heureDebut =
+        document.getElementById(
+            "rdvHeureDebut"
+        ).value;
+
+    const dateFin =
+        document.getElementById(
+            "rdvDateFin"
+        ).value;
+
+    const heureFin =
+        document.getElementById(
+            "rdvHeureFin"
+        ).value;
+
+    if (!nom) {
+
+        alert(
+            "Le nom du rendez-vous est obligatoire."
+        );
+
+        return;
+    }
+
+    if (!dateDebut) {
+
+        alert(
+            "La date de début est obligatoire."
+        );
+
+        return;
+    }
+
+    if (!heureDebut) {
+
+        alert(
+            "L'heure de début est obligatoire."
+        );
+
+        return;
+    }
+
+    if (!dateFin) {
+
+        alert(
+            "La date de fin est obligatoire."
+        );
+
+        return;
+    }
+
+    if (!heureFin) {
+
+        alert(
+            "L'heure de fin est obligatoire."
+        );
+
+        return;
+    }
+
+    const debut =
+        new Date(
+            `${dateDebut}T${heureDebut}`
+        );
+
+    const fin =
+        new Date(
+            `${dateFin}T${heureFin}`
+        );
+
+    if (fin < debut) {
+
+        alert(
+            "La date/heure de fin doit être postérieure à la date/heure de début."
+        );
+
+        return;
+    }
+
     const participants = [];
 
     if (
@@ -2190,38 +2279,23 @@ async function(date, id="") {
 
     const rdv = {
 
-        nom:
-            document.getElementById(
-                "rdvNom"
-            ).value,
-
-        dateDebut:
-            document.getElementById(
-                "rdvDateDebut"
-            ).value,
-
-        heureDebut:
-            document.getElementById(
-                "rdvHeureDebut"
-            ).value,
-
-        dateFin:
-            document.getElementById(
-                "rdvDateFin"
-            ).value,
-
-        heureFin:
-            document.getElementById(
-                "rdvHeureFin"
-            ).value,
-
+        nom,
+    
+        dateDebut,
+    
+        heureDebut,
+    
+        dateFin,
+    
+        heureFin,
+    
         lieu:
             document.getElementById(
                 "rdvLieu"
             ).value,
-
+    
         participants
-
+    
     };
 
     if (id) {
