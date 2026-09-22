@@ -44,6 +44,14 @@ import {
 }
 from "./todo.js";
 
+import {
+    chargerRdvJour,
+    ajouterRdv,
+    modifierRdv,
+    supprimerRdv
+}
+from "./calendrier.js";
+
 let nbDepensesAffichees = 30;
 let recurrentesInitialisation = [];
 let listesCourses = [];
@@ -1349,7 +1357,9 @@ function dessinerCalendrier() {
                     ${jour}
                 </div>
         
-                <div id="rdv-${dateIso}">
+                <div
+                    id="rdv-${dateIso}"
+                    class="zoneRdvs">
                 </div>
         
             </div>
@@ -1361,7 +1371,7 @@ function dessinerCalendrier() {
     document.getElementById(
         "contenu"
     ).innerHTML = `
-
+        
         <div class="calendrierHeader">
 
             <button onclick="moisPrecedent()">
@@ -1393,6 +1403,73 @@ function dessinerCalendrier() {
         </div>
 
     `;
+
+    chargerRdvsCalendrier();
+}
+
+async function chargerRdvsCalendrier() {
+
+    const annee =
+        moisCalendrier.getFullYear();
+
+    const mois =
+        moisCalendrier.getMonth();
+
+    const nbJours =
+        new Date(
+            annee,
+            mois + 1,
+            0
+        ).getDate();
+
+    for (
+        let jour = 1;
+        jour <= nbJours;
+        jour++
+    ) {
+
+        const dateIso =
+            new Date(
+                annee,
+                mois,
+                jour
+            )
+            .toISOString()
+            .split("T")[0];
+
+        const rdvs =
+            await chargerRdvJour(
+                dateIso
+            );
+
+        const html =
+            rdvs.map(r => `
+
+                <div
+                    class="miniRdv"
+                    onclick="
+                        event.stopPropagation()
+                    ">
+
+                    ${r.nom}
+
+                </div>
+
+            `).join("");
+
+        const zone =
+            document.getElementById(
+                `rdv-${dateIso}`
+            );
+
+        if (zone) {
+
+            zone.innerHTML =
+                html;
+
+        }
+
+    }
 
 }
 
@@ -1985,5 +2062,93 @@ async function(id) {
     );
 
     await afficherTodo();
+
+};
+
+window.sauverRdv =
+async function(date) {
+
+    const participants = [];
+
+    if (
+        document.getElementById(
+            "philippe"
+        ).checked
+    ) {
+
+        participants.push(
+            "Philippe"
+        );
+
+    }
+
+    if (
+        document.getElementById(
+            "marion"
+        ).checked
+    ) {
+
+        participants.push(
+            "Marion"
+        );
+
+    }
+
+    if (
+        document.getElementById(
+            "louis"
+        ).checked
+    ) {
+
+        participants.push(
+            "Louis"
+        );
+
+    }
+
+    const rdv = {
+
+        nom:
+            document.getElementById(
+                "rdvNom"
+            ).value,
+
+        dateDebut:
+            document.getElementById(
+                "rdvDateDebut"
+            ).value,
+
+        heureDebut:
+            document.getElementById(
+                "rdvHeureDebut"
+            ).value,
+
+        dateFin:
+            document.getElementById(
+                "rdvDateFin"
+            ).value,
+
+        heureFin:
+            document.getElementById(
+                "rdvHeureFin"
+            ).value,
+
+        lieu:
+            document.getElementById(
+                "rdvLieu"
+            ).value,
+
+        participants
+
+    };
+
+    await ajouterRdv(
+        date,
+        rdv
+    );
+
+    fermerRdv();
+
+    dessinerCalendrier();
 
 };
