@@ -874,6 +874,10 @@ window.toggleMenu = function() {
 window.afficherAccueil = function() {
 
     document.getElementById(
+        "zoneBudget"
+    ).style.display = "block";
+
+    document.getElementById(
         "contenu"
     ).innerHTML = "";
 
@@ -886,49 +890,84 @@ window.afficherAccueil = function() {
 window.afficherBudget = function() {
 
     document.getElementById(
+        "zoneBudget"
+    ).style.display = "block";
+
+    document.getElementById(
         "contenu"
     ).innerHTML = `
+
         <h2>Budget</h2>
+
+        <button onclick="afficherDepenses()">
+            Toutes les dépenses
+        </button>
+
+        <button onclick="afficherRecurrentes()">
+            Dépenses récurrentes
+        </button>
+
+        <button onclick="gererMois()">
+            📅 Gérer le mois
+        </button>
+
     `;
+
+    document
+        .getElementById("sidebar")
+        .classList
+        .remove("open");
 
 };
 
 window.afficherMenus = function() {
 
     document.getElementById(
+        "zoneBudget"
+    ).style.display = "none";
+
+    document.getElementById(
         "contenu"
-    ).innerHTML = `
-        <h2>Menus</h2>
-    `;
+    ).innerHTML =
+        "<h2>Menus</h2>";
 
 };
 
 window.afficherCourses = function() {
 
     document.getElementById(
+        "zoneBudget"
+    ).style.display = "none";
+
+    document.getElementById(
         "contenu"
-    ).innerHTML = `
-        <h2>Liste de courses</h2>
-    `;
+    ).innerHTML =
+        "<h2>Liste de Courses</h2>";
 
 };
 
 window.afficherTodo = function() {
 
     document.getElementById(
+        "zoneBudget"
+    ).style.display = "none";
+
+    document.getElementById(
         "contenu"
-    ).innerHTML = `
-        <h2>To Do List</h2>
-    `;
+    ).innerHTML =
+        "<h2>To Do List</h2>";
 
 };
 
 window.afficherCalendrier = function() {
 
     document.getElementById(
+        "zoneBudget"
+    ).style.display = "none";
+
+    document.getElementById(
         "contenu"
-    ).innerHTML = `
-        <h2>Calendrier</h2>
-    `;
+    ).innerHTML =
+        "<h2>Calendrier</h2>";
 
 };
