@@ -37,6 +37,13 @@ import {
 }
 from "./courses.js";
 
+import {
+    chargerTodo,
+    ajouterTodo,
+    supprimerTodo
+}
+from "./todo.js";
+
 let nbDepensesAffichees = 30;
 let recurrentesInitialisation = [];
 let listesCourses = [];
@@ -1131,13 +1138,14 @@ async function() {
 
 };
 
-window.afficherTodo = function() {
+window.afficherTodo =
+async function() {
 
     document
         .getElementById("sidebar")
         .classList
         .remove("open");
-    
+
     document.getElementById(
         "zoneBudget"
     ).style.display = "none";
@@ -1146,10 +1154,54 @@ window.afficherTodo = function() {
         "budgetActions"
     ).style.display = "none";
 
+    const todos =
+        await chargerTodo();
+
+    const lignes =
+        todos.map(t => `
+
+            <div class="ligneTodo">
+
+                <input
+                    type="checkbox"
+                    onchange="
+                        terminerTodo(
+                            '${t.id}'
+                        )
+                    ">
+
+                <span>
+                    ${t.texte}
+                </span>
+
+            </div>
+
+        `).join("");
+
     document.getElementById(
         "contenu"
-    ).innerHTML =
-        "<h2>To Do List</h2>";
+    ).innerHTML = `
+
+        <h2>
+            To Do List
+        </h2>
+
+        <input
+            id="nouveauTodo"
+            placeholder="Nouvelle tâche"
+            onkeydown="
+                ajouterTodoEntree(
+                    event
+                )
+            ">
+
+        <div class="todoContainer">
+
+            ${lignes}
+
+        </div>
+
+    `;
 
 };
 
@@ -1495,7 +1547,6 @@ window.majAffichageLigne = function(index) {
 };
 
 window.supprimerListeActive =
-window.supprimerListeActive =
 async function(confirmer = true) {
 
     if (confirmer) {
@@ -1596,3 +1647,41 @@ async function verifierSuppressionAuto() {
     await supprimerListeActive(false);
 
 }
+
+window.ajouterTodoEntree =
+async function(event) {
+
+    if (event.key !== "Enter") {
+        return;
+    }
+
+    const zone =
+        document.getElementById(
+            "nouveauTodo"
+        );
+
+    const texte =
+        zone.value.trim();
+
+    if (!texte) {
+        return;
+    }
+
+    await ajouterTodo(
+        texte
+    );
+
+    await afficherTodo();
+
+};
+
+window.terminerTodo =
+async function(id) {
+
+    await supprimerTodo(
+        id
+    );
+
+    await afficherTodo();
+
+};
