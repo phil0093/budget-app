@@ -1211,47 +1211,53 @@ function afficherListeCourses() {
         `).join("");
 
     const lignes =
-    liste.lignes.map((texte, index) => {
+        liste.lignes.map((ligne, index) => {
 
-        const valeur =
-            typeof texte === "string"
-                ? texte
-                : "";
+            const texte =
+                ligne?.texte || "";
 
-        const vide =
-            valeur.trim() === "";
+            const coche =
+                ligne?.coche || false;
 
-        return `
+            const vide =
+                texte.trim() === "";
 
-            <div class="ligneCourse">
+            return `
 
-                ${
-                    !vide
-                    ? `
-                        <input
-                            type="checkbox"
-                            id="check-${index}"
-                            onchange="toggleCourse(${index})">
-                      `
-                    : ""
-                }
+                <div class="ligneCourse">
 
-                <textarea
-                    id="ligne-${index}"
-                    class="${vide ? 'ligneVide' : ''}"
-                    onblur="sauvegarderCourses()"
-                    onkeydown="
-                        gererEntreeCourse(
-                            event,
-                            ${index}
-                        )"
-                >${valeur}</textarea>
+                    ${
+                        !vide
+                        ? `
+                            <input
+                                type="checkbox"
+                                id="check-${index}"
+                                ${coche ? "checked" : ""}
+                                onchange="toggleCourse(${index})">
+                          `
+                        : ""
+                    }
 
-            </div>
+                    <textarea
+                        id="ligne-${index}"
+                        class="
+                            ${vide ? "ligneVide" : ""}
+                            ${coche ? "courseCochee" : ""}
+                        "
+                        onblur="sauvegarderCourses()"
+                        onkeydown="
+                            gererEntreeCourse(
+                                event,
+                                ${index}
+                            )
+                        "
+                    >${texte}</textarea>
 
-        `;
+                </div>
 
-    }).join("");
+            `;
+
+        }).join("");
 
     document.getElementById(
         "contenu"
@@ -1282,37 +1288,27 @@ function afficherListeCourses() {
         </div>
 
     `;
-
 }
 
 window.toggleCourse =
-function(index) {
+async function(index) {
 
     const checkbox =
         document.getElementById(
             `check-${index}`
         );
 
-    const textarea =
+    const zone =
         document.getElementById(
             `ligne-${index}`
         );
 
-    if (checkbox.checked) {
+    zone.classList.toggle(
+        "courseCochee",
+        checkbox.checked
+    );
 
-        textarea.classList.add(
-            "courseCochee"
-        );
-
-    } else {
-
-        textarea.classList.remove(
-            "courseCochee"
-        );
-
-    }
-
-    sauvegarderCourses();
+    await sauvegarderCourses();
 
 };
 
@@ -1413,11 +1409,20 @@ async function() {
         .querySelectorAll(
             "[id^='ligne-']"
         )
-        .forEach(zone => {
+        .forEach((zone, index) => {
 
-            lignes.push(
-                zone.value
-            );
+            const checkbox =
+                document.getElementById(
+                    `check-${index}`
+                );
+
+            lignes.push({
+                texte: zone.value,
+                coche:
+                    checkbox
+                    ? checkbox.checked
+                    : false
+            });
 
         });
 
