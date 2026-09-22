@@ -1,6 +1,5 @@
 import { calculerBudget } from "./budget.js";
 
-
 import {
     ajouterDepenseFirestore,
     chargerDepenses,
@@ -1332,21 +1331,29 @@ function dessinerCalendrier() {
                 aujourdHui.getDate()
             );
 
+        const dateIso =
+            date.toISOString()
+                .split("T")[0];
+        
         html += `
-
+        
             <div
                 class="
                     jourCalendrier
                     ${passe ? "jourPassee" : ""}
                 "
+                onclick="ouvrirRdv('${dateIso}')"
             >
-
+        
                 <div class="numeroJour">
                     ${jour}
                 </div>
-
+        
+                <div id="rdv-${dateIso}">
+                </div>
+        
             </div>
-
+        
         `;
 
     }
@@ -1408,6 +1415,135 @@ function() {
     );
 
     dessinerCalendrier();
+
+};
+
+window.ouvrirRdv = function(date) {
+
+    const html = `
+
+        <div
+            id="modalRdv"
+            class="modalCalendrier">
+
+            <div
+                class="modalCalendrierContenu">
+
+                <h2>
+                    📅 Rendez-vous
+                </h2>
+
+                <label>
+                    Nom
+                </label>
+
+                <input
+                    id="rdvNom">
+
+                <label>
+                    Date début
+                </label>
+
+                <input
+                    type="date"
+                    id="rdvDateDebut"
+                    value="${date}">
+
+                <label>
+                    Heure début
+                </label>
+
+                <input
+                    type="time"
+                    id="rdvHeureDebut">
+
+                <label>
+                    Date fin
+                </label>
+
+                <input
+                    type="date"
+                    id="rdvDateFin"
+                    value="${date}">
+
+                <label>
+                    Heure fin
+                </label>
+
+                <input
+                    type="time"
+                    id="rdvHeureFin">
+
+                <label>
+                    Lieu
+                </label>
+
+                <input
+                    id="rdvLieu">
+
+                <div class="participants">
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="philippe">
+                        Philippe
+                    </label>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="marion">
+                        Marion
+                    </label>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="louis">
+                        Louis
+                    </label>
+
+                </div>
+
+                <div class="actionsRdv">
+
+                    <button
+                        onclick="sauverRdv('${date}')">
+
+                        Enregistrer
+
+                    </button>
+
+                    <button
+                        onclick="fermerRdv()">
+
+                        Annuler
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+    document.body.insertAdjacentHTML(
+        "beforeend",
+        html
+    );
+
+};
+
+window.fermerRdv = function() {
+
+    document
+        .getElementById(
+            "modalRdv"
+        )
+        ?.remove();
 
 };
 
