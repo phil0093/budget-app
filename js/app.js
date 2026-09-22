@@ -994,28 +994,20 @@ window.afficherMenus =
     
     <td>
     
-    <input
-        value="${menu.midi || ""}"
-        onblur="
-            sauvegarderMenuLigne(
-                '${dateIso}'
-            )
-        "
-        id="midi-${dateIso}">
-    
+        <textarea
+            id="midi-${dateIso}"
+            onblur="sauvegarderMenuLigne('${dateIso}')"
+        >${menu.midi || ""}</textarea>
+
     </td>
     
     <td>
     
-    <input
-        value="${menu.soir || ""}"
-        onblur="
-            sauvegarderMenuLigne(
-                '${dateIso}'
-            )
-        "
-        id="soir-${dateIso}">
-    
+        <textarea
+            id="soir-${dateIso}"
+            onblur="sauvegarderMenuLigne('${dateIso}')"
+        >${menu.soir || ""}</textarea>
+
     </td>
     
     </tr>
