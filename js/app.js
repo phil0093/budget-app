@@ -889,6 +889,11 @@ window.afficherAccueil = function() {
 };
 window.afficherBudget = function() {
 
+    document
+        .getElementById("sidebar")
+        .classList
+        .remove("open");
+    
     document.getElementById(
         "zoneBudget"
     ).style.display = "block";
@@ -922,6 +927,11 @@ window.afficherBudget = function() {
 
 window.afficherMenus = function() {
 
+    document
+        .getElementById("sidebar")
+        .classList
+        .remove("open");
+    
     document.getElementById(
         "zoneBudget"
     ).style.display = "none";
@@ -935,6 +945,11 @@ window.afficherMenus = function() {
 
 window.afficherCourses = function() {
 
+    document
+        .getElementById("sidebar")
+        .classList
+        .remove("open");
+    
     document.getElementById(
         "zoneBudget"
     ).style.display = "none";
@@ -948,6 +963,11 @@ window.afficherCourses = function() {
 
 window.afficherTodo = function() {
 
+    document
+        .getElementById("sidebar")
+        .classList
+        .remove("open");
+    
     document.getElementById(
         "zoneBudget"
     ).style.display = "none";
@@ -961,6 +981,11 @@ window.afficherTodo = function() {
 
 window.afficherCalendrier = function() {
 
+    document
+        .getElementById("sidebar")
+        .classList
+        .remove("open");
+    
     document.getElementById(
         "zoneBudget"
     ).style.display = "none";
@@ -971,3 +996,21 @@ window.afficherCalendrier = function() {
         "<h2>Calendrier</h2>";
 
 };
+
+document.addEventListener("click", function(event) {
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const menuButton =
+        document.getElementById("menuButton");
+
+    if (
+        sidebar.classList.contains("open") &&
+        !sidebar.contains(event.target) &&
+        !menuButton.contains(event.target)
+    ) {
+        sidebar.classList.remove("open");
+    }
+
+});
