@@ -234,3 +234,20 @@ body {
     background: #f0f0f0;
 
 }
+
+.tableMenus {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableMenus th,
+.tableMenus td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.tableMenus input {
+    width: 100%;
+    border: none;
+    outline: none;
+}
