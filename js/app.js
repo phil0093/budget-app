@@ -870,6 +870,12 @@ async function(id) {
 
 initialiserDateDuJour();
 
+window.addEventListener("load", () => {
+
+    afficherAccueil();
+
+});
+
 window.toggleMenu = function() {
 
     document
