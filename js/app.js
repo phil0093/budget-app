@@ -1354,13 +1354,15 @@ function(event, index) {
 
         <textarea
             id="ligne-${nouveauIndex}"
+            oninput="majAffichageLigne(${nouveauIndex})"
             onblur="sauvegarderCourses()"
             onkeydown="
                 gererEntreeCourse(
                     event,
                     ${nouveauIndex}
-                )"></textarea>
-
+                )
+            "></textarea>
+    
     `;
 
     zone
@@ -1489,6 +1491,7 @@ window.majAffichageLigne = function(index) {
 
     }
 
+    sauvegarderCourses();
 };
 
 window.supprimerListeActive =
@@ -1535,25 +1538,40 @@ async function() {
 
 async function verifierSuppressionAuto() {
 
-    const liste =
-        listesCourses.find(
-            l => l.nom === listeCourseActive
-        );
+    const lignes = [];
 
-    const lignesAvecTexte =
-        liste.lignes.filter(
-            l => l.texte?.trim() !== ""
-        );
+    document
+        .querySelectorAll(
+            "[id^='ligne-']"
+        )
+        .forEach((zone, index) => {
 
-    if (
-        lignesAvecTexte.length === 0
-    ) {
+            const texte =
+                zone.value.trim();
+
+            if (texte === "") {
+                return;
+            }
+
+            const checkbox =
+                document.getElementById(
+                    `check-${index}`
+                );
+
+            lignes.push(
+                checkbox &&
+                checkbox.checked
+            );
+
+        });
+
+    if (lignes.length === 0) {
         return;
     }
 
     const toutesCochees =
-        lignesAvecTexte.every(
-            l => l.coche
+        lignes.every(
+            x => x === true
         );
 
     if (!toutesCochees) {
@@ -1562,7 +1580,7 @@ async function verifierSuppressionAuto() {
 
     const confirmation =
         confirm(
-            `Tous les articles sont cochés.\n\nSupprimer la liste ?`
+            "Tous les articles sont cochés.\n\nSupprimer la liste ?"
         );
 
     if (!confirmation) {
