@@ -32,7 +32,8 @@ from "./menus.js";
 
 import {
     chargerListesCourses,
-    sauvegarderListeCourses
+    sauvegarderListeCourses,
+    supprimerListeCourses
 }
 from "./courses.js";
 
@@ -1281,6 +1282,14 @@ function afficherListeCourses() {
 
         </button>
 
+        <button
+            class="btnSupprimerListe"
+            onclick="supprimerListeActive()">
+        
+            🗑️ Supprimer la liste
+        
+        </button>
+
         <div class="listeCoursesContainer">
 
             ${lignes}
@@ -1309,6 +1318,7 @@ async function(index) {
     );
 
     await sauvegarderCourses();
+    await verifierSuppressionAuto();
 
 };
 
@@ -1480,3 +1490,85 @@ window.majAffichageLigne = function(index) {
     }
 
 };
+
+window.supprimerListeActive =
+async function() {
+
+    const confirmation =
+        confirm(
+            `Supprimer la liste "${listeCourseActive}" ?`
+        );
+
+    if (!confirmation) {
+        return;
+    }
+
+    await supprimerListeCourses(
+        listeCourseActive
+    );
+
+    listesCourses =
+        await chargerListesCourses();
+
+    if (listesCourses.length === 0) {
+
+        await sauvegarderListeCourses(
+            "Ma liste",
+            [
+                {
+                    texte: "",
+                    coche: false
+                }
+            ]
+        );
+
+        listesCourses =
+            await chargerListesCourses();
+    }
+
+    listeCourseActive =
+        listesCourses[0].nom;
+
+    afficherListeCourses();
+
+};
+
+async function verifierSuppressionAuto() {
+
+    const liste =
+        listesCourses.find(
+            l => l.nom === listeCourseActive
+        );
+
+    const lignesAvecTexte =
+        liste.lignes.filter(
+            l => l.texte?.trim() !== ""
+        );
+
+    if (
+        lignesAvecTexte.length === 0
+    ) {
+        return;
+    }
+
+    const toutesCochees =
+        lignesAvecTexte.every(
+            l => l.coche
+        );
+
+    if (!toutesCochees) {
+        return;
+    }
+
+    const confirmation =
+        confirm(
+            `Tous les articles sont cochés.\n\nSupprimer la liste ?`
+        );
+
+    if (!confirmation) {
+        return;
+    }
+
+    await supprimerListeActive();
+
+}
