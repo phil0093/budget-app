@@ -23,6 +23,13 @@ import {
     modifierMouvement
 } from "./mois.js";
 
+import {
+    chargerMenus,
+    sauverMenu,
+    supprimerMenusAnciens
+}
+from "./menus.js";
+
 let nbDepensesAffichees = 30;
 let recurrentesInitialisation = [];
 
@@ -914,25 +921,160 @@ window.afficherBudget = function() {
 
 };
 
-window.afficherMenus = function() {
-
-    document
-        .getElementById("sidebar")
-        .classList
-        .remove("open");
+window.afficherMenus =
+    async function() {
     
-    document.getElementById(
-        "zoneBudget"
-    ).style.display = "none";
+        document
+            .getElementById("sidebar")
+            .classList
+            .remove("open");
+    
+        document
+            .getElementById("zoneBudget")
+            .style.display =
+            "none";
+    
+        await supprimerMenusAnciens();
+    
+        const menus =
+            await chargerMenus();
+    
+        const jours = [];
+    
+        const date =
+            new Date();
+    
+        for (
+            let i = 0;
+            i < 8;
+            i++
+        ) {
+    
+            const d =
+                new Date(date);
+    
+            d.setDate(
+                d.getDate() + i
+            );
+    
+            jours.push(
+                d
+            );
+    
+        }
+    
+        const lignes =
+            jours.map(d => {
+    
+                const dateIso =
+                    d.toISOString()
+                    .split("T")[0];
+    
+                const menu =
+                    menus[dateIso] || {};
+    
+                const jour =
+                    d.toLocaleDateString(
+                        "fr-FR",
+                        {
+                            weekday:
+                            "long"
+                        }
+                    );
+    
+                return `
+    
+    <tr>
+    
+    <td>${jour}</td>
+    
+    <td>
+    
+    <input
+        value="${menu.midi || ""}"
+        onblur="
+            sauvegarderMenuLigne(
+                '${dateIso}'
+            )
+        "
+        id="midi-${dateIso}">
+    
+    </td>
+    
+    <td>
+    
+    <input
+        value="${menu.soir || ""}"
+        onblur="
+            sauvegarderMenuLigne(
+                '${dateIso}'
+            )
+        "
+        id="soir-${dateIso}">
+    
+    </td>
+    
+    </tr>
+    
+    `;
+    
+            }).join("");
+    
+        document
+            .getElementById(
+                "contenu"
+            ).innerHTML = `
+    
+    <h2>Menus</h2>
+    
+    <table class="tableMenus">
+    
+    <thead>
+    
+    <tr>
+    
+    <th>Jour</th>
+    <th>Midi</th>
+    <th>Soir</th>
+    
+    </tr>
+    
+    </thead>
+    
+    <tbody>
+    
+    ${lignes}
+    
+    </tbody>
+    
+    </table>
+    
+    `;
+    
+};
 
-    document.getElementById(
-        "budgetActions"
-    ).style.display = "none";
+window.sauvegarderMenuLigne =
+async function(date) {
 
-    document.getElementById(
-        "contenu"
-    ).innerHTML =
-        "<h2>Menus</h2>";
+    const midi =
+        document
+        .getElementById(
+            `midi-${date}`
+        )
+        .value;
+
+    const soir =
+        document
+        .getElementById(
+            `soir-${date}`
+        )
+        .value;
+
+    await sauverMenu(
+        date,
+        midi,
+        soir
+    );
 
 };
 
