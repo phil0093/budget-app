@@ -359,3 +359,18 @@ body {
 
     border-radius: 8px;
 }
+
+.ligneVide {
+
+    min-height: 25px !important;
+
+    border-bottom: none !important;
+
+}
+.courseCochee {
+
+    text-decoration: line-through;
+
+    color: #888;
+
+}
