@@ -250,24 +250,8 @@ body {
 
 .tableMenus td {
     border: 1px solid #ddd;
-    padding: 4px;
+    padding: 0;
     vertical-align: top;
-}
-
-.tableMenus input {
-    width: 100%;
-    min-height: 70px;
-
-    border: none;
-    outline: none;
-
-    font-size: 16px;
-
-    padding: 10px;
-
-    box-sizing: border-box;
-
-    background-color: #f9f9f9;
 }
 
 .tableMenus td:first-child {
@@ -276,17 +260,19 @@ body {
     text-transform: capitalize;
     text-align: center;
     vertical-align: middle;
+    padding: 10px;
 }
+
 .tableMenus textarea {
     width: 100%;
-    min-height: 80px;
+    min-height: 100px;
 
-    resize: vertical;
+    resize: none;
 
     border: none;
     outline: none;
 
-    padding: 10px;
+    padding: 12px;
 
     font-size: 16px;
 
