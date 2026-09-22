@@ -482,3 +482,85 @@ body {
 
     margin-top: 2px;
 }
+.modalCalendrier {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,0.5);
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 2000;
+}
+
+.modalCalendrierContenu {
+
+    background: white;
+
+    width: 90%;
+    max-width: 450px;
+
+    border-radius: 12px;
+
+    padding: 20px;
+}
+
+.modalCalendrierContenu h2 {
+
+    margin-top: 0;
+}
+
+.modalCalendrierContenu label {
+
+    display: block;
+
+    margin-top: 10px;
+
+    font-weight: bold;
+}
+
+.modalCalendrierContenu input {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 10px;
+
+    margin-top: 5px;
+}
+
+.participants {
+
+    margin-top: 10px;
+}
+
+.participants label {
+
+    display: block;
+
+    font-weight: normal;
+}
+
+.actionsRdv {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+.actionsRdv button {
+
+    flex: 1;
+}
