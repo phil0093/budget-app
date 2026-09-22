@@ -414,3 +414,70 @@ body {
 
     font-size: 16px;
 }
+
+.calendrierHeader {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 15px;
+}
+
+.calendrierHeader button {
+
+    border: none;
+
+    background: #14597a;
+
+    color: white;
+
+    padding: 10px;
+
+    border-radius: 8px;
+}
+
+.grilleCalendrier {
+
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 4px;
+}
+
+.jourCalendrier {
+
+    background: white;
+
+    min-height: 90px;
+
+    padding: 5px;
+
+    border-radius: 8px;
+
+    box-sizing: border-box;
+}
+
+.jourPassee {
+
+    background: #e5e5e5;
+
+    color: #888;
+}
+
+.numeroJour {
+
+    font-weight: bold;
+
+    margin-bottom: 5px;
+}
+
+.ligneRdv {
+
+    font-size: 11px;
+
+    margin-top: 2px;
+}
