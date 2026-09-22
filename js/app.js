@@ -1244,6 +1244,7 @@ function afficherListeCourses() {
                             ${vide ? "ligneVide" : ""}
                             ${coche ? "courseCochee" : ""}
                         "
+                        oninput="majAffichageLigne(${index})"
                         onblur="sauvegarderCourses()"
                         onkeydown="
                             gererEntreeCourse(
@@ -1252,7 +1253,6 @@ function afficherListeCourses() {
                             )
                         "
                     >${texte}</textarea>
-
                 </div>
 
             `;
@@ -1430,5 +1430,53 @@ async function() {
         listeCourseActive,
         lignes
     );
+
+};
+
+window.majAffichageLigne = function(index) {
+
+    const zone =
+        document.getElementById(
+            `ligne-${index}`
+        );
+
+    const ligne =
+        zone.closest(".ligneCourse");
+
+    let checkbox =
+        document.getElementById(
+            `check-${index}`
+        );
+
+    const texte =
+        zone.value.trim();
+
+    if (texte !== "" && !checkbox) {
+
+        checkbox =
+            document.createElement(
+                "input"
+            );
+
+        checkbox.type = "checkbox";
+
+        checkbox.id =
+            `check-${index}`;
+
+        checkbox.onchange =
+            () => toggleCourse(index);
+
+        ligne.insertBefore(
+            checkbox,
+            zone
+        );
+
+    }
+
+    if (texte === "" && checkbox) {
+
+        checkbox.remove();
+
+    }
 
 };
