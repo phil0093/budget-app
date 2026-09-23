@@ -1,5 +1,5 @@
 import {
-    chargerRdvJour,
+    chargerRdvsMois,
     ajouterRdv,
     modifierRdv,
     supprimerRdv
@@ -238,6 +238,9 @@ async function chargerRdvsCalendrier() {
             0
         ).getDate();
 
+    const rdvsMois =
+        await chargerRdvsMois();
+
     for (
         let jour = 1;
         jour <= nbJours;
@@ -254,9 +257,7 @@ async function chargerRdvsCalendrier() {
             );
 
         const rdvs =
-            await chargerRdvJour(
-                dateIso
-            );
+            rdvsMois[dateIso] || [];
 
         rdvs.sort((a, b) =>
             a.heureDebut.localeCompare(
@@ -266,9 +267,10 @@ async function chargerRdvsCalendrier() {
 
         const rdvsVisibles =
             rdvs.slice(0, 3);
-        
+
         let html =
             rdvsVisibles.map(r => `
+
                 <div
                     class="miniRdv"
                     onclick="
@@ -277,27 +279,37 @@ async function chargerRdvsCalendrier() {
                             '${dateIso}',
                             '${r.id}'
                         );
-                    ">
+                    "
+                >
+
                     ${r.nom}
+
                 </div>
+
             `).join("");
-        
+
         if (rdvs.length > 3) {
-        
+
             html += `
+
                 <div
                     class="miniRdvPlus"
                     onclick="
                         event.stopPropagation();
-                        afficherTousLesRdvs('${dateIso}');
+                        afficherTousLesRdvs(
+                            '${dateIso}'
+                        );
                     "
                 >
-                    +${rdvs.length - 3} autre(s)
+
+                    +${rdvs.length - 3}
+
                 </div>
+
             `;
-        
+
         }
-        
+
         const zone =
             document.getElementById(
                 `rdv-${dateIso}`
