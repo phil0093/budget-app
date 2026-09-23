@@ -1,51 +1,8 @@
-import { calculerBudget } from "./budget.js";
 import "./pages/menus-page.js";
 import "./pages/courses-page.js";
 import "./pages/todo-page.js";
 import "./pages/calendrier-page.js";
-
-const moisCourant =
-    new Date()
-    .toISOString()
-    .substring(0, 7);
-
-function formatDateLocale(date) {
-
-    const annee =
-        date.getFullYear();
-
-    const mois =
-        String(
-            date.getMonth() + 1
-        ).padStart(2, "0");
-
-    const jour =
-        String(
-            date.getDate()
-        ).padStart(2, "0");
-
-    return `${annee}-${mois}-${jour}`;
-
-}
-
-function initialiserDateDuJour() {
-
-    const aujourdHui =
-        new Date()
-            .toISOString()
-            .split("T")[0];
-
-    document.getElementById("dateDepense").value =
-        aujourdHui;
-}
-
-initialiserDateDuJour();
-
-window.addEventListener("load", () => {
-
-    afficherAccueil();
-
-});
+import "./pages/budget-page.js";
 
 window.toggleMenu = function() {
 
@@ -98,13 +55,11 @@ window.afficherBudget = function() {
 
 };
 
+window.addEventListener("load", () => {
 
+    afficherAccueil();
 
-
-
-
-
-
+});
 
 document.addEventListener("click", function(event) {
 
@@ -126,3 +81,21 @@ document.addEventListener("click", function(event) {
 
 
 
+const moisCourant =
+    new Date()
+    .toISOString()
+    .substring(0, 7);
+
+
+function initialiserDateDuJour() {
+
+    const aujourdHui =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+
+    document.getElementById("dateDepense").value =
+        aujourdHui;
+}
+
+initialiserDateDuJour();
