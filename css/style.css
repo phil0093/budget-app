@@ -452,16 +452,14 @@ body {
 }
 
 .jourCalendrier {
-
     background: white;
-
-    min-height: 90px;
-
+    height: 110px;
     padding: 5px;
-
     border-radius: 8px;
-
     box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .jourPassee {
@@ -560,14 +558,15 @@ body {
 
     flex: 1;
 }
+
 .zoneRdvs {
+    overflow: hidden;
     margin-top: 4px;
+    min-width: 0;
 }
 
 .miniRdv {
-
     background: #14597a;
-
     color: white;
 
     font-size: 10px;
@@ -579,10 +578,11 @@ body {
     margin-bottom: 2px;
 
     overflow: hidden;
-
     white-space: nowrap;
-
     text-overflow: ellipsis;
+
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .btnSupprimerListe {
