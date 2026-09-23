@@ -226,6 +226,12 @@ async function chargerRdvsCalendrier() {
                 dateIso
             );
 
+        rdvs.sort((a, b) =>
+            a.heureDebut.localeCompare(
+                b.heureDebut
+            )
+        );
+
         const rdvsVisibles =
             rdvs.slice(0, 3);
         
@@ -251,7 +257,7 @@ async function chargerRdvsCalendrier() {
                     class="miniRdvPlus"
                     onclick="
                         event.stopPropagation();
-                        ouvrirRdv('${dateIso}');
+                        afficherTousLesRdvs('${dateIso}');
                     "
                 >
                     +${rdvs.length - 3} autre(s)
@@ -275,6 +281,74 @@ async function chargerRdvsCalendrier() {
     }
 
 }
+
+window.afficherTousLesRdvs =
+async function(date) {
+
+    const rdvs =
+        await chargerRdvJour(date);
+
+    rdvs.sort((a, b) =>
+        a.heureDebut.localeCompare(
+            b.heureDebut
+        )
+    );
+
+    const liste =
+        rdvs.map(r => `
+
+            <div
+                class="miniRdv"
+                onclick="
+                    modifierRdvCalendrier(
+                        '${date}',
+                        '${r.id}'
+                    )
+                "
+            >
+                ${r.heureDebut}
+                -
+                ${r.nom}
+            </div>
+
+        `).join("");
+
+    document.body.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div
+            id="modalListeRdvs"
+            class="modalCalendrier">
+
+            <div
+                class="modalCalendrierContenu">
+
+                <h2>
+                    RDV du ${date}
+                </h2>
+
+                ${liste}
+
+                <br>
+
+                <button
+                    onclick="
+                        document
+                            .getElementById(
+                                'modalListeRdvs'
+                            )
+                            .remove()
+                    ">
+                    Fermer
+                </button>
+
+            </div>
+
+        </div>
+        `
+    );
+
+};
 
 window.modifierRdvCalendrier =
 async function(date, id) {
