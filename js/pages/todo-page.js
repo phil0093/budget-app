@@ -47,7 +47,7 @@ window.afficherTodo =
 async function() {
 
     await nettoyerTodosAnciennes();
-    
+
     document
         .getElementById("sidebar")
         .classList
@@ -63,47 +63,35 @@ async function() {
 
     const todos =
         await chargerTodo();
-    
+
     todos.sort((a, b) => {
-    
+
         if (
             a.terminee === b.terminee
         ) {
             return 0;
         }
-    
-        return a.terminee ? 1 : -1;
-    
+
+        return a.terminee
+            ? 1
+            : -1;
+
     });
 
-    const lignes =
-        todos.map(t => `
+    const philippe =
+        todos.filter(
+            t => t.zone === "philippe"
+        );
 
-            <div class="ligneTodo">
+    const marion =
+        todos.filter(
+            t => t.zone === "marion"
+        );
 
-                <input
-                    type="checkbox"
-                    ${t.terminee ? "checked" : ""}
-                    onchange="
-                        toggleTodo(
-                            '${t.id}'
-                        )
-                    "
-                >
-            
-                <span
-                    class="${
-                        t.terminee
-                        ? "todoTermine"
-                        : ""
-                    }"
-                >
-                    ${t.texte}
-                </span>
-            
-            </div>
-
-        `).join("");
+    const partagee =
+        todos.filter(
+            t => t.zone === "partagee"
+        );
 
     document.getElementById(
         "contenu"
@@ -113,14 +101,77 @@ async function() {
             To Do List
         </h2>
 
+        ${construireBlocTodo(
+            "👨 Philippe",
+            "philippe",
+            philippe
+        )}
+
+        ${construireBlocTodo(
+            "👩 Marion",
+            "marion",
+            marion
+        )}
+
+        ${construireBlocTodo(
+            "👨‍👩‍👦 Partagée",
+            "partagee",
+            partagee
+        )}
+
+    `;
+
+};
+
+function construireBlocTodo(
+    titre,
+    zone,
+    todos
+) {
+
+    const lignes =
+    todos.map(t => `
+
+        <div class="ligneTodo">
+
+            <input
+                type="checkbox"
+                ${t.terminee ? "checked" : ""}
+                onchange="
+                    toggleTodo(
+                        '${t.id}'
+                    )
+                "
+            >
+
+            <span
+                class="${
+                    t.terminee
+                    ? "todoTermine"
+                    : ""
+                }"
+            >
+                ${t.texte}
+            </span>
+
+        </div>
+
+    `).join("");
+
+    return `
+
+        <h3>${titre}</h3>
+
         <input
-            id="nouveauTodo"
+            id="nouveauTodo-${zone}"
             placeholder="Nouvelle tâche"
             onkeydown="
                 ajouterTodoEntree(
-                    event
+                    event,
+                    '${zone}'
                 )
-            ">
+            "
+        >
 
         <div class="todoContainer">
 
@@ -130,29 +181,33 @@ async function() {
 
     `;
 
-};
+}
 
 window.ajouterTodoEntree =
-async function(event) {
+async function(
+    event,
+    zone
+) {
 
     if (event.key !== "Enter") {
         return;
     }
 
-    const zone =
+    const input =
         document.getElementById(
-            "nouveauTodo"
+            `nouveauTodo-${zone}`
         );
 
     const texte =
-        zone.value.trim();
+        input.value.trim();
 
     if (!texte) {
         return;
     }
 
     await ajouterTodo(
-        texte
+        texte,
+        zone
     );
 
     await afficherTodo();
