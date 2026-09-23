@@ -37,35 +37,13 @@ export async function chargerRdvsMois() {
 
     const snapshot =
         await getDocs(
-            collection(
-                db,
-                "rdvs"
-            )
+            collection(db, "calendrier")
         );
 
     const resultat = {};
 
     snapshot.forEach(doc => {
-
-        const data =
-            doc.data();
-
-        const date =
-            data.date;
-
-        if (!resultat[date]) {
-
-            resultat[date] = [];
-
-        }
-
-        resultat[date].push({
-
-            id: doc.id,
-            ...data
-
-        });
-
+        resultat[doc.id] = doc.data().rdvs || [];
     });
 
     return resultat;
