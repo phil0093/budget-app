@@ -67,19 +67,19 @@ export async function supprimerMenusAnciens() {
             )
         );
 
-    for (const document of snapshot.docs) {
+    for (const menuDoc of snapshot.docs) {
 
         if (
-            document.id <
+            menuDoc.id <
             aujourdHui
         ) {
-
+    
             await deleteDoc(
-                doc.ref
+                menuDoc.ref
             );
-
+    
         }
-
+    
     }
 
 }
