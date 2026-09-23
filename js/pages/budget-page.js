@@ -3,7 +3,7 @@ import {
     chargerDepenses,
     supprimerDepenseFirestore,
     modifierDepenseFirestore
-} from "./depenses.js";
+} from "../services/depenses.js";
 
 import {
     chargerRecurrentes,
@@ -11,7 +11,7 @@ import {
     supprimerRecurrente,
     modifierRecurrente
 }
-from "./recurrentes.js";
+from "../services/recurrentes.js";
 
 import {
     moisExiste,
@@ -19,7 +19,7 @@ import {
     ajouterMouvementMois,
     chargerMouvementsMois,
     modifierMouvement
-} from "./mois.js";
+} from "../services/mois.js";
 
 let nbDepensesAffichees = 30;
 let recurrentesInitialisation = [];
