@@ -30,6 +30,45 @@ export async function chargerRdvJour(date) {
 
 }
 
+export async function chargerRdvsMois() {
+
+    const snapshot =
+        await getDocs(
+            collection(
+                db,
+                "rdvs"
+            )
+        );
+
+    const resultat = {};
+
+    snapshot.forEach(doc => {
+
+        const data =
+            doc.data();
+
+        const date =
+            data.date;
+
+        if (!resultat[date]) {
+
+            resultat[date] = [];
+
+        }
+
+        resultat[date].push({
+
+            id: doc.id,
+            ...data
+
+        });
+
+    });
+
+    return resultat;
+
+}
+
 export async function ajouterRdv(date, rdv) {
 
     const docRef =
