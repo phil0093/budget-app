@@ -4,6 +4,7 @@ import {
     supprimerListeCourses
 }
 from "../services/courses.js";
+import {masquerZones} from "./utils.js";
 
 let listesCourses = [];
 let listeCourseActive = "";
@@ -16,17 +17,11 @@ async function() {
         .classList
         .remove("open");
 
-    document.getElementById(
-        "zoneConnexion"
-    ).style.display = "none";
-    
-    document.getElementById(
-        "zoneBudget"
-    ).style.display = "none";
-
-    document.getElementById(
+    masquerZones(
+        "zoneConnexion",
+        "zoneBudget",
         "budgetActions"
-    ).style.display = "none";
+    );
     
     listesCourses =
         await chargerListesCourses();
