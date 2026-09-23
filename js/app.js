@@ -36,12 +36,7 @@ import {
 }
 from "./courses.js";
 
-import {
-    chargerTodo,
-    ajouterTodo,
-    supprimerTodo
-}
-from "./todo.js";
+
 
 import {
     chargerRdvJour,
