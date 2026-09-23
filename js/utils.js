@@ -16,3 +16,15 @@ export function formatDateLocale(date) {
     return `${annee}-${mois}-${jour}`;
 
 }
+
+export function masquerZones(...ids) {
+
+    ids.forEach(id => {
+
+        document.getElementById(
+            id
+        ).style.display = "none";
+
+    });
+
+}
