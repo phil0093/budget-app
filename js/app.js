@@ -29,19 +29,12 @@ import "./pages/courses-page.js";
 import "./pages/todo-page.js";
 import "./pages/calendrier-page.js";
 
-import {
-    chargerRdvJour,
-    ajouterRdv,
-    modifierRdv,
-    supprimerRdv
-}
-from "./calendrier.js";
+
 
 let nbDepensesAffichees = 30;
 let recurrentesInitialisation = [];
 
-let moisCalendrier =
-    new Date();
+
 
 const moisCourant =
     new Date()
