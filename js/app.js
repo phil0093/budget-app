@@ -30,15 +30,6 @@ import "./pages/todo-page.js";
 import "./pages/calendrier-page.js";
 
 import {
-    chargerListesCourses,
-    sauvegarderListeCourses,
-    supprimerListeCourses
-}
-from "./courses.js";
-
-
-
-import {
     chargerRdvJour,
     ajouterRdv,
     modifierRdv,
@@ -48,8 +39,7 @@ from "./calendrier.js";
 
 let nbDepensesAffichees = 30;
 let recurrentesInitialisation = [];
-let listesCourses = [];
-let listeCourseActive = "";
+
 let moisCalendrier =
     new Date();
 
