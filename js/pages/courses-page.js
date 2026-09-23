@@ -31,8 +31,14 @@ async function() {
 
         await sauvegarderListeCourses(
             "Ma liste",
-            Array(20).fill("")
+            Array(20).fill().map(
+                () => ({
+                    texte: "",
+                    coche: false
+                })
+            )
         );
+
 
         listesCourses =
             await chargerListesCourses();
@@ -56,6 +62,9 @@ function afficherListeCourses() {
         listesCourses.find(
             x => x.nom === listeCourseActive
         );
+    if (!liste) {
+        return;
+    }
 
     const options =
         listesCourses.map(l => `
@@ -256,9 +265,14 @@ async function() {
 
     await sauvegarderListeCourses(
         nom,
-        [""]
+        [
+            {
+                texte: "",
+                coche: false
+            }
+        ]
     );
-
+    
     listesCourses =
         await chargerListesCourses();
 
