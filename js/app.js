@@ -78,24 +78,3 @@ document.addEventListener("click", function(event) {
     }
 
 });
-
-
-
-const moisCourant =
-    new Date()
-    .toISOString()
-    .substring(0, 7);
-
-
-function initialiserDateDuJour() {
-
-    const aujourdHui =
-        new Date()
-            .toISOString()
-            .split("T")[0];
-
-    document.getElementById("dateDepense").value =
-        aujourdHui;
-}
-
-initialiserDateDuJour();
