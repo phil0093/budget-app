@@ -445,9 +445,9 @@ body {
 .grilleCalendrier {
     display: grid;
     grid-template-columns:
-        35px
+        16px
         repeat(7, minmax(0, 1fr));
-    gap: 4px;
+    gap: 1px;
 }
 
 .semaineHeader,
@@ -457,11 +457,11 @@ body {
     justify-content: center;
     align-items: center;
 
-    font-size: 11px;
+    font-size: 9px;
     font-weight: bold;
 
     background: #f0f0f0;
-    border-radius: 4px;
+    border-radius: 3px;
 
 }
 
@@ -490,10 +490,9 @@ body {
 }
 
 .numeroJour {
-
+    font-size: 11px;
     font-weight: bold;
-
-    margin-bottom: 5px;
+    margin-bottom: 2px;
 }
 
 .modalCalendrier {
@@ -589,9 +588,9 @@ body {
     background: #14597a;
     color: white;
 
-    font-size: 10px;
+    font-size: 8px;
 
-    padding: 2px 4px;
+    padding: 1px 3px;
     margin-bottom: 2px;
 
     border-radius: 4px;
@@ -609,10 +608,10 @@ body {
     background: #d9d9d9;
     color: #333;
 
-    font-size: 10px;
+    font-size: 8px;
     font-weight: bold;
 
-    padding: 2px 4px;
+    padding: 1px 3px;
 
     border-radius: 4px;
 
