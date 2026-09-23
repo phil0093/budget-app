@@ -25,6 +25,9 @@ import {
 } from "./mois.js";
 
 import "./pages/menus-page.js";
+import "./pages/courses-page.js";
+import "./pages/todo-page.js";
+import "./pages/calendrier-page.js";
 
 import {
     chargerListesCourses,
