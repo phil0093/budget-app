@@ -222,9 +222,11 @@ async function chargerRdvsCalendrier() {
                 dateIso
             );
 
-        const html =
-            rdvs.map(r => `
-
+        const rdvsVisibles =
+            rdvs.slice(0, 3);
+        
+        let html =
+            rdvsVisibles.map(r => `
                 <div
                     class="miniRdv"
                     onclick="
@@ -234,13 +236,26 @@ async function chargerRdvsCalendrier() {
                             '${r.id}'
                         );
                     ">
-                
                     ${r.nom}
-                
                 </div>
-
             `).join("");
-
+        
+        if (rdvs.length > 3) {
+        
+            html += `
+                <div
+                    class="miniRdvPlus"
+                    onclick="
+                        event.stopPropagation();
+                        ouvrirRdv('${dateIso}');
+                    "
+                >
+                    +${rdvs.length - 3} autre(s)
+                </div>
+            `;
+        
+        }
+        
         const zone =
             document.getElementById(
                 `rdv-${dateIso}`
