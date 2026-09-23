@@ -14,10 +14,13 @@ window.afficherMenus = async function() {
         .classList
         .remove("open");
 
-    document
-        .getElementById("zoneBudget")
-        .style.display =
-        "none";
+    document.getElementById(
+        "zoneConnexion"
+    ).style.display = "none";
+    
+    document.getElementById(
+        "zoneBudget"
+    ).style.display = "none";
 
     document.getElementById(
         "budgetActions"
