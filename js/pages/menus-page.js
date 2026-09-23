@@ -1,3 +1,10 @@
+import {
+    chargerMenus,
+    sauverMenu,
+    supprimerMenusAnciens
+}
+from "../services/menus.js";
+
 window.afficherMenus =
     async function() {
     
