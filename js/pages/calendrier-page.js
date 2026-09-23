@@ -279,20 +279,25 @@ async function(date, id) {
 window.moisPrecedent =
 function() {
 
-    moisCalendrier.setMonth(
-        moisCalendrier.getMonth() - 1
-    );
+    moisCalendrier =
+        new Date(
+            moisCalendrier.getFullYear(),
+            moisCalendrier.getMonth() - 1,
+            1
+        );
 
     dessinerCalendrier();
 
 };
-
 window.moisSuivant =
 function() {
 
-    moisCalendrier.setMonth(
-        moisCalendrier.getMonth() + 1
-    );
+    moisCalendrier =
+        new Date(
+            moisCalendrier.getFullYear(),
+            moisCalendrier.getMonth() + 1,
+            1
+        );
 
     dessinerCalendrier();
 
@@ -300,6 +305,14 @@ function() {
 
 window.ouvrirRdv = function(date, rdv = null) {
 
+    if (
+        document.getElementById(
+            "modalRdv"
+        )
+    ) {
+        return;
+    }
+    
     const html = `
 
         <div
