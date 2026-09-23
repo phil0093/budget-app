@@ -6,7 +6,7 @@ import {
 }
 from "../services/todo.js";
 
-import {masquerZones} from "./utils.js";
+import {masquerZones} from "../utils.js";
 
 async function nettoyerTodosAnciennes() {
 
