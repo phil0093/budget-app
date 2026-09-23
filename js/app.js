@@ -13,9 +13,12 @@ window.toggleMenu = function() {
 
 };
 
-
 window.afficherAccueil = function() {
 
+    document.getElementById(
+        "zoneConnexion"
+    ).style.display = "block";
+    
     document.getElementById(
         "zoneBudget"
     ).style.display = "block";
@@ -42,6 +45,10 @@ window.afficherBudget = function() {
         .classList
         .remove("open");
 
+    document.getElementById(
+        "zoneConnexion"
+    ).style.display = "none";
+    
     document.getElementById(
         "zoneBudget"
     ).style.display = "block";
