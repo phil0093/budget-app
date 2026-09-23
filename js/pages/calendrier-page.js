@@ -23,6 +23,10 @@ async function() {
         .remove("open");
 
     document.getElementById(
+        "zoneConnexion"
+    ).style.display = "none";
+    
+    document.getElementById(
         "zoneBudget"
     ).style.display = "none";
 
