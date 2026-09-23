@@ -1,5 +1,6 @@
 import {
     chargerRdvsMois,
+    chargerRdvJour,
     ajouterRdv,
     modifierRdv,
     supprimerRdv
