@@ -3,6 +3,7 @@ import { db } from "../firebase-config.js";
 import {
     doc,
     getDoc,
+    getDocs,
     setDoc
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
