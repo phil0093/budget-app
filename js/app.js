@@ -13,6 +13,7 @@ window.toggleMenu = function() {
 
 };
 
+
 window.afficherAccueil = function() {
 
     document.getElementById(
