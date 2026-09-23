@@ -1,4 +1,9 @@
 import {
+    calculerBudget
+}
+from "../budget.js";
+
+import {
     ajouterDepenseFirestore,
     chargerDepenses,
     supprimerDepenseFirestore,
@@ -21,6 +26,11 @@ import {
     modifierMouvement
 } from "../services/mois.js";
 
+import {
+    formatDateLocale
+}
+from "../utils.js";
+
 const moisCourant =
     new Date()
     .toISOString()
@@ -33,13 +43,19 @@ let moisGestion =
 
 function initialiserDateDuJour() {
 
-    const aujourdHui =
-        new Date()
-            .toISOString()
-            .split("T")[0];
+    const champ =
+        document.getElementById(
+            "dateDepense"
+        );
 
-    document.getElementById("dateDepense").value =
-        aujourdHui;
+    if (!champ) {
+        return;
+    }
+
+    champ.value =
+        formatDateLocale(
+            new Date()
+        );
 }
 
 initialiserDateDuJour();
@@ -76,9 +92,9 @@ window.ajouterDepense = async function () {
     
     if (!date) {
     
-        date = new Date()
-            .toISOString()
-            .split("T")[0];
+        date = formatDateLocale(
+            new Date()
+        );
     
     }
 
