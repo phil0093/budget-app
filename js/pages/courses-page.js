@@ -4,7 +4,7 @@ import {
     supprimerListeCourses
 }
 from "../services/courses.js";
-import {masquerZones} from "./utils.js";
+import {masquerZones} from "../utils.js";
 
 let listesCourses = [];
 let listeCourseActive = "";
