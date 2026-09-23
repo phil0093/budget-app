@@ -6,6 +6,8 @@ import {
 }
 from "../services/todo.js";
 
+import {masquerZones} from "./utils.js";
+
 async function nettoyerTodosAnciennes() {
 
     const maintenant =
@@ -53,17 +55,11 @@ async function() {
         .classList
         .remove("open");
 
-    document.getElementById(
-        "zoneConnexion"
-    ).style.display = "none";
-    
-    document.getElementById(
-        "zoneBudget"
-    ).style.display = "none";
-
-    document.getElementById(
+    masquerZones(
+        "zoneConnexion",
+        "zoneBudget",
         "budgetActions"
-    ).style.display = "none";
+    );
 
     const todos =
         await chargerTodo();
