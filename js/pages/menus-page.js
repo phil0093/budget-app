@@ -5,76 +5,72 @@ import {
 }
 from "../services/menus.js";
 
-import {
-    formatDateLocale
-}
-from "../utils.js";
+import {formatDateLocale} from "../utils.js";
 
-window.afficherMenus =
-    async function() {
+window.afficherMenus = async function() {
     
-        document
-            .getElementById("sidebar")
-            .classList
-            .remove("open");
-    
-        document
-            .getElementById("zoneBudget")
-            .style.display =
-            "none";
+    document
+        .getElementById("sidebar")
+        .classList
+        .remove("open");
 
-        document.getElementById(
-            "budgetActions"
-        ).style.display = "none";
+    document
+        .getElementById("zoneBudget")
+        .style.display =
+        "none";
+
+    document.getElementById(
+        "budgetActions"
+    ).style.display = "none";
         
-        await supprimerMenusAnciens();
+    await supprimerMenusAnciens();
+
+    const menus =
+        await chargerMenus();
+
+    const jours = [];
+
+    const date =
+        new Date();
+
+    for (
+        let i = 0;
+        i < 8;
+        i++
+    ) {
+
+        const d =
+            new Date(date);
+
+        d.setDate(
+            d.getDate() + i
+        );
+
+        jours.push(
+            d
+        );
+
+    }
     
-        const menus =
-            await chargerMenus();
-    
-        const jours = [];
-    
-        const date =
-            new Date();
-    
-        for (
-            let i = 0;
-            i < 8;
-            i++
-        ) {
-    
-            const d =
-                new Date(date);
-    
-            d.setDate(
-                d.getDate() + i
-            );
-    
-            jours.push(
-                d
-            );
-    
-        }
-    
-        const lignes =
-            jours.map(d => {
-    
-                const dateIso =
-                    formatDateLocale(d);
-    
-                const menu =
-                    menus[dateIso] || {};
-    
-                const jour =
-                    d.toLocaleDateString(
-                        "fr-FR",
-                        {
-                            weekday:
-                            "short"
-                        }
-                    );
-    
-                return `
+    const lignes =
+        jours.map(d => {
+
+            const dateIso =
+                formatDateLocale(d);
+
+            const menu =
+                menus[dateIso] || {};
+
+            const jour =
+                d.toLocaleDateString(
+                    "fr-FR",
+                    {
+                        weekday:
+                        "short"
+                    }
+                );
+
+            return `
     
     <tr>
     
@@ -86,7 +82,7 @@ window.afficherMenus =
             id="midi-${dateIso}"
             onblur="sauvegarderMenuLigne('${dateIso}')"
         >${menu.midi || ""}</textarea>
-
+    
     </td>
     
     <td>
@@ -95,7 +91,7 @@ window.afficherMenus =
             id="soir-${dateIso}"
             onblur="sauvegarderMenuLigne('${dateIso}')"
         >${menu.soir || ""}</textarea>
-
+    
     </td>
     
     </tr>
@@ -137,8 +133,7 @@ window.afficherMenus =
     
 };
 
-window.sauvegarderMenuLigne =
-async function(date) {
+window.sauvegarderMenuLigne =async function(date) {
 
     const midi =
         document
@@ -146,14 +141,14 @@ async function(date) {
             `midi-${date}`
         )
         .value;
-
+    
     const soir =
         document
         .getElementById(
             `soir-${date}`
         )
         .value;
-
+    
     await sauverMenu(
         date,
         midi,
