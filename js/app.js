@@ -1,38 +1,9 @@
 import { calculerBudget } from "./budget.js";
-
-
-import {
-    ajouterDepenseFirestore,
-    chargerDepenses,
-    supprimerDepenseFirestore,
-    modifierDepenseFirestore
-} from "./depenses.js";
-
-import {
-    chargerRecurrentes,
-    ajouterRecurrente,
-    supprimerRecurrente,
-    modifierRecurrente
-}
-from "./recurrentes.js";
-
-import {
-    moisExiste,
-    creerMois,
-    ajouterMouvementMois,
-    chargerMouvementsMois,
-    modifierMouvement
-} from "./mois.js";
-
 import "./pages/menus-page.js";
 import "./pages/courses-page.js";
 import "./pages/todo-page.js";
 import "./pages/calendrier-page.js";
 
-
-
-let nbDepensesAffichees = 30;
-let recurrentesInitialisation = [];
 
 
 
@@ -41,8 +12,7 @@ const moisCourant =
     .toISOString()
     .substring(0, 7);
 
-let moisGestion =
-    moisCourant;
+
 
 function formatDateLocale(date) {
 
