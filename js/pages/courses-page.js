@@ -1,6 +1,9 @@
 import {
-    chargerTodo,
-    ajouterTodo,
-    supprimerTodo
+    chargerListesCourses,
+    sauvegarderListeCourses,
+    supprimerListeCourses
 }
 from "../services/courses.js";
+
+let listesCourses = [];
+let listeCourseActive = "";
