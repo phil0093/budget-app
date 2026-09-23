@@ -7,7 +7,8 @@ import {
 from "../services/calendrier.js";
 
 import {
-    formatDateLocale
+    formatDateLocale,
+    masquerZones
 }
 from "../utils.js";
 
@@ -22,17 +23,11 @@ async function() {
         .classList
         .remove("open");
 
-    document.getElementById(
-        "zoneConnexion"
-    ).style.display = "none";
-    
-    document.getElementById(
-        "zoneBudget"
-    ).style.display = "none";
-
-    document.getElementById(
+    masquerZones(
+        "zoneConnexion",
+        "zoneBudget",
         "budgetActions"
-    ).style.display = "none";
+    );
     
     dessinerCalendrier();
 
