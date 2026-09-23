@@ -72,12 +72,6 @@ body {
 
 }
 
-
-.liste {
-    margin-top: 25px;
-    background: white;
-    padding: 15px;
-}
 .liste-depenses {
     display: flex;
     flex-direction: column;
@@ -156,7 +150,6 @@ body {
     font-size: 27px;
     font-weight: bold;
 }
-
 
 .coeur {
     color: #e60026;
@@ -475,12 +468,6 @@ body {
     margin-bottom: 5px;
 }
 
-.ligneRdv {
-
-    font-size: 11px;
-
-    margin-top: 2px;
-}
 .modalCalendrier {
 
     position: fixed;
@@ -586,4 +573,23 @@ body {
     white-space: nowrap;
 
     text-overflow: ellipsis;
+}
+
+.btnSupprimerListe {
+
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: none;
+    color: white;
+    background: #c0392b;
+    border-radius: 8px;
+    cursor: pointer;
+
+}
+
+.btnSupprimerListe:hover {
+
+    background: #a93226;
+
 }
