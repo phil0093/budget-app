@@ -5,6 +5,11 @@ import {
 }
 from "../services/menus.js";
 
+import {
+    formatDateLocale
+}
+from "../utils.js";
+
 window.afficherMenus =
     async function() {
     
