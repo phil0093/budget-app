@@ -8,6 +8,7 @@ from "../services/calendrier.js";
 
 import {
     formatDateLocale,
+    numeroSemaine,
     masquerZones
 }
 from "../utils.js";
@@ -41,34 +42,18 @@ function dessinerCalendrier() {
     const mois =
         moisCalendrier.getMonth();
 
-    const premierJour =
-        new Date(
-            annee,
-            mois,
-            1
-        );
-
-    let decalage =
-        premierJour.getDay();
-
-    decalage =
-        decalage === 0
-            ? 6
-            : decalage - 1;
-
-    const nbJours =
-        new Date(
-            annee,
-            mois + 1,
-            0
-        ).getDate();
-
     const aujourdHui =
         new Date();
 
     let html = "";
 
-    const joursSemaine = [
+    html += `
+        <div class="semaineHeader">
+            Sem
+        </div>
+    `;
+
+    [
         "Lun",
         "Mar",
         "Mer",
@@ -76,9 +61,7 @@ function dessinerCalendrier() {
         "Ven",
         "Sam",
         "Dim"
-    ];
-
-    joursSemaine.forEach(jour => {
+    ].forEach(jour => {
 
         html += `
             <div class="numeroJour">
@@ -88,69 +71,122 @@ function dessinerCalendrier() {
 
     });
 
-    for (
-        let i = 0;
-        i < decalage;
-        i++
+    const premierJour =
+        new Date(
+            annee,
+            mois,
+            1
+        );
+
+    const dernierJour =
+        new Date(
+            annee,
+            mois + 1,
+            0
+        );
+
+    const debutCalendrier =
+        new Date(premierJour);
+
+    const decalageDebut =
+        debutCalendrier.getDay() === 0
+            ? 6
+            : debutCalendrier.getDay() - 1;
+
+    debutCalendrier.setDate(
+        debutCalendrier.getDate() -
+        decalageDebut
+    );
+
+    const finCalendrier =
+        new Date(dernierJour);
+
+    const decalageFin =
+        finCalendrier.getDay() === 0
+            ? 0
+            : 7 - finCalendrier.getDay();
+
+    finCalendrier.setDate(
+        finCalendrier.getDate() +
+        decalageFin
+    );
+
+    const dateCourante =
+        new Date(debutCalendrier);
+
+    while (
+        dateCourante <= finCalendrier
     ) {
 
-        html += "<div></div>";
-
-    }
-
-    for (
-        let jour = 1;
-        jour <= nbJours;
-        jour++
-    ) {
-
-        const date =
-            new Date(
-                annee,
-                mois,
-                jour
-            );
-
-        const passe =
-            date <
-            new Date(
-                aujourdHui.getFullYear(),
-                aujourdHui.getMonth(),
-                aujourdHui.getDate()
-            );
-
-        const dateIso =
-            formatDateLocale(date);
-        
         html += `
-        
-            <div
-                class="
-                    jourCalendrier
-                    ${passe ? "jourPassee" : ""}
-                "
-                onclick="ouvrirRdv('${dateIso}')"
-            >
-        
-                <div class="numeroJour">
-                    ${jour}
-                </div>
-        
-                <div
-                    id="rdv-${dateIso}"
-                    class="zoneRdvs">
-                </div>
-        
+            <div class="numeroSemaine">
+                ${numeroSemaine(dateCourante)}
             </div>
-        
         `;
+
+        for (
+            let i = 0;
+            i < 7;
+            i++
+        ) {
+
+            const date =
+                new Date(dateCourante);
+
+            const horsMois =
+                date.getMonth() !== mois;
+
+            const passe =
+                date <
+                new Date(
+                    aujourdHui.getFullYear(),
+                    aujourdHui.getMonth(),
+                    aujourdHui.getDate()
+                );
+
+            const dateIso =
+                formatDateLocale(date);
+
+            html += `
+
+                <div
+                    class="
+                        jourCalendrier
+                        ${passe ? "jourPassee" : ""}
+                        ${horsMois ? "jourHorsMois" : ""}
+                    "
+                    onclick="
+                        ouvrirRdv(
+                            '${dateIso}'
+                        )
+                    "
+                >
+
+                    <div class="numeroJour">
+                        ${date.getDate()}
+                    </div>
+
+                    <div
+                        id="rdv-${dateIso}"
+                        class="zoneRdvs">
+                    </div>
+
+                </div>
+
+            `;
+
+            dateCourante.setDate(
+                dateCourante.getDate() + 1
+            );
+
+        }
 
     }
 
     document.getElementById(
         "contenu"
     ).innerHTML = `
-        
+
         <div class="calendrierHeader">
 
             <button onclick="moisPrecedent()">
@@ -184,6 +220,7 @@ function dessinerCalendrier() {
     `;
 
     chargerRdvsCalendrier();
+
 }
 
 async function chargerRdvsCalendrier() {
