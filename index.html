@@ -55,28 +55,32 @@
 
         <h1 class="titre-budget">
             <span class="coeur">❤️</span>
-            Budget M&amp;P
+            M&amp;P
             <span class="coeur">❤️</span>
         </h1>
 
-        <div class="auth-box">
-
-            <div id="userInfo">
-                Non connecté
+        <div id="zoneConnexion">
+            
+            <div class="auth-box">
+    
+                <div id="userInfo">
+                    Non connecté
+                </div>
+    
+                <button id="loginBtn" onclick="loginGoogle()">
+                    Connexion Google
+                </button>
+    
+                <button id="logoutBtn"
+                        onclick="logout()"
+                        style="display:none">
+                    Déconnexion
+                </button>
+    
             </div>
 
-            <button id="loginBtn" onclick="loginGoogle()">
-                Connexion Google
-            </button>
-
-            <button id="logoutBtn"
-                    onclick="logout()"
-                    style="display:none">
-                Déconnexion
-            </button>
-
         </div>
-
+        
         <div id="application" style="display:none;">
 
             <div id="zoneBudget">
