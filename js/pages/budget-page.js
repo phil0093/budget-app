@@ -21,10 +21,28 @@ import {
     modifierMouvement
 } from "../services/mois.js";
 
+const moisCourant =
+    new Date()
+    .toISOString()
+    .substring(0, 7);
+
 let nbDepensesAffichees = 30;
 let recurrentesInitialisation = [];
 let moisGestion =
     moisCourant;
+
+function initialiserDateDuJour() {
+
+    const aujourdHui =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+
+    document.getElementById("dateDepense").value =
+        aujourdHui;
+}
+
+initialiserDateDuJour();
 
 async function majSolde() {
     
