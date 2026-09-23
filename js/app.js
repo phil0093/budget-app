@@ -3,6 +3,7 @@ import "./pages/courses-page.js";
 import "./pages/todo-page.js";
 import "./pages/calendrier-page.js";
 import "./pages/budget-page.js";
+import {masquerZones} from "./utils.js";
 
 window.toggleMenu = function() {
 
@@ -23,9 +24,7 @@ window.afficherAccueil = function() {
         "zoneBudget"
     ).style.display = "block";
 
-    document.getElementById(
-        "budgetActions"
-    ).style.display = "none";
+    masquerZones("budgetActions");
 
     document.getElementById(
         "contenu"
@@ -45,10 +44,8 @@ window.afficherBudget = function() {
         .classList
         .remove("open");
 
-    document.getElementById(
-        "zoneConnexion"
-    ).style.display = "none";
-    
+    masquerZones("zoneConnexion");
+        
     document.getElementById(
         "zoneBudget"
     ).style.display = "block";
