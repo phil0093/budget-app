@@ -60,8 +60,7 @@ window.afficherMenus =
             jours.map(d => {
     
                 const dateIso =
-                    d.toISOString()
-                    .split("T")[0];
+                    formatDateLocale(d);
     
                 const menu =
                     menus[dateIso] || {};
