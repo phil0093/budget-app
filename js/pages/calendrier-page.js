@@ -6,6 +6,11 @@ import {
 }
 from "../services/calendrier.js";
 
+import {
+    formatDateLocale
+}
+from "../utils.js";
+
 let moisCalendrier =
     new Date();
 
