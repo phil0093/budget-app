@@ -5,7 +5,8 @@ import {
     addDoc,
     getDocs,
     deleteDoc,
-    doc
+    doc,
+    updateDoc
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
@@ -36,8 +37,28 @@ export async function ajouterTodo(texte) {
             "todo"
         ),
         {
-            texte
+            texte,
+            terminee: false,
+            dateCreation:
+                new Date().toISOString(),
+            dateTerminee: null
         }
+    );
+
+}
+
+export async function modifierTodo(
+    id,
+    donnees
+) {
+
+    await updateDoc(
+        doc(
+            db,
+            "todo",
+            id
+        ),
+        donnees
     );
 
 }
