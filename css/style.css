@@ -251,7 +251,7 @@ body {
 .tableMenus {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed;
+    table-layout: auto;
 }
 
 .tableMenus th {
@@ -267,6 +267,7 @@ body {
     vertical-align: top;
 }
 
+.tableMenus th:first-child,
 .tableMenus td:first-child {
     width: 45px;
     font-size: 12px;
