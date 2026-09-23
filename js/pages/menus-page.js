@@ -70,7 +70,7 @@ window.afficherMenus =
                         "fr-FR",
                         {
                             weekday:
-                            "long"
+                            "short"
                         }
                     );
     
