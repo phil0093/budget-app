@@ -5,7 +5,11 @@ import {
 }
 from "../services/menus.js";
 
-import {formatDateLocale} from "../utils.js";
+import {
+    formatDateLocale,
+    masquerZones
+}
+from "../utils.js";
 
 window.afficherMenus = async function() {
     
@@ -14,17 +18,11 @@ window.afficherMenus = async function() {
         .classList
         .remove("open");
 
-    document.getElementById(
-        "zoneConnexion"
-    ).style.display = "none";
-    
-    document.getElementById(
-        "zoneBudget"
-    ).style.display = "none";
-
-    document.getElementById(
+    masquerZones(
+        "zoneConnexion",
+        "zoneBudget",
         "budgetActions"
-    ).style.display = "none";
+    );
         
     await supprimerMenusAnciens();
 
