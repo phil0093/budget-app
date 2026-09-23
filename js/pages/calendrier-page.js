@@ -49,7 +49,7 @@ function dessinerCalendrier() {
 
     html += `
         <div class="semaineHeader">
-            Sem
+            S.
         </div>
     `;
 
