@@ -29,7 +29,7 @@ export async function chargerTodo() {
 
 }
 
-export async function ajouterTodo(texte) {
+export async function ajouterTodo(texte, zone) {
 
     await addDoc(
         collection(
@@ -38,6 +38,7 @@ export async function ajouterTodo(texte) {
         ),
         {
             texte,
+            zone,
             terminee: false,
             dateCreation:
                 new Date().toISOString(),
