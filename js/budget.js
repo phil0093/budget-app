@@ -1,6 +1,6 @@
-import { chargerDepenses } from "../services/depenses.js";
-import { chargerRecurrentes } from "../services/recurrentes.js";
-import { chargerMouvementsMois } from "../services/mois.js";
+import { chargerDepenses } from "./services/depenses.js";
+import { chargerRecurrentes } from "./services/recurrentes.js";
+import { chargerMouvementsMois } from "./services/mois.js";
 
 export async function calculerBudget(mois) {
 
