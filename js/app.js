@@ -24,12 +24,7 @@ import {
     modifierMouvement
 } from "./mois.js";
 
-import {
-    chargerMenus,
-    sauverMenu,
-    supprimerMenusAnciens
-}
-from "./menus.js";
+import "./pages/menus-page.js";
 
 import {
     chargerListesCourses,
