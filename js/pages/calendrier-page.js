@@ -25,6 +25,11 @@ async function() {
         .classList
         .remove("open");
 
+    document
+        .querySelector(".container")
+        .classList
+        .add("modeCalendrier");
+
     masquerZones(
         "zoneConnexion",
         "zoneBudget",
@@ -47,12 +52,6 @@ function dessinerCalendrier() {
         new Date();
 
     let html = "";
-
-    html += `
-        <div class="semaineHeader">
-            S.
-        </div>
-    `;
 
     [
         "Lun",
@@ -119,12 +118,6 @@ function dessinerCalendrier() {
         dateCourante <= finCalendrier
     ) {
 
-        html += `
-            <div class="numeroSemaine">
-                ${numeroSemaine(dateCourante)}
-            </div>
-        `;
-
         for (
             let i = 0;
             i < 7;
@@ -148,6 +141,15 @@ function dessinerCalendrier() {
             const dateIso =
                 formatDateLocale(date);
 
+            const badgeSemaine =
+                date.getDay() === 1
+                ? `
+                    <div class="badgeSemaine">
+                        ${numeroSemaine(date)}
+                    </div>
+                  `
+                : "";
+
             html += `
 
                 <div
@@ -164,7 +166,11 @@ function dessinerCalendrier() {
                 >
 
                     <div class="numeroJour">
+
+                        ${badgeSemaine}
+                    
                         ${date.getDate()}
+                    
                     </div>
 
                     <div
