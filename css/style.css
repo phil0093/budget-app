@@ -445,9 +445,7 @@ body {
 
 .grilleCalendrier {
     display: grid;
-    grid-template-columns:
-        16px
-        repeat(7, minmax(0, 1fr));
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 1px;
 }
 
