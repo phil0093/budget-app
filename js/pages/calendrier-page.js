@@ -386,7 +386,7 @@ async function(date) {
         rdvs.map(r => `
 
             <div
-                class="miniRdv"
+                class="miniRdv ${couleurRdv(r)}"
                 onclick="
                     modifierRdvCalendrier(
                         '${date}',
@@ -397,6 +397,13 @@ async function(date) {
                 ${r.heureDebut}
                 -
                 ${r.nom}
+
+                <br>
+ 
+                <small>
+                ${(r.participants || []).join(", ")}
+                </small>
+                
             </div>
 
         `).join("");
