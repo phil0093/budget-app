@@ -34,126 +34,97 @@ window.afficherMenus = async function() {
     const date =
         new Date();
 
-    for (
-        let i = 0;
-        i < 8;
-        i++
-    ) {
+    for (let i = 0; i < 8; i++) {
 
         const d =
             new Date(date);
 
-        d.setDate(
-            d.getDate() + i
-        );
+        d.setDate(d.getDate() + i);
 
-        jours.push(
-            d
-        );
+        jours.push(d);
 
     }
     
     const lignes =
         jours.map(d => {
 
-            const dateIso =
-                formatDateLocale(d);
+    const dateIso =
+        formatDateLocale(d);
 
-            const menu =
-                menus[dateIso] || {};
+    const menu =
+        menus[dateIso] || {};
 
-            const jour =
-                d.toLocaleDateString(
-                    "fr-FR",
-                    {
-                        weekday:
-                        "short"
-                    }
-                );
+    const jour =
+        d.toLocaleDateString("fr-FR",{weekday: "short"});
 
-            return `
+    return `
     
-    <tr>
-    
-    <td>${jour}</td>
-    
-    <td>
-    
-        <textarea
-            id="midi-${dateIso}"
-            onblur="sauvegarderMenuLigne('${dateIso}')"
-        >${menu.midi || ""}</textarea>
-    
-    </td>
-    
-    <td>
-    
-        <textarea
-            id="soir-${dateIso}"
-            onblur="sauvegarderMenuLigne('${dateIso}')"
-        >${menu.soir || ""}</textarea>
-    
-    </td>
-    
-    </tr>
+        <tr>
+        
+            <td>${jour}</td>
+        
+            <td>
+            
+                <textarea
+                    id="midi-${dateIso}"
+                    onblur="sauvegarderMenuLigne('${dateIso}')"
+                >${menu.midi || ""}</textarea>
+            
+            </td>
+            
+            <td>
+            
+                <textarea
+                    id="soir-${dateIso}"
+                    onblur="sauvegarderMenuLigne('${dateIso}')"
+                >${menu.soir || ""}</textarea>
+            
+            </td>
+        
+        </tr>
     
     `;
     
             }).join("");
     
-        document
-            .getElementById(
-                "contenu"
-            ).innerHTML = `
+        document.getElementById("contenu").innerHTML = `
     
-    <h2>Menus</h2>
-    
-    <table class="tableMenus">
-    
-    <thead>
-    
-    <tr>
-    
-    <th>Jour</th>
-    <th>Midi</th>
-    <th>Soir</th>
-    
-    </tr>
-    
-    </thead>
-    
-    <tbody>
-    
-    ${lignes}
-    
-    </tbody>
-    
-    </table>
-    
-    `;
+            <h2>Menus</h2>
+            
+            <table class="tableMenus">
+            
+                <thead>
+                
+                    <tr>
+                    
+                        <th>Jour</th>
+                        <th>Midi</th>
+                        <th>Soir</th>
+                    
+                    </tr>
+                
+                </thead>
+                
+                <tbody>
+                
+                    ${lignes}
+                
+                </tbody>
+            
+            </table>
+        
+        `;
     
 };
 
 window.sauvegarderMenuLigne =async function(date) {
 
     const midi =
-        document
-        .getElementById(
-            `midi-${date}`
-        )
-        .value;
+        document.getElementById(`midi-${date}`).value;
     
     const soir =
-        document
-        .getElementById(
-            `soir-${date}`
-        )
-        .value;
+        document.getElementById(`soir-${date}`).value;
     
-    await sauverMenu(
-        date,
-        midi,
-        soir
-    );
+    await sauverMenu(date, midi, soir);
 
 };
