@@ -279,7 +279,7 @@ async function chargerRdvsCalendrier() {
             rdvsVisibles.map(r => `
 
                 <div
-                    class="miniRdv"
+                    class="miniRdv ${couleurRdv(r)}"
                     onclick="
                         event.stopPropagation();
                         modifierRdvCalendrier(
@@ -330,6 +330,43 @@ async function chargerRdvsCalendrier() {
         }
 
     }
+
+}
+
+function couleurRdv(rdv) {
+
+    const participants =
+        rdv.participants || [];
+
+    if (participants.length > 1) {
+        return "rdvPartage";
+    }
+
+    if (
+        participants.includes(
+            "Philippe"
+        )
+    ) {
+        return "rdvPhilippe";
+    }
+
+    if (
+        participants.includes(
+            "Marion"
+        )
+    ) {
+        return "rdvMarion";
+    }
+
+    if (
+        participants.includes(
+            "Louis"
+        )
+    ) {
+        return "rdvLouis";
+    }
+
+    return "";
 
 }
 
