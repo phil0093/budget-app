@@ -17,8 +17,7 @@ from "../utils.js";
 let moisCalendrier =
     new Date();
 
-window.afficherCalendrier =
-async function() {
+window.afficherCalendrier = async function() {
 
     document
         .getElementById("sidebar")
@@ -72,18 +71,10 @@ function dessinerCalendrier() {
     });
 
     const premierJour =
-        new Date(
-            annee,
-            mois,
-            1
-        );
+        new Date(annee, mois,1);
 
     const dernierJour =
-        new Date(
-            annee,
-            mois + 1,
-            0
-        );
+        new Date(annee, mois + 1, 0);
 
     const debutCalendrier =
         new Date(premierJour);
@@ -93,10 +84,7 @@ function dessinerCalendrier() {
             ? 6
             : debutCalendrier.getDay() - 1;
 
-    debutCalendrier.setDate(
-        debutCalendrier.getDate() -
-        decalageDebut
-    );
+    debutCalendrier.setDate(debutCalendrier.getDate() - decalageDebut);
 
     const finCalendrier =
         new Date(dernierJour);
@@ -106,24 +94,14 @@ function dessinerCalendrier() {
             ? 0
             : 7 - finCalendrier.getDay();
 
-    finCalendrier.setDate(
-        finCalendrier.getDate() +
-        decalageFin
-    );
+    finCalendrier.setDate(finCalendrier.getDate() + decalageFin);
 
     const dateCourante =
         new Date(debutCalendrier);
 
-    while (
-        dateCourante <= finCalendrier
-    ) {
+    while (dateCourante <= finCalendrier) {
 
-        for (
-            let i = 0;
-            i < 7;
-            i++
-        ) {
-
+        for (let i = 0; i < 7; i++) {
             const date =
                 new Date(dateCourante);
 
@@ -131,12 +109,7 @@ function dessinerCalendrier() {
                 date.getMonth() !== mois;
 
             const passe =
-                date <
-                new Date(
-                    aujourdHui.getFullYear(),
-                    aujourdHui.getMonth(),
-                    aujourdHui.getDate()
-                );
+                date < new Date(aujourdHui.getFullYear(), aujourdHui.getMonth(), aujourdHui.getDate());
 
             const dateIso =
                 formatDateLocale(date);
@@ -182,9 +155,7 @@ function dessinerCalendrier() {
 
             `;
 
-            dateCourante.setDate(
-                dateCourante.getDate() + 1
-            );
+            dateCourante.setDate(dateCourante.getDate() + 1);
 
         }
 
@@ -239,38 +210,20 @@ async function chargerRdvsCalendrier() {
         moisCalendrier.getMonth();
 
     const nbJours =
-        new Date(
-            annee,
-            mois + 1,
-            0
-        ).getDate();
+        new Date(annee, mois + 1, 0).getDate();
 
     const rdvsMois =
         await chargerRdvsMois();
 
-    for (
-        let jour = 1;
-        jour <= nbJours;
-        jour++
-    ) {
+    for (let jour = 1; jour <= nbJours; jour++) {
 
         const dateIso =
-            formatDateLocale(
-                new Date(
-                    annee,
-                    mois,
-                    jour
-                )
-            );
+            formatDateLocale(new Date(annee, mois, jour));
 
         const rdvs =
             rdvsMois[dateIso] || [];
 
-        rdvs.sort((a, b) =>
-            a.heureDebut.localeCompare(
-                b.heureDebut
-            )
-        );
+        rdvs.sort((a, b) => a.heureDebut.localeCompare(b.heureDebut));
 
         const rdvsVisibles =
             rdvs.slice(0, 3);
@@ -318,15 +271,10 @@ async function chargerRdvsCalendrier() {
         }
 
         const zone =
-            document.getElementById(
-                `rdv-${dateIso}`
-            );
+            document.getElementById(`rdv-${dateIso}`);
 
         if (zone) {
-
-            zone.innerHTML =
-                html;
-
+            zone.innerHTML = html;
         }
 
     }
@@ -338,31 +286,28 @@ function couleurRdv(rdv) {
     const participants =
         rdv.participants || [];
 
-    if (participants.length > 1) {
+    const philippe =
+        participants.includes("Philippe");
+
+    const marion =
+        participants.includes("Marion");
+
+    const louis =
+        participants.includes("Louis");
+
+    if (philippe && marion) {
         return "rdvPartage";
     }
-
-    if (
-        participants.includes(
-            "Philippe"
-        )
-    ) {
+    
+    if (philippe) {
         return "rdvPhilippe";
     }
-
-    if (
-        participants.includes(
-            "Marion"
-        )
-    ) {
+    
+    if (marion) {
         return "rdvMarion";
     }
-
-    if (
-        participants.includes(
-            "Louis"
-        )
-    ) {
+    
+    if (louis && !philippe && !marion) {
         return "rdvLouis";
     }
 
@@ -370,17 +315,12 @@ function couleurRdv(rdv) {
 
 }
 
-window.afficherTousLesRdvs =
-async function(date) {
+window.afficherTousLesRdvs = async function(date) {
 
     const rdvs =
         await chargerRdvJour(date);
 
-    rdvs.sort((a, b) =>
-        a.heureDebut.localeCompare(
-            b.heureDebut
-        )
-    );
+    rdvs.sort((a, b) =>a.heureDebut.localeCompare(b.heureDebut));
 
     const liste =
         rdvs.map(r => `
@@ -445,47 +385,33 @@ async function(date) {
 
 };
 
-window.modifierRdvCalendrier =
-async function(date, id) {
+window.modifierRdvCalendrier = async function(date, id) {
 
     const rdvs =
         await chargerRdvJour(date);
 
     const rdv =
-        rdvs.find(
-            r => r.id === id
-        );
+        rdvs.find(r => r.id === id);
 
-    if (!rdv) {
-        return;
-    }
+    if (!rdv) {return;}
 
     ouvrirRdv(date, rdv);
 
 };
 
-window.moisPrecedent =
-function() {
+window.moisPrecedent = function() {
 
     moisCalendrier =
-        new Date(
-            moisCalendrier.getFullYear(),
-            moisCalendrier.getMonth() - 1,
-            1
-        );
+        new Date(moisCalendrier.getFullYear(), moisCalendrier.getMonth() - 1, 1);
 
     dessinerCalendrier();
 
 };
-window.moisSuivant =
-function() {
+
+window.moisSuivant = function() {
 
     moisCalendrier =
-        new Date(
-            moisCalendrier.getFullYear(),
-            moisCalendrier.getMonth() + 1,
-            1
-        );
+        new Date(moisCalendrier.getFullYear(), moisCalendrier.getMonth() + 1, 1);
 
     dessinerCalendrier();
 
@@ -493,13 +419,7 @@ function() {
 
 window.ouvrirRdv = function(date, rdv = null) {
 
-    if (
-        document.getElementById(
-            "modalRdv"
-        )
-    ) {
-        return;
-    }
+    if (document.getElementById("modalRdv")) {return;}
     
     const html = `
 
@@ -651,189 +571,103 @@ window.ouvrirRdv = function(date, rdv = null) {
 
     `;
 
-    document.body.insertAdjacentHTML(
-        "beforeend",
-        html
-    );
+    document.body.insertAdjacentHTML("beforeend", html);
 
 };
 
 window.fermerRdv = function() {
 
-    document
-        .getElementById(
-            "modalRdv"
-        )
-        ?.remove();
+    document.getElementById("modalRdv")?.remove();
 
 };
 
-window.sauverRdv =
-async function(date, id="") {
+window.sauverRdv = async function(date, id="") {
 
     const nom =
-        document.getElementById(
-            "rdvNom"
-        ).value.trim();
+        document.getElementById("rdvNom").value.trim();
 
     const dateDebut =
-        document.getElementById(
-            "rdvDateDebut"
-        ).value;
+        document.getElementById("rdvDateDebut").value;
 
     const heureDebut =
-        document.getElementById(
-            "rdvHeureDebut"
-        ).value;
+        document.getElementById("rdvHeureDebut").value;
 
     const dateFin =
-        document.getElementById(
-            "rdvDateFin"
-        ).value;
+        document.getElementById("rdvDateFin").value;
 
     const heureFin =
-        document.getElementById(
-            "rdvHeureFin"
-        ).value;
+        document.getElementById("rdvHeureFin").value;
 
     if (!nom) {
-
-        alert(
-            "Le nom du rendez-vous est obligatoire."
-        );
+        alert("Le nom du rendez-vous est obligatoire.");
 
         return;
     }
 
     if (!dateDebut) {
-
-        alert(
-            "La date de début est obligatoire."
-        );
+        alert("La date de début est obligatoire.");
 
         return;
     }
 
     if (!heureDebut) {
-
-        alert(
-            "L'heure de début est obligatoire."
-        );
+        alert("L'heure de début est obligatoire.");
 
         return;
     }
 
     if (!dateFin) {
-
-        alert(
-            "La date de fin est obligatoire."
-        );
+        alert("La date de fin est obligatoire.");
 
         return;
     }
 
     if (!heureFin) {
-
-        alert(
-            "L'heure de fin est obligatoire."
-        );
+        alert("L'heure de fin est obligatoire.");
 
         return;
     }
 
     const debut =
-        new Date(
-            `${dateDebut}T${heureDebut}`
-        );
+        new Date(`${dateDebut}T${heureDebut}`);
 
     const fin =
-        new Date(
-            `${dateFin}T${heureFin}`
-        );
+        new Date(`${dateFin}T${heureFin}`);
 
     if (fin < debut) {
-
-        alert(
-            "La date/heure de fin doit être postérieure à la date/heure de début."
-        );
+        alert("La date/heure de fin doit être postérieure à la date/heure de début.");
 
         return;
     }
 
     const participants = [];
 
-    if (
-        document.getElementById(
-            "philippe"
-        ).checked
-    ) {
-
-        participants.push(
-            "Philippe"
-        );
-
+    if (document.getElementById("philippe").checked) {
+        participants.push("Philippe");
     }
 
-    if (
-        document.getElementById(
-            "marion"
-        ).checked
-    ) {
-
-        participants.push(
-            "Marion"
-        );
-
+    if (document.getElementById("marion").checked) {
+        participants.push("Marion");
     }
 
-    if (
-        document.getElementById(
-            "louis"
-        ).checked
-    ) {
-
-        participants.push(
-            "Louis"
-        );
-
+    if (document.getElementById("louis").checked) {
+        participants.push("Louis");
     }
 
     const rdv = {
-
         nom,
-    
         dateDebut,
-    
         heureDebut,
-    
         dateFin,
-    
         heureFin,
-    
-        lieu:
-            document.getElementById(
-                "rdvLieu"
-            ).value,
-    
+        lieu: document.getElementById("rdvLieu").value,
         participants
-    
     };
 
     if (id) {
-
-            await modifierRdv(
-                date,
-                id,
-                rdv
-            );
-        
+            await modifierRdv(date, id, rdv);
         } else {
-        
-            await ajouterRdv(
-                date,
-                rdv
-            );
-        
+            await ajouterRdv(date, rdv );
         }
 
     fermerRdv();
@@ -842,21 +676,13 @@ async function(date, id="") {
 
 };
 
-window.supprimerRdvCalendrier =
-async function(date, id) {
+window.supprimerRdvCalendrier = async function(date, id) {
 
-    if (
-        !confirm(
-            "Supprimer ce rendez-vous ?"
-        )
-    ) {
+    if (!confirm("Supprimer ce rendez-vous ?")) {
         return;
     }
 
-    await supprimerRdv(
-        date,
-        id
-    );
+    await supprimerRdv(date, id);
 
     fermerRdv();
 
