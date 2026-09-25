@@ -26,27 +26,17 @@ async function nettoyerTodosAnciennes() {
         }
 
         const dateTerminee =
-            new Date(
-                todo.dateTerminee
-            ).getTime();
+            new Date(todo.dateTerminee).getTime();
 
-        if (
-            maintenant - dateTerminee >
-            deuxJours
-        ) {
-
-            await supprimerTodo(
-                todo.id
-            );
-
+        if (maintenant - dateTerminee > deuxJours) {
+            await supprimerTodo(todo.id);
         }
 
     }
 
 }
 
-window.afficherTodo =
-async function() {
+window.afficherTodo = async function() {
 
     await nettoyerTodosAnciennes();
 
@@ -66,9 +56,7 @@ async function() {
 
     todos.sort((a, b) => {
 
-        if (
-            a.terminee === b.terminee
-        ) {
+        if (a.terminee === b.terminee) {
             return 0;
         }
 
@@ -79,23 +67,15 @@ async function() {
     });
 
     const philippe =
-        todos.filter(
-            t => t.zone === "philippe"
-        );
+        todos.filter(t => t.zone === "philippe");
 
     const marion =
-        todos.filter(
-            t => t.zone === "marion"
-        );
+        todos.filter(t => t.zone === "marion");
 
     const partagee =
-        todos.filter(
-            t => t.zone === "partagee"
-        );
+        todos.filter(t => t.zone === "partagee");
 
-    document.getElementById(
-        "contenu"
-    ).innerHTML = `
+    document.getElementById("contenu").innerHTML = `
 
         <h2>
             To Do List
@@ -123,40 +103,36 @@ async function() {
 
 };
 
-function construireBlocTodo(
-    titre,
-    zone,
-    todos
-) {
+function construireBlocTodo(titre, zone, todos) {
 
     const lignes =
-    todos.map(t => `
+        todos.map(t => `
 
-        <div class="ligneTodo">
-
-            <input
-                type="checkbox"
-                ${t.terminee ? "checked" : ""}
-                onchange="
-                    toggleTodo(
-                        '${t.id}'
-                    )
-                "
-            >
-
-            <span
-                class="${
-                    t.terminee
-                    ? "todoTermine"
-                    : ""
-                }"
-            >
-                ${t.texte}
-            </span>
-
-        </div>
-
-    `).join("");
+            <div class="ligneTodo">
+    
+                <input
+                    type="checkbox"
+                    ${t.terminee ? "checked" : ""}
+                    onchange="
+                        toggleTodo(
+                            '${t.id}'
+                        )
+                    "
+                >
+    
+                <span
+                    class="${
+                        t.terminee
+                        ? "todoTermine"
+                        : ""
+                    }"
+                >
+                    ${t.texte}
+                </span>
+    
+            </div>
+    
+        `).join("");
 
     return `
 
@@ -183,20 +159,14 @@ function construireBlocTodo(
 
 }
 
-window.ajouterTodoEntree =
-async function(
-    event,
-    zone
-) {
+window.ajouterTodoEntree = async function(event, zone) {
 
     if (event.key !== "Enter") {
         return;
     }
 
     const input =
-        document.getElementById(
-            `nouveauTodo-${zone}`
-        );
+        document.getElementById(`nouveauTodo-${zone}`);
 
     const texte =
         input.value.trim();
@@ -205,25 +175,19 @@ async function(
         return;
     }
 
-    await ajouterTodo(
-        texte,
-        zone
-    );
+    await ajouterTodo(texte, zone);
 
     await afficherTodo();
 
 };
 
-window.toggleTodo =
-async function(id) {
+window.toggleTodo = async function(id) {
 
     const todos =
         await chargerTodo();
 
     const todo =
-        todos.find(
-            t => t.id === id
-        );
+        todos.find(t => t.id === id);
 
     if (!todo) {
         return;
