@@ -25,6 +25,12 @@ if ("serviceWorker" in navigator) {
 
 }
 
+alert(
+    window.matchMedia(
+        "(display-mode: standalone)"
+    ).matches
+);
+
 window.toggleMenu = function() {
 
     document
