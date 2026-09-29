@@ -18,8 +18,18 @@ const messaging =
 
 export async function initialiserNotifications() {
 
+    alert(
+        "Permission actuelle : " +
+        Notification.permission
+    );
+    
     const permission =
         await Notification.requestPermission();
+    
+    alert(
+        "Résultat : " +
+        permission
+    );
 
     if (
         permission !== "granted"
