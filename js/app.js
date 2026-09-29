@@ -6,12 +6,6 @@ import "./pages/budget-page.js";
 import {masquerZones} from "./utils.js";
 import {initialiserNotifications} from "./services/notifications.js";
 
-window.activerNotifications = async function() {
-     
-    await initialiserNotifications();
-     
-};
-
 if ("serviceWorker" in navigator) {
 
     navigator.serviceWorker
@@ -29,11 +23,7 @@ if ("serviceWorker" in navigator) {
 
 }
 
-alert(
-    window.matchMedia(
-        "(display-mode: standalone)"
-    ).matches
-);
+initialiserNotifications();
 
 window.toggleMenu = function() {
 
