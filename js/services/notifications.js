@@ -30,7 +30,9 @@ export async function initialiserNotifications() {
             permission
         );
 
-        if (permission !== "granted") {
+        if (
+            permission !== "granted"
+        ) {
 
             console.log(
                 "Permission refusée"
@@ -45,7 +47,7 @@ export async function initialiserNotifications() {
                 messaging,
                 {
                     vapidKey:
-                        "BA65h3QaFlA-leZVFxMwq5UTqHD6dYgJ-tgRP7XBzKBjK4wM8xbQN3LzQRNRjBmGzskIoI7vgZsRrl2SjyYoXCQ"
+                        "..."
                 }
             );
 
@@ -57,7 +59,7 @@ export async function initialiserNotifications() {
         if (!token) {
 
             console.log(
-                "Aucun token"
+                "Token vide"
             );
 
             return null;
@@ -82,13 +84,13 @@ export async function initialiserNotifications() {
         );
 
         console.log(
-            "Document Firestore créé"
+            "Document enregistré"
         );
 
         return token;
 
     }
-    catch (err) {
+    catch(err) {
 
         console.error(
             "Erreur notifications",
