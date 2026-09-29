@@ -1,4 +1,11 @@
-import { app } from "../firebase-config.js";
+import { app, db }
+from "../firebase-config.js";
+
+import {
+    doc,
+    setDoc
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 import {
     getMessaging,
@@ -14,22 +21,43 @@ export async function initialiserNotifications() {
     const permission =
         await Notification.requestPermission();
 
-    if (permission !== "granted") {
+    if (
+        permission !== "granted"
+    ) {
 
-        console.log("Notifications refusées");
+        alert(
+            "Notifications refusées"
+        );
 
         return null;
 
     }
 
     const token =
-        await getToken(messaging, {
+        await getToken(
+            messaging,
+            {
                 vapidKey:
                     "BA65h3QaFlA-leZVFxMwq5UTqHD6dYgJ-tgRP7XBzKBjK4wM8xbQN3LzQRNRjBmGzskIoI7vgZsRrl2SjyYoXCQ"
             }
         );
 
-    console.log("Token :", token);
+    await setDoc(
+        doc(
+            db,
+            "devices",
+            token
+        ),
+        {
+            token,
+            dateMaj:
+                new Date().toISOString()
+        }
+    );
+
+    alert(
+        "Notifications activées"
+    );
 
     return token;
 
