@@ -22,10 +22,10 @@ export async function initialiserNotifications() {
         "Permission actuelle : " +
         Notification.permission
     );
-    
+
     const permission =
         await Notification.requestPermission();
-    
+
     alert(
         "Résultat : " +
         permission
@@ -43,32 +43,10 @@ export async function initialiserNotifications() {
 
     }
 
-    const token =
-        await getToken(
-            messaging,
-            {
-                vapidKey:
-                    "BA65h3QaFlA-leZVFxMwq5UTqHD6dYgJ-tgRP7XBzKBjK4wM8xbQN3LzQRNRjBmGzskIoI7vgZsRrl2SjyYoXCQ"
-            }
-        );
-
-    await setDoc(
-        doc(
-            db,
-            "devices",
-            token
-        ),
-        {
-            token,
-            dateMaj:
-                new Date().toISOString()
-        }
-    );
-
     alert(
-        "Notifications activées"
+        "Notifications autorisées"
     );
 
-    return token;
+    return null;
 
 }
