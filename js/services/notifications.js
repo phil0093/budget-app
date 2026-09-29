@@ -19,7 +19,7 @@ const messaging =
 export async function initialiserNotifications() {
 
     alert(
-        "Notifications v5"
+        "Notifications v6"
     );
     
     try {
@@ -67,9 +67,16 @@ export async function initialiserNotifications() {
                 token
             ),
             {
-                token
+                token,
+                utilisateur:
+                    auth.currentUser?.email || "",
+                dateMaj:
+                    new Date().toISOString(),
+                test:
+                    "VERSION_PUSH_V1"
             }
         );
+
 
         alert("5");
 
