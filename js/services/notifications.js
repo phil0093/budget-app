@@ -19,7 +19,7 @@ const messaging =
 export async function initialiserNotifications() {
 
     alert(
-        "Notifications v4"
+        "Notifications v5"
     );
     
     try {
@@ -38,8 +38,10 @@ export async function initialiserNotifications() {
 
         alert("3");
 
-        const token =
-            await getToken(
+        alert("3.1");
+
+        const tokenPromise =
+            getToken(
                 messaging,
                 {
                     vapidKey:
@@ -48,6 +50,13 @@ export async function initialiserNotifications() {
                         registration
                 }
             );
+        
+        alert("3.2");
+        
+        const token =
+            await tokenPromise;
+        
+        alert("3.3");
 
         alert("4");
 
