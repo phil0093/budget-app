@@ -4,6 +4,9 @@ import "./pages/todo-page.js";
 import "./pages/calendrier-page.js";
 import "./pages/budget-page.js";
 import {masquerZones} from "./utils.js";
+import {initialiserNotifications} from "./services/notifications.js";
+
+initialiserNotifications();
 
 if ("serviceWorker" in navigator) {
 
