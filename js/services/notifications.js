@@ -17,7 +17,10 @@ const messaging =
     getMessaging(app);
 
 export async function initialiserNotifications() {
-
+    alert(
+        "Notifications v3"
+    );
+    
     try {
 
         console.log("Début notifications");
