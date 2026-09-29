@@ -42,12 +42,19 @@ export async function initialiserNotifications() {
 
         }
 
+        const registration =
+            await navigator.serviceWorker.register(
+                "./firebase-messaging-sw.js"
+            );
+        
         const token =
             await getToken(
                 messaging,
                 {
                     vapidKey:
-                        "..."
+                        "BA65h3QaFlA-leZVFxMwq5UTqHD6dYgJ-tgRP7XBzKBjK4wM8xbQN3LzQRNRjBmGzskIoI7vgZsRrl2SjyYoXCQ",
+                    serviceWorkerRegistration:
+                        registration
                 }
             );
 
