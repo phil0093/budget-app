@@ -8,19 +8,8 @@ import {initialiserNotifications} from "./services/notifications.js";
 
 if ("serviceWorker" in navigator) {
 
-    navigator.serviceWorker
-        .register("./sw.js")
-        .then(() => {
-
-            console.log("Service Worker enregistré");
-
-        })
-        .catch(err => {
-
-            console.error("Erreur Service Worker",err);
-
-        });
-
+    navigator.serviceWorker.register("./sw.js")
+    
 }
 
 initialiserNotifications();
