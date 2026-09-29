@@ -18,38 +18,83 @@ const messaging =
 
 export async function initialiserNotifications() {
 
-    const permission =
-        await Notification.requestPermission();
+    try {
 
-    if (permission !== "granted") {
+        console.log("Début notifications");
 
-        return null;
+        const permission =
+            await Notification.requestPermission();
 
-    }
+        console.log(
+            "Permission = ",
+            permission
+        );
 
-    const token =
-        await getToken(messaging,{
-                vapidKey:
-                    "BA65h3QaFlA-leZVFxMwq5UTqHD6dYgJ-tgRP7XBzKBjK4wM8xbQN3LzQRNRjBmGzskIoI7vgZsRrl2SjyYoXCQ"
+        if (permission !== "granted") {
+
+            console.log(
+                "Permission refusée"
+            );
+
+            return null;
+
+        }
+
+        const token =
+            await getToken(
+                messaging,
+                {
+                    vapidKey:
+                        "BA65h3QaFlA-leZVFxMwq5UTqHD6dYgJ-tgRP7XBzKBjK4wM8xbQN3LzQRNRjBmGzskIoI7vgZsRrl2SjyYoXCQ"
+                }
+            );
+
+        console.log(
+            "Token = ",
+            token
+        );
+
+        if (!token) {
+
+            console.log(
+                "Aucun token"
+            );
+
+            return null;
+
+        }
+
+        await setDoc(
+            doc(
+                db,
+                "devices",
+                token
+            ),
+            {
+                token,
+                utilisateur:
+                    auth.currentUser?.email || "",
+                nom:
+                    auth.currentUser?.displayName || "",
+                dateMaj:
+                    new Date().toISOString()
             }
         );
 
-    if (!token) {
+        console.log(
+            "Document Firestore créé"
+        );
 
-        return null;
+        return token;
 
     }
+    catch (err) {
 
-    await setDoc(
-        doc(db, "devices", token),
-        {
-            token,
-            utilisateur: auth.currentUser?.email || "",
-            dateMaj:
-                new Date().toISOString()
-        }
-    );
+        console.error(
+            "Erreur notifications",
+            err
+        );
 
-    return token;
+    }
 
 }
