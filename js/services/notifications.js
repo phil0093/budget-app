@@ -1,5 +1,5 @@
-import { app, db }
-from "../firebase-config.js";
+import { app, db } from "../firebase-config.js";
+import { auth } from "../auth.js";
 
 import {
     doc,
@@ -18,35 +18,38 @@ const messaging =
 
 export async function initialiserNotifications() {
 
-    alert(
-        "Permission actuelle : " +
-        Notification.permission
-    );
-
     const permission =
         await Notification.requestPermission();
 
-    alert(
-        "Résultat : " +
-        permission
-    );
-
-    if (
-        permission !== "granted"
-    ) {
-
-        alert(
-            "Notifications refusées"
-        );
+    if (permission !== "granted") {
 
         return null;
 
     }
 
-    alert(
-        "Notifications autorisées"
+    const token =
+        await getToken(messaging,{
+                vapidKey:
+                    "BA65h3QaFlA-leZVFxMwq5UTqHD6dYgJ-tgRP7XBzKBjK4wM8xbQN3LzQRNRjBmGzskIoI7vgZsRrl2SjyYoXCQ"
+            }
+        );
+
+    if (!token) {
+
+        return null;
+
+    }
+
+    await setDoc(
+        doc(db, "devices", token),
+        {
+            token,
+            utilisateur: auth.currentUser?.email || "",
+            dateMaj:
+                new Date().toISOString()
+        }
     );
 
-    return null;
+    return token;
 
 }
