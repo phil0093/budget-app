@@ -58,6 +58,12 @@ export async function initialiserNotifications() {
                 }
             );
 
+        alert(
+            token
+                ? "Token récupéré"
+                : "Token vide"
+        );
+        
         console.log(
             "Token = ",
             token
@@ -90,6 +96,10 @@ export async function initialiserNotifications() {
             }
         );
 
+        alert(
+            "Appareil enregistré"
+        );
+        
         console.log(
             "Document enregistré"
         );
@@ -99,6 +109,10 @@ export async function initialiserNotifications() {
     }
     catch(err) {
 
+        alert(
+            err.message
+        );
+        
         console.error(
             "Erreur notifications",
             err
