@@ -209,19 +209,61 @@ async function chargerRdvsCalendrier() {
     const mois =
         moisCalendrier.getMonth();
 
-    const nbJours =
-        new Date(annee, mois + 1, 0).getDate();
-
+    const premierJour =
+        new Date(annee, mois, 1);
+    
+    const dernierJour =
+        new Date(annee, mois + 1, 0);
+    
+    const debutCalendrier =
+        new Date(premierJour);
+    
+    const decalageDebut =
+        debutCalendrier.getDay() === 0
+            ? 6
+            : debutCalendrier.getDay() - 1;
+    
+    debutCalendrier.setDate(debutCalendrier.getDate() - decalageDebut);
+    
+    const finCalendrier =
+        new Date(dernierJour);
+    
+    const decalageFin =
+        finCalendrier.getDay() === 0
+            ? 0
+            : 7 - finCalendrier.getDay();
+    
+    finCalendrier.setDate(finCalendrier.getDate() + decalageFin);
     const rdvsMois =
         await chargerRdvsMois();
 
-    for (let jour = 1; jour <= nbJours; jour++) {
+    const dateCourante =
+        new Date(debutCalendrier);
+
+    const tousLesRdvs =
+        Object.values(rdvsMois)
+        .flat();
+    
+    while (dateCourante <= finCalendrier) {
 
         const dateIso =
-            formatDateLocale(new Date(annee, mois, jour));
+            formatDateLocale(dateCourante);
 
         const rdvs =
-            rdvsMois[dateIso] || [];
+            tousLesRdvs.filter(rdv => {
+        
+            const debut =
+                rdv.dateDebut || rdv.date;
+    
+            const fin =
+                rdv.dateFin || rdv.date;
+    
+            return (
+                dateIso >= debut &&
+                dateIso <= fin
+            );
+    
+        });
 
         rdvs.sort((a, b) => a.heureDebut.localeCompare(b.heureDebut));
 
@@ -276,6 +318,8 @@ async function chargerRdvsCalendrier() {
         if (zone) {
             zone.innerHTML = html;
         }
+
+        dateCourante.setDate(dateCourante.getDate() + 1);
 
     }
 
