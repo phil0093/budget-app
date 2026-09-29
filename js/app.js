@@ -6,7 +6,11 @@ import "./pages/budget-page.js";
 import {masquerZones} from "./utils.js";
 import {initialiserNotifications} from "./services/notifications.js";
 
-initialiserNotifications();
+window.activerNotifications = async function() {
+     
+    await initialiserNotifications();
+     
+};
 
 if ("serviceWorker" in navigator) {
 
