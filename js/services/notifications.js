@@ -17,39 +17,27 @@ const messaging =
     getMessaging(app);
 
 export async function initialiserNotifications() {
+
     alert(
-        "Notifications v3"
+        "Notifications v4"
     );
     
     try {
 
-        console.log("Début notifications");
+        alert("1");
 
         const permission =
             await Notification.requestPermission();
 
-        console.log(
-            "Permission = ",
-            permission
-        );
-
-        if (
-            permission !== "granted"
-        ) {
-
-            console.log(
-                "Permission refusée"
-            );
-
-            return null;
-
-        }
+        alert("2 : " + permission);
 
         const registration =
             await navigator.serviceWorker.register(
                 "./firebase-messaging-sw.js"
             );
-        
+
+        alert("3");
+
         const token =
             await getToken(
                 messaging,
@@ -61,26 +49,7 @@ export async function initialiserNotifications() {
                 }
             );
 
-        alert(
-            token
-                ? "Token récupéré"
-                : "Token vide"
-        );
-        
-        console.log(
-            "Token = ",
-            token
-        );
-
-        if (!token) {
-
-            console.log(
-                "Token vide"
-            );
-
-            return null;
-
-        }
+        alert("4");
 
         await setDoc(
             doc(
@@ -89,36 +58,18 @@ export async function initialiserNotifications() {
                 token
             ),
             {
-                token,
-                utilisateur:
-                    auth.currentUser?.email || "",
-                nom:
-                    auth.currentUser?.displayName || "",
-                dateMaj:
-                    new Date().toISOString()
+                token
             }
         );
 
-        alert(
-            "Appareil enregistré"
-        );
-        
-        console.log(
-            "Document enregistré"
-        );
-
-        return token;
+        alert("5");
 
     }
     catch(err) {
 
         alert(
+            "ERREUR : " +
             err.message
-        );
-        
-        console.error(
-            "Erreur notifications",
-            err
         );
 
     }
