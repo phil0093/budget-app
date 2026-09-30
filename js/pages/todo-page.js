@@ -138,16 +138,30 @@ function construireBlocTodo(titre, zone, todos) {
 
         <h3>${titre}</h3>
 
-        <input
-            id="nouveauTodo-${zone}"
-            placeholder="Nouvelle tâche"
-            onkeydown="
-                ajouterTodoEntree(
-                    event,
-                    '${zone}'
-                )
-            "
-        >
+        <div class="ajoutTodo">
+
+            <input
+                id="nouveauTodo-${zone}"
+                placeholder="Nouvelle tâche"
+                onkeydown="
+                    ajouterTodoEntree(
+                        event,
+                        '${zone}'
+                    )
+                "
+            >
+        
+            <button
+                onclick="
+                    ajouterTodoBouton(
+                        '${zone}'
+                    )
+                "
+            >
+                ➕
+            </button>
+        
+        </div>
 
         <div class="todoContainer">
 
@@ -158,6 +172,30 @@ function construireBlocTodo(titre, zone, todos) {
     `;
 
 }
+
+window.ajouterTodoBouton =
+async function(zone) {
+
+    const input =
+        document.getElementById(
+            `nouveauTodo-${zone}`
+        );
+
+    const texte =
+        input.value.trim();
+
+    if (!texte) {
+        return;
+    }
+
+    await ajouterTodo(
+        texte,
+        zone
+    );
+
+    await afficherTodo();
+
+};
 
 window.ajouterTodoEntree = async function(event, zone) {
 
