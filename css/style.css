@@ -419,6 +419,35 @@ body {
 
 }
 
+.ajoutTodo {
+
+    display: flex;
+    gap: 6px;
+
+}
+
+.ajoutTodo input {
+
+    flex: 1;
+
+}
+
+.ajoutTodo button {
+
+    width: 45px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #14597a;
+
+    color: white;
+
+    font-size: 18px;
+
+}
+
 .calendrierHeader {
 
     display: flex;
