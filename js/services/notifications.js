@@ -18,27 +18,15 @@ const messaging =
 
 export async function initialiserNotifications() {
 
-    alert(
-        "Notifications v6"
-    );
-    
     try {
-
-        alert("1");
 
         const permission =
             await Notification.requestPermission();
-
-        alert("2 : " + permission);
 
         const registration =
             await navigator.serviceWorker.register(
                 "./firebase-messaging-sw.js"
             );
-
-        alert("3");
-
-        alert("3.1");
 
         const tokenPromise =
             getToken(
@@ -51,15 +39,9 @@ export async function initialiserNotifications() {
                 }
             );
         
-        alert("3.2");
-        
         const token =
             await tokenPromise;
         
-        alert("3.3");
-
-        alert("4");
-
         await setDoc(
             doc(
                 db,
@@ -76,10 +58,7 @@ export async function initialiserNotifications() {
                     "VERSION_PUSH_V1"
             }
         );
-
-
-        alert("5");
-
+        
     }
     catch(err) {
 
