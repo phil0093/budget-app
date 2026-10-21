@@ -420,13 +420,23 @@ window.afficherTousLesRdvs = async function(date) {
 
 window.modifierRdvCalendrier = async function(date, id) {
 
-    const rdvs =
-        await chargerRdvJour(date);
+    const docSnap =
+        await getDoc(
+            doc(
+                db,
+                "rdvs",
+                id
+            )
+        );
 
-    const rdv =
-        rdvs.find(r => r.id === id);
+    if (!docSnap.exists()) {
+        return;
+    }
 
-    if (!rdv) {return;}
+    const rdv = {
+        id,
+        ...docSnap.data()
+    };
 
     ouvrirRdv(date, rdv);
 
