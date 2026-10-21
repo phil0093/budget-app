@@ -449,6 +449,9 @@ window.modifierRdvCalendrier = async function(date, id) {
         return;
     }
 
+    rdv.dateStockage =
+        rdv.dateDebut || date;
+    
     ouvrirRdv(date, rdv);
 
 };
@@ -622,7 +625,7 @@ window.ouvrirRdv = function(date, rdv = null) {
                     <button
                         onclick="
                             sauverRdv(
-                                '${date}',
+                                '${rdv?.dateStockage || date}',
                                 '${rdv?.id || ""}'
                             )
                         ">
