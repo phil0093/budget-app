@@ -250,20 +250,9 @@ async function chargerRdvsCalendrier() {
             formatDateLocale(dateCourante);
 
         const rdvs =
-            tousLesRdvs.filter(rdv => {
-        
-            const debut =
-                rdv.dateDebut || rdv.date;
-    
-            const fin =
-                rdv.dateFin || rdv.date;
-    
-            return (
-                dateIso >= debut &&
-                dateIso <= fin
+            tousLesRdvs.filter(rdv =>
+                afficherSurJour(rdv, dateIso)
             );
-    
-        });
 
         rdvs.sort((a, b) => a.heureDebut.localeCompare(b.heureDebut));
 
@@ -523,9 +512,46 @@ window.ouvrirRdv = function(date, rdv = null) {
                     value="${rdv?.heureFin || ""}">
 
                 <label>
+                    Récurrence
+                </label>
+                
+                <select id="rdvRecurrence">
+                
+                    <option value=""
+                        ${!rdv?.recurrence ? "selected" : ""}>
+                        Aucune
+                    </option>
+                
+                    <option value="hebdomadaire"
+                        ${rdv?.recurrence === "hebdomadaire" ? "selected" : ""}>
+                        Hebdomadaire
+                    </option>
+                
+                    <option value="mensuelle"
+                        ${rdv?.recurrence === "mensuelle" ? "selected" : ""}>
+                        Mensuelle
+                    </option>
+                
+                    <option value="annuelle"
+                        ${rdv?.recurrence === "annuelle" ? "selected" : ""}>
+                        Annuelle
+                    </option>
+                
+                </select>
+                
+                <label>
+                    Fin de récurrence
+                </label>
+                
+                <input
+                    type="date"
+                    id="rdvFinRecurrence"
+                    value="${rdv?.finRecurrence || ""}">
+                
+                <label>
                     Lieu
                 </label>
-
+                
                 <input
                     id="rdvLieu"
                     value="${rdv?.lieu || ""}">
@@ -642,6 +668,12 @@ window.sauverRdv = async function(date, id="") {
     const heureFin =
         document.getElementById("rdvHeureFin").value;
 
+    const recurrence =
+        document.getElementById("rdvRecurrence").value;
+    
+    const finRecurrence =
+        document.getElementById("rdvFinRecurrence").value;
+    
     if (!nom) {
         alert("Le nom du rendez-vous est obligatoire.");
 
@@ -704,6 +736,8 @@ window.sauverRdv = async function(date, id="") {
         heureDebut,
         dateFin,
         heureFin,
+        recurrence,
+        finRecurrence,
         lieu: document.getElementById("rdvLieu").value,
         participants
     };
@@ -719,6 +753,70 @@ window.sauverRdv = async function(date, id="") {
     dessinerCalendrier();
 
 };
+
+function afficherSurJour(rdv, dateIso) {
+
+    const debut =
+        rdv.dateDebut ||
+        rdv.date;
+
+    const fin =
+        rdv.dateFin ||
+        rdv.date;
+
+    if (dateIso >= debut && dateIso <= fin) {
+        return true;
+    }
+
+    if (!rdv.recurrence) {
+        return false;
+    }
+
+    if (rdv.finRecurrence && dateIso > rdv.finRecurrence) {
+        return false;
+    }
+
+    const dateDebutObj =
+        new Date(debut);
+
+    const dateJourObj =
+        new Date(dateIso);
+
+    switch (rdv.recurrence) {
+
+        case "hebdomadaire":
+
+            return (
+                dateJourObj >= dateDebutObj &&
+                dateJourObj.getDay() ===
+                dateDebutObj.getDay()
+            );
+
+        case "mensuelle":
+
+            return (
+                dateJourObj >= dateDebutObj &&
+                dateJourObj.getDate() ===
+                dateDebutObj.getDate()
+            );
+
+        case "annuelle":
+
+            return (
+                dateJourObj >= dateDebutObj &&
+                dateJourObj.getDate() ===
+                    dateDebutObj.getDate() &&
+                dateJourObj.getMonth() ===
+                    dateDebutObj.getMonth()
+            );
+
+        default:
+
+            return false;
+
+    }
+
+}
 
 window.supprimerRdvCalendrier = async function(date, id) {
 
