@@ -350,8 +350,21 @@ function couleurRdv(rdv) {
 
 window.afficherTousLesRdvs = async function(date) {
 
+    const rdvsMois =
+        await chargerRdvsMois();
+    
+    const tousLesRdvs =
+        Object.values(rdvsMois)
+        .flat();
+    
     const rdvs =
-        await chargerRdvJour(date);
+        tousLesRdvs.filter(rdv =>
+            afficherSurJour(
+                rdv,
+                date
+            )
+        );
+
 
     rdvs.sort((a, b) =>a.heureDebut.localeCompare(b.heureDebut));
 
@@ -420,23 +433,21 @@ window.afficherTousLesRdvs = async function(date) {
 
 window.modifierRdvCalendrier = async function(date, id) {
 
-    const docSnap =
-        await getDoc(
-            doc(
-                db,
-                "rdvs",
-                id
-            )
+    const rdvsMois =
+        await chargerRdvsMois();
+
+    const tousLesRdvs =
+        Object.values(rdvsMois)
+        .flat();
+
+    const rdv =
+        tousLesRdvs.find(
+            r => r.id === id
         );
 
-    if (!docSnap.exists()) {
+    if (!rdv) {
         return;
     }
-
-    const rdv = {
-        id,
-        ...docSnap.data()
-    };
 
     ouvrirRdv(date, rdv);
 
@@ -794,13 +805,23 @@ function afficherSurJour(rdv, dateIso) {
 
     switch (rdv.recurrence) {
 
-        case "hebdomadaire":
+        case "hebdomadaire": {
 
+            const difference =
+                Math.floor(
+                    (
+                        dateJourObj -
+                        dateDebutObj
+                    ) /
+                    (1000 * 60 * 60 * 24)
+                );
+        
             return (
-                dateJourObj >= dateDebutObj &&
-                dateJourObj.getDay() ===
-                dateDebutObj.getDay()
+                difference >= 0 &&
+                difference % 7 === 0
             );
+        
+        }
 
         case "mensuelle":
 
