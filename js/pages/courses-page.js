@@ -9,9 +9,7 @@ import {masquerZones} from "../utils.js";
 let listesCourses = [];
 let listeCourseActive = "";
 
-window.afficherCourses =
-async function() {
-
+window.afficherCourses = async function() {
     document
         .getElementById("sidebar")
         .classList
@@ -23,14 +21,11 @@ async function() {
         "budgetActions"
     );
     
-    listesCourses =
-        await chargerListesCourses();
+    listesCourses = await chargerListesCourses();
 
     if (listesCourses.length === 0) {
 
-        await sauvegarderListeCourses(
-            "Ma liste",
-            Array(20).fill().map(
+        await sauvegarderListeCourses("Ma liste", Array(20).fill().map(
                 () => ({
                     texte: "",
                     coche: false
@@ -38,17 +33,11 @@ async function() {
             )
         );
 
-
-        listesCourses =
-            await chargerListesCourses();
-
+        listesCourses = await chargerListesCourses();
     }
 
     if (!listeCourseActive) {
-
-        listeCourseActive =
-            listesCourses[0].nom;
-
+        listeCourseActive = listesCourses[0].nom;
     }
 
     afficherListeCourses();
@@ -57,10 +46,9 @@ async function() {
 
 function afficherListeCourses() {
 
-    const liste =
-        listesCourses.find(
-            x => x.nom === listeCourseActive
-        );
+    const liste = 
+        listesCourses.find(x => x.nom === listeCourseActive);
+    
     if (!liste) {
         return;
     }
@@ -164,113 +152,119 @@ function afficherListeCourses() {
     `;
 }
 
-window.toggleCourse =
-async function(index) {
+window.toggleCourse = async function(index) {
 
     const checkbox =
-        document.getElementById(
-            `check-${index}`
-        );
+        document.getElementById(`check-${index}`);
 
     const zone =
-        document.getElementById(
-            `ligne-${index}`
-        );
+        document.getElementById(`ligne-${index}`);
 
-    zone.classList.toggle(
-        "courseCochee",
-        checkbox.checked
-    );
+    zone.classList.toggle("courseCochee", checkbox.checked);
 
     await sauvegarderCourses();
+    
+    listesCourses = await chargerListesCourses();
+    afficherListeCourses();
+    
     await verifierSuppressionAuto();
 
 };
 
-window.gererEntreeCourse =
-function(event, index) {
+window.gererEntreeCourse = function(event, index) {
 
-    if (event.key !== "Enter") {
+    const zone =
+        document.getElementById(`ligne-${index}`);
+
+    if (event.key === "Enter") {
+
+        event.preventDefault();
+
+        const lignes =
+            document.querySelectorAll("[id^='ligne-']");
+
+        const nouveauIndex =
+            lignes.length;
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "ligneCourse";
+
+        div.innerHTML = `
+            <textarea
+                id="ligne-${nouveauIndex}"
+                oninput="majAffichageLigne(${nouveauIndex})"
+                onblur="sauvegarderCourses()"
+                onkeydown="
+                    gererEntreeCourse(
+                        event,
+                        ${nouveauIndex}
+                    )
+                "
+            ></textarea>
+        `;
+
+        zone
+            .closest(".ligneCourse")
+            .after(div);
+
+        document
+            .getElementById(
+                `ligne-${nouveauIndex}`
+            )
+            .focus();
+
         return;
     }
 
-    event.preventDefault();
+    if (event.key === "Backspace" && zone.value.trim() === "") {
 
-    const zone =
-        document.getElementById(
-            `ligne-${index}`
-        );
+        const ligne =
+            zone.closest(".ligneCourse");
 
-    const lignes =
-        document.querySelectorAll(
-            "[id^='ligne-']"
-        );
+        const toutesLesLignes =
+            document.querySelectorAll(".ligneCourse");
 
-    const nouveauIndex =
-        lignes.length;
+        if (toutesLesLignes.length <= 1) {
+            return;
+        }
 
-    const div =
-        document.createElement("div");
+        event.preventDefault();
 
-    div.className =
-        "ligneCourse";
+        const precedente =
+            ligne.previousElementSibling;
 
-    div.innerHTML = `
+        ligne.remove();
 
-        <textarea
-            id="ligne-${nouveauIndex}"
-            oninput="majAffichageLigne(${nouveauIndex})"
-            onblur="sauvegarderCourses()"
-            onkeydown="
-                gererEntreeCourse(
-                    event,
-                    ${nouveauIndex}
-                )
-            "></textarea>
-    
-    `;
+        if (precedente && precedente.querySelector("textarea")) {
+            precedente
+                .querySelector("textarea")
+                .focus();
+        }
 
-    zone
-        .closest(".ligneCourse")
-        .after(div);
-
-    document
-        .getElementById(
-            `ligne-${nouveauIndex}`
-        )
-        .focus();
+        sauvegarderCourses();
+    }
 
 };
 
-window.changerListe =
-function(nom) {
+window.changerListe = function(nom) {
 
-    listeCourseActive =
-        nom;
+    listeCourseActive = nom;
 
     afficherListeCourses();
 
 };
 
-window.nouvelleListeCourses =
-async function() {
+window.nouvelleListeCourses = async function() {
 
     const nom =
-        prompt(
-            "Nom de la liste"
-        );
+        prompt("Nom de la liste");
 
     if (!nom) return;
 
-    await sauvegarderListeCourses(
-        nom,
-        [
-            {
-                texte: "",
-                coche: false
-            }
-        ]
-    );
+    await sauvegarderListeCourses(nom, [{texte: "", coche: false}]);
     
     listesCourses =
         await chargerListesCourses();
@@ -282,21 +276,16 @@ async function() {
 
 };
 
-window.sauvegarderCourses =
-async function() {
+window.sauvegarderCourses = async function() {
 
     const lignes = [];
 
     document
-        .querySelectorAll(
-            "[id^='ligne-']"
-        )
+        .querySelectorAll("[id^='ligne-']")
         .forEach((zone, index) => {
 
             const checkbox =
-                document.getElementById(
-                    `check-${index}`
-                );
+                document.getElementById(`check-${index}`);
 
             lignes.push({
                 texte: zone.value,
@@ -308,71 +297,52 @@ async function() {
 
         });
 
-    await sauvegarderListeCourses(
-        listeCourseActive,
-        lignes
-    );
+    await sauvegarderListeCourses(listeCourseActive, lignes);
+    listesCourses = await chargerListesCourses();
 
 };
 
 window.majAffichageLigne = function(index) {
 
     const zone =
-        document.getElementById(
-            `ligne-${index}`
-        );
+        document.getElementById(`ligne-${index}`;
 
     const ligne =
         zone.closest(".ligneCourse");
 
     let checkbox =
-        document.getElementById(
-            `check-${index}`
-        );
+        document.getElementById(`check-${index}`);
 
     const texte =
         zone.value.trim();
 
     if (texte !== "" && !checkbox) {
 
-        checkbox =
-            document.createElement(
-                "input"
-            );
+        checkbox = document.createElement("input");
 
         checkbox.type = "checkbox";
 
-        checkbox.id =
-            `check-${index}`;
+        checkbox.id = `check-${index}`;
 
-        checkbox.onchange =
-            () => toggleCourse(index);
+        checkbox.onchange = () => toggleCourse(index);
 
-        ligne.insertBefore(
-            checkbox,
-            zone
-        );
+        ligne.insertBefore(checkbox, zone);
 
     }
 
     if (texte === "" && checkbox) {
-
         checkbox.remove();
-
     }
 
     sauvegarderCourses();
 };
 
-window.supprimerListeActive =
-async function(confirmer = true) {
+window.supprimerListeActive = async function(confirmer = true) {
 
     if (confirmer) {
 
         const confirmation =
-            confirm(
-                `Supprimer la liste "${listeCourseActive}" ?`
-            );
+            confirm(`Supprimer la liste "${listeCourseActive}" ?`);
 
         if (!confirmation) {
             return;
@@ -380,32 +350,21 @@ async function(confirmer = true) {
 
     }
 
-    await supprimerListeCourses(
-        listeCourseActive
-    );
+    await supprimerListeCourses(listeCourseActive);
 
     listesCourses =
         await chargerListesCourses();
 
     if (listesCourses.length === 0) {
 
-        await sauvegarderListeCourses(
-            "Ma liste",
-            [
-                {
-                    texte: "",
-                    coche: false
-                }
-            ]
-        );
+        await sauvegarderListeCourses("Ma liste", [{texte: "", coche: false}]);
 
         listesCourses =
             await chargerListesCourses();
 
     }
 
-    listeCourseActive =
-        listesCourses[0].nom;
+    listeCourseActive =listesCourses[0].nom;
 
     afficherListeCourses();
 
@@ -416,9 +375,7 @@ async function verifierSuppressionAuto() {
     const lignes = [];
 
     document
-        .querySelectorAll(
-            "[id^='ligne-']"
-        )
+        .querySelectorAll("[id^='ligne-']")
         .forEach((zone, index) => {
 
             const texte =
@@ -429,14 +386,9 @@ async function verifierSuppressionAuto() {
             }
 
             const checkbox =
-                document.getElementById(
-                    `check-${index}`
-                );
+                document.getElementById(`check-${index}`);
 
-            lignes.push(
-                checkbox &&
-                checkbox.checked
-            );
+            lignes.push(checkbox && checkbox.checked);
 
         });
 
@@ -445,18 +397,14 @@ async function verifierSuppressionAuto() {
     }
 
     const toutesCochees =
-        lignes.every(
-            x => x === true
-        );
+        lignes.every(x => x === true);
 
     if (!toutesCochees) {
         return;
     }
 
     const confirmation =
-        confirm(
-            "Tous les articles sont cochés.\n\nSupprimer la liste ?"
-        );
+        confirm("Tous les articles sont cochés.\n\nSupprimer la liste ?");
 
     if (!confirmation) {
         return;
