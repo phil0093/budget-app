@@ -331,6 +331,24 @@ body {
     padding: 8px 0;
 }
 
+.niveau-1 {
+
+    padding-left: 25px;
+
+}
+
+.niveau-1 textarea {
+
+    font-size: 0.9em;
+
+}
+
+.niveau-1 input[type="checkbox"] {
+
+    margin-left: 25px;
+
+}
+
 .selectListeCourses {
 
     width: 100%;
