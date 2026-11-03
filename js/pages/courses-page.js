@@ -75,10 +75,15 @@ function afficherListeCourses() {
 
             const vide =
                 texte.trim() === "";
+            
+            const niveau =
+                texte.startsWith("    ")
+                    ? 1
+                    : 0;
 
             return `
 
-                <div class="ligneCourse">
+                <div class="ligneCourse niveau-${niveau}">
 
                     ${
                         !vide
@@ -176,6 +181,16 @@ window.gererEntreeCourse = function(event, index) {
     const zone =
         document.getElementById(`ligne-${index}`);
 
+    if (event.key === " " && zone.value === "") {
+    
+        event.preventDefault();
+    
+        zone.value = "    ";
+    
+        return;
+    
+    }
+    
     if (event.key === "Enter") {
 
         event.preventDefault();
