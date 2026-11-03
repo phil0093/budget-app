@@ -77,13 +77,10 @@ function afficherListeCourses() {
                 texte.trim() === "";
             
             const niveau =
-                texte.startsWith("    ")
-                    ? 1
-                    : 0;
-
+                ligne?.niveau || 0;
             return `
 
-                <div class="ligneCourse niveau-${niveau}">
+                <div class="ligneCourse" style="padding-left: ${niveau * 25}px;">
 
                     ${
                         !vide
@@ -97,11 +94,15 @@ function afficherListeCourses() {
                         : ""
                     }
 
-                    <textarea
+                   <textarea
                         id="ligne-${index}"
+                        data-niveau="${niveau}"
                         class="
                             ${vide ? "ligneVide" : ""}
                             ${coche ? "courseCochee" : ""}
+                        "
+                        style="
+                            font-size:${niveau ? "0.9em" : "1em"};
                         "
                         oninput="majAffichageLigne(${index})"
                         onblur="sauvegarderCourses()"
@@ -185,8 +186,15 @@ window.gererEntreeCourse = function(event, index) {
     
         event.preventDefault();
     
-        zone.value = "    ";
-    
+        zone.dataset.niveau = "1";
+
+        zone.closest(".ligneCourse").style.paddingLeft = "25px";
+        
+        zone.style.fontSize = "0.9em";
+
+        majAffichageLigne(index);
+        sauvegarderCourses();
+        
         return;
     
     }
@@ -307,7 +315,11 @@ window.sauvegarderCourses = async function() {
                 coche:
                     checkbox
                     ? checkbox.checked
-                    : false
+                    : false,
+                niveau:
+                    parseInt(
+                        zone.dataset.niveau || 0
+                    )
             });
 
         });
