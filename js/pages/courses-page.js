@@ -305,7 +305,7 @@ window.sauvegarderCourses = async function() {
 window.majAffichageLigne = function(index) {
 
     const zone =
-        document.getElementById(`ligne-${index}`;
+        document.getElementById(`ligne-${index}`);
 
     const ligne =
         zone.closest(".ligneCourse");
