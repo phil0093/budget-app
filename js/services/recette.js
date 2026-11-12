@@ -41,7 +41,14 @@ export async function ajouterRecette() {
             portions: "",
             tempsPreparation: "",
             tempsCuisson: "",
-            ingredients: "",
+        
+            ingredients: [
+                {
+                    quantite: "",
+                    ingredient: ""
+                }
+            ],
+        
             etapes: ""
         }
     );
