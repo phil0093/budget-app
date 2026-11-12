@@ -852,3 +852,24 @@ body {
     width: 100%;
 
 }
+.ligneIngredient {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-bottom: 8px;
+
+}
+
+.ingredientQuantite {
+
+    width: 120px;
+
+}
+
+.ingredientNom {
+
+    flex: 1;
+
+}
