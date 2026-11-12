@@ -53,6 +53,58 @@ function dessinerRecettes() {
                     "
                 >
 
+                <div class="infosRecette">
+
+                    <div class="infoRecette">
+                        👥
+                        <input
+                            type="number"
+                            min="1"
+                            id="portions-${recette.id}"
+                            value="${recette.portions || ""}"
+                            placeholder="Portions"
+                            onblur="
+                                sauverRecette(
+                                    '${recette.id}'
+                                )
+                            "
+                        >
+                    </div>
+                
+                    <div class="infoRecette">
+                        ⏱️
+                        <input
+                            type="number"
+                            min="0"
+                            id="prep-${recette.id}"
+                            value="${recette.tempsPreparation || ""}"
+                            placeholder="Préparation"
+                            onblur="
+                                sauverRecette(
+                                    '${recette.id}'
+                                )
+                            "
+                        >
+                    </div>
+                
+                    <div class="infoRecette">
+                        🔥
+                        <input
+                            type="number"
+                            min="0"
+                            id="cuisson-${recette.id}"
+                            value="${recette.tempsCuisson || ""}"
+                            placeholder="Cuisson"
+                            onblur="
+                                sauverRecette(
+                                    '${recette.id}'
+                                )
+                            "
+                        >
+                    </div>
+                
+                </div>
+
                 <h3>
                     🛒 Ingrédients
                 </h3>
@@ -141,6 +193,21 @@ async function(id) {
                     `nom-${id}`
                 ).value,
 
+            portions:
+                document.getElementById(
+                    `portions-${id}`
+                ).value,
+            
+            tempsPreparation:
+                document.getElementById(
+                    `prep-${id}`
+                ).value,
+            
+            tempsCuisson:
+                document.getElementById(
+                    `cuisson-${id}`
+                ).value,
+            
             ingredients:
                 document.getElementById(
                     `ingredients-${id}`
