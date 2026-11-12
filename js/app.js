@@ -3,6 +3,7 @@ import "./pages/courses-page.js";
 import "./pages/todo-page.js";
 import "./pages/calendrier-page.js";
 import "./pages/budget-page.js";
+import "./pages/notes-page.js";
 import {masquerZones} from "./utils.js";
 import {initialiserNotifications} from "./services/notifications.js";
 
