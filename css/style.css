@@ -825,3 +825,30 @@ body {
     margin-bottom: 15px;
 
 }
+.infosRecette {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-bottom: 15px;
+
+}
+
+.infoRecette {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    flex: 1;
+
+}
+
+.infoRecette input {
+
+    width: 100%;
+
+}
