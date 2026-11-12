@@ -788,3 +788,40 @@ body {
     margin-top: 10px;
 
 }
+.carteRecette {
+
+    background: white;
+
+    border-radius: 10px;
+
+    padding: 15px;
+
+    margin-bottom: 20px;
+
+}
+
+.titreRecette {
+
+    width: 100%;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    margin-bottom: 15px;
+
+}
+
+.zoneRecette {
+
+    width: 100%;
+
+    min-height: 120px;
+
+    box-sizing: border-box;
+
+    resize: vertical;
+
+    margin-bottom: 15px;
+
+}
