@@ -39,14 +39,18 @@ function dessinerRecettes() {
     const html =
         recettes.map(recette => {
 
-            const ingredients =
-                (recette.ingredients?.length
-                    ? recette.ingredients
-                    : [{
-                        quantite: "",
-                        ingredient: ""
-                    }]
+           const ingredientsTableau =
+                Array.isArray(
+                    recette.ingredients
                 )
+                ? recette.ingredients
+                : [{
+                    quantite: "",
+                    ingredient: ""
+                }];
+            
+            const ingredients =
+                ingredientsTableau
                 .map((ing, index) => `
 
                     <div
