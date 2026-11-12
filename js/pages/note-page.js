@@ -4,7 +4,7 @@ import {
     modifierNote,
     supprimerNote
 }
-from "../services/notes.js";
+from "../services/note.js";
 
 import {
     masquerZones
