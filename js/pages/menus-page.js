@@ -6,10 +6,17 @@ import {
 from "../services/menus.js";
 
 import {
+    chargerRecettes
+}
+from "../services/recette.js";
+
+import {
     formatDateLocale,
     masquerZones
 }
 from "../utils.js";
+
+let recettes = [];
 
 window.afficherMenus = async function() {
     
@@ -29,6 +36,9 @@ window.afficherMenus = async function() {
     const menus =
         await chargerMenus();
 
+    recettes =
+        await chargerRecettes();
+    
     const jours = [];
 
     const date =
@@ -67,18 +77,41 @@ window.afficherMenus = async function() {
             
                 <textarea
                     id="midi-${dateIso}"
+                    oninput="
+                        rechercherRecettes(
+                            this,
+                            '${dateIso}',
+                            'midi'
+                        )
+                    "
                     onblur="sauvegarderMenuLigne('${dateIso}')"
                 >${menu.midi || ""}</textarea>
-            
+                <div
+                    id="suggestions-midi-${dateIso}"
+                    class="suggestionsRecettes"
+                ></div>
+
             </td>
             
             <td>
-            
+
                 <textarea
                     id="soir-${dateIso}"
+                    oninput="
+                        rechercherRecettes(
+                            this,
+                            '${dateIso}',
+                            'soir'
+                        )
+                    "
                     onblur="sauvegarderMenuLigne('${dateIso}')"
                 >${menu.soir || ""}</textarea>
-            
+
+                <div
+                    id="suggestions-soir-${dateIso}"
+                    class="suggestionsRecettes"
+                ></div>
+
             </td>
         
         </tr>
@@ -115,6 +148,74 @@ window.afficherMenus = async function() {
         
         `;
     
+};
+
+window.rechercherRecettes =
+function(zone, date, repas) {
+
+    const lignes =
+        zone.value
+            .split("\n");
+
+    const texte =
+        lignes[
+            lignes.length - 1
+        ]
+        .trim()
+        .toLowerCase();
+
+    const suggestions =
+        recettes.filter(r =>
+    
+            r.nom &&
+            texte.length >= 2 &&
+    
+            r.nom
+                .toLowerCase()
+                .includes(texte)
+    
+        );
+
+    const div =
+        document.getElementById(
+            `suggestions-${repas}-${date}`
+        );
+
+    if (
+        !texte ||
+        suggestions.length === 0
+    ) {
+
+        div.innerHTML = "";
+
+        return;
+
+    }
+
+    div.innerHTML =
+        suggestions
+            .slice(0, 5)
+            .map(r => `
+
+                <div
+                    class="suggestionRecette"
+                    onclick="
+                        choisirRecette(
+                            '${date}',
+                            '${repas}',
+                            '${r.nom}',
+                            '${r.id}'
+                        )
+                    "
+                >
+
+                    🍝 ${r.nom}
+
+                </div>
+
+            `)
+            .join("");
+
 };
 
 window.sauvegarderMenuLigne =async function(date) {
