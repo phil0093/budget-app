@@ -62,22 +62,12 @@ function dessinerRecettes() {
                             class="ingredientQuantite"
                             placeholder="Qté"
                             value="${ing.quantite || ""}"
-                            onblur="
-                                sauverRecette(
-                                    '${recette.id}'
-                                )
-                            "
                         >
 
                         <input
                             class="ingredientNom"
                             placeholder="Ingrédient"
                             value="${ing.ingredient || ""}"
-                            onblur="
-                                sauverRecette(
-                                    '${recette.id}'
-                                )
-                            "
                         >
 
                     </div>
@@ -93,20 +83,10 @@ function dessinerRecettes() {
                         id="nom-${recette.id}"
                         value="${recette.nom || ""}"
                         placeholder="Nom de la recette"
-                        onblur="
-                            sauverRecette(
-                                '${recette.id}'
-                            )
-                        "
                     >
 
                     <select
                         id="type-${recette.id}"
-                        onblur="
-                            sauverRecette(
-                                '${recette.id}'
-                            )
-                        "
                     >
 
                         <option
@@ -164,11 +144,6 @@ function dessinerRecettes() {
                                 id="portions-${recette.id}"
                                 value="${recette.portions || ""}"
                                 placeholder="Portions"
-                                onblur="
-                                    sauverRecette(
-                                        '${recette.id}'
-                                    )
-                                "
                             >
 
                         </div>
@@ -183,11 +158,6 @@ function dessinerRecettes() {
                                 id="prep-${recette.id}"
                                 value="${recette.tempsPreparation || ""}"
                                 placeholder="Préparation"
-                                onblur="
-                                    sauverRecette(
-                                        '${recette.id}'
-                                    )
-                                "
                             >
 
                         </div>
@@ -202,11 +172,6 @@ function dessinerRecettes() {
                                 id="cuisson-${recette.id}"
                                 value="${recette.tempsCuisson || ""}"
                                 placeholder="Cuisson"
-                                onblur="
-                                    sauverRecette(
-                                        '${recette.id}'
-                                    )
-                                "
                             >
 
                         </div>
@@ -236,22 +201,34 @@ function dessinerRecettes() {
                     <textarea
                         class="zoneRecette"
                         id="etapes-${recette.id}"
-                        onblur="
-                            sauverRecette(
-                                '${recette.id}'
-                            )
-                        "
+
                     >${recette.etapes || ""}</textarea>
 
-                    <button
-                        onclick="
-                            supprimerRecetteInterface(
-                                '${recette.id}'
-                            )
-                        "
-                    >
-                        🗑️ Supprimer
-                    </button>
+                    <br>
+
+                        <button
+                            onclick="
+                                sauverRecette(
+                                    '${recette.id}'
+                                )
+                            "
+                        >
+                        
+                            💾 Enregistrer
+                        
+                        </button>
+                        
+                        <button
+                            onclick="
+                                supprimerRecetteInterface(
+                                    '${recette.id}'
+                                )
+                            "
+                        >
+                        
+                            🗑️ Supprimer
+                        
+                        </button>
 
                 </div>
 
@@ -304,7 +281,11 @@ async function(id) {
     }
 
     recette.ingredients =
-        recette.ingredients || [];
+        Array.isArray(
+            recette.ingredients
+        )
+            ? recette.ingredients
+            : [];
 
     recette.ingredients.push({
         quantite: "",
@@ -333,30 +314,30 @@ async function(id) {
         document.getElementById(
             `nom-${id}`
         ).value.trim();
-
+    
     const type =
         document.getElementById(
             `type-${id}`
-        ).value.trim();
+        ).value;
 
     if (!nom) {
 
         alert(
             "Le nom de la recette est obligatoire."
         );
-
+    
         return;
-
+    
     }
-
+    
     if (!type) {
-
+    
         alert(
             "Le type de recette est obligatoire."
         );
-
+    
         return;
-
+    
     }
 
     const ingredients = [];
