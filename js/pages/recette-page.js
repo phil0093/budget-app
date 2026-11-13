@@ -12,6 +12,14 @@ import {
 from "../utils.js";
 
 let recettes = [];
+let typesFiltres =
+    [
+        "Entrée",
+        "Plat",
+        "Dessert",
+        "Apéritif",
+        "Autre"
+    ];
 let recettesOuvertes =
     new Set();
 
@@ -36,10 +44,50 @@ async function() {
 
 };
 
+window.toggleFiltreRecette =
+function(type) {
+
+    if (
+        typesFiltres.includes(type)
+    ) {
+
+        typesFiltres =
+            typesFiltres.filter(
+                t => t !== type
+            );
+
+    }
+    else {
+
+        typesFiltres.push(type);
+
+    }
+
+    dessinerRecettes();
+
+};
+
 function dessinerRecettes() {
 
+    const recettesFiltrees =
+        recettes
+            .filter(
+                recette =>
+                    typesFiltres.includes(
+                        recette.type
+                    )
+            )
+            .sort(
+                (a, b) =>
+                    (a.nom || "")
+                    .localeCompare(
+                        b.nom || "",
+                        "fr"
+                    )
+            );
+    
     const html =
-        recettes.map(recette => {
+        recettesFiltrees.map(recette => {
 
             const ouverte =
                 recettesOuvertes.has(
@@ -258,14 +306,58 @@ function dessinerRecettes() {
 
         }).join("");
 
+    const filtresHtml =
+        [
+            "Entrée",
+            "Plat",
+            "Dessert",
+            "Apéritif",
+            "Autre"
+        ]
+    
+        .map(type => `
+    
+            <label
+                class="filtreRecette"
+            >
+    
+                <input
+                    type="checkbox"
+    
+                    ${
+                        typesFiltres.includes(type)
+                            ? "checked"
+                            : ""
+                    }
+    
+                    onchange="
+                        toggleFiltreRecette(
+                            '${type}'
+                        )
+                    "
+                >
+    
+                ${type}
+    
+            </label>
+    
+        `)
+        .join("");
+    
     document.getElementById(
         "contenu"
     ).innerHTML = `
 
-        <h2>
+       <h2>
             🍝 Recettes
         </h2>
-
+        
+        <div class="zoneFiltresRecettes">
+        
+            ${filtresHtml}
+        
+        </div>
+        
         <button
             onclick="creerRecette()"
         >
