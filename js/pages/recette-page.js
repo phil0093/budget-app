@@ -73,18 +73,29 @@ function dessinerRecettes() {
         recettes
             .filter(
                 recette =>
+                    !recette.type ||
                     typesFiltres.includes(
                         recette.type
                     )
             )
-            .sort(
-                (a, b) =>
-                    (a.nom || "")
-                    .localeCompare(
-                        b.nom || "",
-                        "fr"
-                    )
-            );
+            .sort((a, b) => {
+
+                if (!a.type && b.type) {
+                    return -1;
+                }
+            
+                if (a.type && !b.type) {
+                    return 1;
+                }
+            
+                return (
+                    a.nom || ""
+                ).localeCompare(
+                    b.nom || "",
+                    "fr"
+                );
+            
+            })
     
     const html =
         recettesFiltrees.map(recette => {
