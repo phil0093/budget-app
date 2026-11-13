@@ -100,6 +100,51 @@ function dessinerRecettes() {
                         "
                     >
 
+                    <select
+                        id="type-${recette.id}"
+                        onblur="
+                            sauverRecette(
+                                '${recette.id}'
+                            )
+                        "
+                    >
+                    
+                        <option
+                            value="Entrée"
+                            ${recette.type === "Entrée" ? "selected" : ""}
+                        >
+                            Entrée
+                        </option>
+                    
+                        <option
+                            value="Plat"
+                            ${recette.type === "Plat" ? "selected" : ""}
+                        >
+                            Plat
+                        </option>
+                    
+                        <option
+                            value="Dessert"
+                            ${recette.type === "Dessert" ? "selected" : ""}
+                        >
+                            Dessert
+                        </option>
+                    
+                        <option
+                            value="Apéritif"
+                            ${recette.type === "Apéritif" ? "selected" : ""}
+                        >
+                            Apéritif
+                        </option>
+                    
+                        <option
+                            value="Autre"
+                            ${recette.type === "Autre" ? "selected" : ""}
+                        >
+                            Autre
+                        </option>
+                    
+                    </select>
                     <div class="infosRecette">
 
                         <div class="infoRecette">
@@ -314,6 +359,11 @@ async function(id) {
                     `nom-${id}`
                 ).value,
 
+            type:
+                document.getElementById(
+                    `type-${id}`
+                ).value,
+            
             portions:
                 document.getElementById(
                     `portions-${id}`
