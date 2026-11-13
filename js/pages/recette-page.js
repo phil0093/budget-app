@@ -382,11 +382,29 @@ function dessinerRecettes() {
 }
 
 window.toggleRecette =
-function(id) {
+async function(id) {
 
     if (
         recettesOuvertes.has(id)
     ) {
+
+        const recette =
+            recettes.find(
+                r => r.id === id
+            );
+
+        if (
+            recette &&
+            !recette.nom &&
+            !recette.type
+        ) {
+
+            await supprimerRecette(id);
+
+            recettes =
+                await chargerRecettes();
+
+        }
 
         recettesOuvertes.delete(id);
 
@@ -408,7 +426,22 @@ async function() {
 
     recettes =
         await chargerRecettes();
-
+    
+    const nouvelleRecette =
+        recettes.find(
+            r =>
+                !r.nom &&
+                !r.type
+        );
+    
+    if (nouvelleRecette) {
+    
+        recettesOuvertes.add(
+            nouvelleRecette.id
+        );
+    
+    }
+    
     dessinerRecettes();
 
 };
