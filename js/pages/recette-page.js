@@ -12,6 +12,8 @@ import {
 from "../utils.js";
 
 let recettes = [];
+let recettesOuvertes =
+    new Set();
 
 window.afficherRecettes =
 async function() {
@@ -39,16 +41,21 @@ function dessinerRecettes() {
     const html =
         recettes.map(recette => {
 
-           const ingredientsTableau =
+            const ouverte =
+                recettesOuvertes.has(
+                    recette.id
+                );
+
+            const ingredientsTableau =
                 Array.isArray(
                     recette.ingredients
                 )
-                ? recette.ingredients
-                : [{
-                    quantite: "",
-                    ingredient: ""
-                }];
-            
+                    ? recette.ingredients
+                    : [{
+                        quantite: "",
+                        ingredient: ""
+                    }];
+
             const ingredients =
                 ingredientsTableau
                 .map((ing, index) => `
@@ -78,133 +85,150 @@ function dessinerRecettes() {
 
                 <div class="carteRecette">
 
-                    <input
-                        class="titreRecette"
-                        id="nom-${recette.id}"
-                        value="${recette.nom || ""}"
-                        placeholder="Nom de la recette"
-                    >
-
-                    <select
-                        id="type-${recette.id}"
-                    >
-
-                        <option
-                            value=""
-                            ${!recette.type ? "selected" : ""}
-                        >
-                            Choisir un type...
-                        </option>
-
-                        <option
-                            value="Entrée"
-                            ${recette.type === "Entrée" ? "selected" : ""}
-                        >
-                            Entrée
-                        </option>
-                    
-                        <option
-                            value="Plat"
-                            ${recette.type === "Plat" ? "selected" : ""}
-                        >
-                            Plat
-                        </option>
-                    
-                        <option
-                            value="Dessert"
-                            ${recette.type === "Dessert" ? "selected" : ""}
-                        >
-                            Dessert
-                        </option>
-                    
-                        <option
-                            value="Apéritif"
-                            ${recette.type === "Apéritif" ? "selected" : ""}
-                        >
-                            Apéritif
-                        </option>
-                    
-                        <option
-                            value="Autre"
-                            ${recette.type === "Autre" ? "selected" : ""}
-                        >
-                            Autre
-                        </option>
-                    
-                    </select>
-                    <div class="infosRecette">
-
-                        <div class="infoRecette">
-
-                            👥
-
-                            <input
-                                type="number"
-                                min="1"
-                                id="portions-${recette.id}"
-                                value="${recette.portions || ""}"
-                                placeholder="Portions"
-                            >
-
-                        </div>
-
-                        <div class="infoRecette">
-
-                            ⏱️
-
-                            <input
-                                type="number"
-                                min="0"
-                                id="prep-${recette.id}"
-                                value="${recette.tempsPreparation || ""}"
-                                placeholder="Préparation"
-                            >
-
-                        </div>
-
-                        <div class="infoRecette">
-
-                            🔥
-
-                            <input
-                                type="number"
-                                min="0"
-                                id="cuisson-${recette.id}"
-                                value="${recette.tempsCuisson || ""}"
-                                placeholder="Cuisson"
-                            >
-
-                        </div>
-
-                    </div>
-
-                    <h3>
-                        🛒 Ingrédients
-                    </h3>
-
-                    ${ingredients}
-
-                    <button
+                    <div
+                        class="enteteRecette"
                         onclick="
-                            ajouterIngredient(
+                            toggleRecette(
                                 '${recette.id}'
                             )
                         "
                     >
-                        ➕ Ingrédient
-                    </button>
 
-                    <h3>
-                        👨‍🍳 Étapes
-                    </h3>
+                        ${ouverte ? "▼" : "▶"}
 
-                    <textarea
-                        class="zoneRecette"
-                        id="etapes-${recette.id}"
+                        ${recette.nom || "Nouvelle recette"}
 
-                    >${recette.etapes || ""}</textarea>
+                    </div>
 
-                    <br>
+                    ${ouverte ? `
+
+                        <input
+                            class="titreRecette"
+                            id="nom-${recette.id}"
+                            value="${recette.nom || ""}"
+                            placeholder="Nom de la recette"
+                        >
+
+                        <select
+                            id="type-${recette.id}"
+                        >
+
+                            <option
+                                value=""
+                                ${!recette.type ? "selected" : ""}
+                            >
+                                Choisir un type...
+                            </option>
+
+                            <option
+                                value="Entrée"
+                                ${recette.type === "Entrée" ? "selected" : ""}
+                            >
+                                Entrée
+                            </option>
+
+                            <option
+                                value="Plat"
+                                ${recette.type === "Plat" ? "selected" : ""}
+                            >
+                                Plat
+                            </option>
+
+                            <option
+                                value="Dessert"
+                                ${recette.type === "Dessert" ? "selected" : ""}
+                            >
+                                Dessert
+                            </option>
+
+                            <option
+                                value="Apéritif"
+                                ${recette.type === "Apéritif" ? "selected" : ""}
+                            >
+                                Apéritif
+                            </option>
+
+                            <option
+                                value="Autre"
+                                ${recette.type === "Autre" ? "selected" : ""}
+                            >
+                                Autre
+                            </option>
+
+                        </select>
+
+                        <div class="infosRecette">
+
+                            <div class="infoRecette">
+
+                                👥
+
+                                <input
+                                    type="number"
+                                    min="1"
+                                    id="portions-${recette.id}"
+                                    value="${recette.portions || ""}"
+                                    placeholder="Portions"
+                                >
+
+                            </div>
+
+                            <div class="infoRecette">
+
+                                ⏱️
+
+                                <input
+                                    type="number"
+                                    min="0"
+                                    id="prep-${recette.id}"
+                                    value="${recette.tempsPreparation || ""}"
+                                    placeholder="Préparation"
+                                >
+
+                            </div>
+
+                            <div class="infoRecette">
+
+                                🔥
+
+                                <input
+                                    type="number"
+                                    min="0"
+                                    id="cuisson-${recette.id}"
+                                    value="${recette.tempsCuisson || ""}"
+                                    placeholder="Cuisson"
+                                >
+
+                            </div>
+
+                        </div>
+
+                        <h3>
+                            🛒 Ingrédients
+                        </h3>
+
+                        ${ingredients}
+
+                        <button
+                            onclick="
+                                ajouterIngredient(
+                                    '${recette.id}'
+                                )
+                            "
+                        >
+                            ➕ Ingrédient
+                        </button>
+
+                        <h3>
+                            👨‍🍳 Étapes
+                        </h3>
+
+                        <textarea
+                            class="zoneRecette"
+                            id="etapes-${recette.id}"
+                        >${recette.etapes || ""}</textarea>
+
+                        <br>
 
                         <button
                             onclick="
@@ -213,11 +237,9 @@ function dessinerRecettes() {
                                 )
                             "
                         >
-                        
                             💾 Enregistrer
-                        
                         </button>
-                        
+
                         <button
                             onclick="
                                 supprimerRecetteInterface(
@@ -225,10 +247,10 @@ function dessinerRecettes() {
                                 )
                             "
                         >
-                        
                             🗑️ Supprimer
-                        
                         </button>
+
+                    ` : ""}
 
                 </div>
 
@@ -255,6 +277,26 @@ function dessinerRecettes() {
     `;
 
 }
+
+window.toggleRecette =
+function(id) {
+
+    if (
+        recettesOuvertes.has(id)
+    ) {
+
+        recettesOuvertes.delete(id);
+
+    }
+    else {
+
+        recettesOuvertes.add(id);
+
+    }
+
+    dessinerRecettes();
+
+};
 
 window.creerRecette =
 async function() {
