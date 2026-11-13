@@ -108,7 +108,14 @@ function dessinerRecettes() {
                             )
                         "
                     >
-                    
+
+                        <option
+                            value=""
+                            ${!recette.type ? "selected" : ""}
+                        >
+                            Choisir un type...
+                        </option>
+
                         <option
                             value="Entrée"
                             ${recette.type === "Entrée" ? "selected" : ""}
@@ -322,6 +329,36 @@ async function(id) {
 window.sauverRecette =
 async function(id) {
 
+    const nom =
+        document.getElementById(
+            `nom-${id}`
+        ).value.trim();
+
+    const type =
+        document.getElementById(
+            `type-${id}`
+        ).value.trim();
+
+    if (!nom) {
+
+        alert(
+            "Le nom de la recette est obligatoire."
+        );
+
+        return;
+
+    }
+
+    if (!type) {
+
+        alert(
+            "Le type de recette est obligatoire."
+        );
+
+        return;
+
+    }
+
     const ingredients = [];
 
     document
@@ -354,16 +391,10 @@ async function(id) {
         id,
         {
 
-            nom:
-                document.getElementById(
-                    `nom-${id}`
-                ).value,
+            nom,
 
-            type:
-                document.getElementById(
-                    `type-${id}`
-                ).value,
-            
+            type,
+
             portions:
                 document.getElementById(
                     `portions-${id}`
