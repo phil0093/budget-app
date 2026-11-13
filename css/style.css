@@ -894,3 +894,24 @@ body {
     background: #ececec;
 
 }
+.zoneFiltresRecettes {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+
+}
+
+.filtreRecette {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 3px;
+
+    font-size: 0.9em;
+
+}
