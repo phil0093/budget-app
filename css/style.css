@@ -873,3 +873,24 @@ body {
     flex: 1;
 
 }
+.enteteRecette {
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    padding: 12px;
+
+    background: #f5f5f5;
+
+    border-radius: 8px;
+
+}
+
+.enteteRecette:hover {
+
+    background: #ececec;
+
+}
