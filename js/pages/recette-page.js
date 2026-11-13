@@ -280,23 +280,77 @@ async function(id) {
         return;
     }
 
-    recette.ingredients =
-        Array.isArray(
-            recette.ingredients
-        )
-            ? recette.ingredients
-            : [];
+    const ingredients = [];
 
-    recette.ingredients.push({
+    document
+        .querySelectorAll(
+            `[data-recette="${id}"]`
+        )
+        .forEach(ligne => {
+
+            ingredients.push({
+
+                quantite:
+                    ligne
+                        .querySelector(
+                            ".ingredientQuantite"
+                        )
+                        .value,
+
+                ingredient:
+                    ligne
+                        .querySelector(
+                            ".ingredientNom"
+                        )
+                        .value
+
+            });
+
+        });
+
+    ingredients.push({
+
         quantite: "",
+
         ingredient: ""
+
     });
 
     await modifierRecette(
         id,
         {
-            ingredients:
-                recette.ingredients
+            nom:
+                document.getElementById(
+                    `nom-${id}`
+                ).value,
+
+            type:
+                document.getElementById(
+                    `type-${id}`
+                ).value,
+
+            portions:
+                document.getElementById(
+                    `portions-${id}`
+                ).value,
+
+            tempsPreparation:
+                document.getElementById(
+                    `prep-${id}`
+                ).value,
+
+            tempsCuisson:
+                document.getElementById(
+                    `cuisson-${id}`
+                ).value,
+
+            ingredients,
+
+            etapes:
+                document.getElementById(
+                    `etapes-${id}`
+                ).value
+
         }
     );
 
