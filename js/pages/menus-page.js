@@ -17,6 +17,7 @@ import {
 from "../utils.js";
 
 let recettes = [];
+let recettesLieesMenus = {};
 
 window.afficherMenus = async function() {
     
@@ -218,14 +219,91 @@ function(zone, date, repas) {
 
 };
 
-window.sauvegarderMenuLigne =async function(date) {
+window.choisirRecette =
+function(date, repas, nom, recetteId) {
 
-    const midi =
-        document.getElementById(`midi-${date}`).value;
-    
-    const soir =
-        document.getElementById(`soir-${date}`).value;
-    
-    await sauverMenu(date, midi, soir);
+    const zone =
+        document.getElementById(
+            `${repas}-${date}`
+        );
+
+    const lignes =
+        zone.value.split("\n");
+
+    lignes.pop();
+
+    lignes.push(nom);
+
+    zone.value =
+        lignes.join("\n");
+
+    const cle =
+        `${date}-${repas}`;
+
+    if (
+        !recettesLieesMenus[cle]
+    ) {
+
+        recettesLieesMenus[cle] = [];
+
+    }
+
+    const dejaPresent =
+        recettesLieesMenus[cle]
+        .some(
+            r => r.id === recetteId
+        );
+
+    if (!dejaPresent) {
+
+        recettesLieesMenus[cle]
+        .push({
+            id: recetteId,
+            nom
+        });
+
+    }
+
+    document.getElementById(
+        `suggestions-${repas}-${date}`
+    ).innerHTML = "";
+
+    sauvegarderMenuLigne(date);
 
 };
+
+
+window.sauvegarderMenuLigne =
+async function(date) {
+
+    const midi =
+        document.getElementById(
+            `midi-${date}`
+        ).value;
+
+    const soir =
+        document.getElementById(
+            `soir-${date}`
+        ).value;
+
+    await sauverMenu(
+        date,
+        {
+            midi,
+            soir,
+
+            recettesMidi:
+                recettesLieesMenus[
+                    `${date}-midi`
+                ] || [],
+
+            recettesSoir:
+                recettesLieesMenus[
+                    `${date}-soir`
+                ] || []
+
+        }
+    );
+
+};
+
