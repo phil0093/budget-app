@@ -518,9 +518,26 @@ async function(id) {
         document.getElementById(
             `type-${id}`
         ).value;
-
+    
+    // Nouvelle recette abandonnée
+    
+    if (!nom && !type) {
+    
+        await supprimerRecette(id);
+    
+        recettes =
+            await chargerRecettes();
+    
+        dessinerRecettes();
+    
+        return;
+    
+    }
+    
+    // Vérifications
+    
     if (!nom) {
-
+    
         alert(
             "Le nom de la recette est obligatoire."
         );
@@ -538,7 +555,7 @@ async function(id) {
         return;
     
     }
-
+    
     const ingredients = [];
 
     document
@@ -600,6 +617,11 @@ async function(id) {
         }
     );
 
+    recettes =
+        await chargerRecettes();
+
+    dessinerRecettes();
+    
 };
 
 window.supprimerRecetteInterface =
