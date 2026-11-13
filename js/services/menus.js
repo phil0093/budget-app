@@ -10,8 +10,7 @@ import {
 
 export async function sauverMenu(
     date,
-    midi,
-    soir
+    donnees
 ) {
 
     await setDoc(
@@ -22,8 +21,19 @@ export async function sauverMenu(
         ),
         {
             date,
-            midi,
-            soir
+
+            midi:
+                donnees.midi || "",
+
+            soir:
+                donnees.soir || "",
+
+            recettesMidi:
+                donnees.recettesMidi || [],
+
+            recettesSoir:
+                donnees.recettesSoir || []
+
         }
     );
 
