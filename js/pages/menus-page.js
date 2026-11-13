@@ -61,13 +61,28 @@ window.afficherMenus = async function() {
 
     const dateIso =
         formatDateLocale(d);
-
+    
     const menu =
         menus[dateIso] || {};
-
+    
+    recettesLieesMenus[
+        `${dateIso}-midi`
+    ] =
+        menu.recettesMidi || [];
+    
+    recettesLieesMenus[
+        `${dateIso}-soir`
+    ] =
+        menu.recettesSoir || [];
+    
     const jour =
-        d.toLocaleDateString("fr-FR",{weekday: "short"});
-
+        d.toLocaleDateString(
+            "fr-FR",
+            {
+                weekday: "short"
+            }
+        );
+            
     return `
     
         <tr>
@@ -289,7 +304,9 @@ async function(date) {
     await sauverMenu(
         date,
         {
+
             midi,
+
             soir,
 
             recettesMidi:
