@@ -57,33 +57,3 @@ export async function supprimerListe(nom) {
     );
 
 }
-
-window.migrerListes =
-async function() {
-
-    const snapshot =
-        await getDocs(
-            collection(
-                db,
-                "listesCourses"
-            )
-        );
-
-    for (const documentAncien of snapshot.docs) {
-
-        await setDoc(
-            doc(
-                db,
-                "listes",
-                documentAncien.id
-            ),
-            documentAncien.data()
-        );
-
-    }
-
-    console.log(
-        "Migration terminée"
-    );
-
-};
