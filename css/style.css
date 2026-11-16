@@ -402,24 +402,24 @@ body {
 
 }
 
-.listeCoursesContainer {
+.listeContainer {
     background: white;
     border-radius: 10px;
     padding: 15px;
 }
 
-.ligneCourse {
+.ligneListe {
     display: flex;
     align-items: center;
     gap: 10px;
     min-height: 45px;
 }
 
-.ligneCourse input[type="checkbox"] {
+.ligneListe input[type="checkbox"] {
     transform: scale(1.3);
 }
 
-.ligneCourse textarea {
+.ligneListe textarea {
 
     flex: 1;
 
@@ -459,7 +459,7 @@ body {
 
 }
 
-.selectListeCourses {
+.selectListe {
 
     width: 100%;
     margin-bottom: 10px;
@@ -490,14 +490,13 @@ body {
     min-height: 25px !important;
 
     border-bottom: none !important;
-
 }
-.courseCochee {
+
+.listeCochee {
 
     text-decoration: line-through;
 
     color: #888;
-
 }
 
 .todoContainer {
