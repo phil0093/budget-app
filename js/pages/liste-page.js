@@ -1,5 +1,5 @@
 import {
-    chargerListe,
+    chargerListess,
     sauvegarderListe,
     supprimerListe
 }
@@ -21,7 +21,7 @@ window.afficherListe = async function() {
         "budgetActions"
     );
     
-    listes = await chargerListe();
+    listes = await chargerListes();
 
     if (listes.length === 0) {
 
@@ -33,7 +33,7 @@ window.afficherListe = async function() {
             )
         );
 
-        listes = await chargerListe();
+        listes = await chargerListes();
     }
 
     if (!listeActive) {
@@ -170,7 +170,7 @@ window.toggleListe = async function(index) {
 
     await sauvegarderListe();
     
-    listes = await chargerListe();
+    listes = await chargerListes();
     afficherListe();
     
     await verifierSuppressionAuto();
@@ -290,7 +290,7 @@ window.nouvelleListe = async function() {
     await sauvegarderListe(nom, [{texte: "", coche: false}]);
     
     listes =
-        await chargerListe();
+        await chargerListes();
 
     listeActive =
         nom;
@@ -325,7 +325,7 @@ window.sauvegarderListe = async function() {
         });
 
     await sauvegarderListe(listeActive, lignes);
-    listes = await chargerListe();
+    listes = await chargerListes();
 
 };
 
@@ -380,14 +380,14 @@ window.supprimerListeActive = async function(confirmer = true) {
     await supprimerListe(listeActive);
 
     listes =
-        await chargerListe();
+        await chargerListes();
 
     if (listes.length === 0) {
 
         await sauvegarderListe("Ma liste", [{texte: "", coche: false}]);
 
         listes =
-            await chargerListe();
+            await chargerListes();
 
     }
 
