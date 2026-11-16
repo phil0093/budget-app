@@ -131,7 +131,9 @@ function dessinerCourses() {
                                 ${ligne.coche ? "checked" : ""}
                                 ${!ligne.produit ? "style='visibility:hidden'" : ""}
                                 onchange="
-                                    sauvegarderCourseActive()
+                                    toggleCourseCochee(
+                                        this
+                                    )
                                 "
                             >
                         
@@ -152,6 +154,13 @@ function dessinerCourses() {
                             onblur="
                                 sauvegarderCourseActive()
                             "
+                            oninput="
+                                majAffichageCourse(
+                                    '${rayon}',
+                                    ${index}
+                                )
+                            "
+
                         >
 
                         <input
@@ -435,3 +444,76 @@ async function() {
         await chargerCourses();
 
 };
+
+window.majAffichageCourse =
+function(rayon, index) {
+
+    const produit =
+        document.getElementById(
+            `produit-${rayon}-${index}`
+        );
+
+    if (!produit) {
+        return;
+    }
+
+    if (
+        produit.value.trim() === ""
+    ) {
+        return;
+    }
+
+    const ligne =
+        produit.closest(
+            ".ligneCourse"
+        );
+
+    const rayonDiv =
+        ligne.closest(
+            ".rayonCourse"
+        );
+
+    const lignesDuRayon =
+        rayonDiv.querySelectorAll(
+            ".ligneCourse"
+        );
+
+    const derniereLigne =
+        lignesDuRayon[
+            lignesDuRayon.length - 1
+        ];
+
+    if (
+        ligne !== derniereLigne
+    ) {
+
+        return;
+
+    }
+
+    sauvegarderCourseActive();
+    
+};
+
+window.toggleCourseCochee =
+function(checkbox) {
+
+    const ligne =
+        checkbox.closest(
+            ".ligneCourse"
+        );
+
+    const produit =
+        ligne.querySelector(
+            'input[type="text"]'
+        );
+
+    produit.classList.toggle(
+        "courseCochee",
+        checkbox.checked
+    );
+
+    sauvegarderCourseActive();
+
+};
+
