@@ -1,5 +1,5 @@
 import "./pages/menus-page.js";
-import "./pages/courses-page.js";
+import "./pages/liste-page.js";
 import "./pages/todo-page.js";
 import "./pages/calendrier-page.js";
 import "./pages/budget-page.js";
