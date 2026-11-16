@@ -464,29 +464,7 @@ async function(rayon, index) {
 
     await sauvegarderCourseActive();
 
-    const lignesDuRayon =
-        document.querySelectorAll(
-            `[data-rayon="${rayon}"]`
-        );
-
-    const derniereLigne =
-        lignesDuRayon[
-            lignesDuRayon.length - 1
-        ];
-
-    const champProduit =
-        derniereLigne.querySelector(
-            'input[type="text"]'
-        );
-
-    if (champProduit) {
-
-        champProduit.focus();
-
-    }
-
 };
-
 
 window.toggleCourseCochee =
 function(checkbox) {
