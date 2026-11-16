@@ -18,10 +18,35 @@ initialiserNotifications();
 
 window.toggleMenu = function() {
 
-    document
-        .getElementById("sidebar")
-        .classList
-        .toggle("open");
+    const sidebar =
+        document.getElementById(
+            "sidebar"
+        );
+
+    const ouverture =
+        !sidebar.classList.contains(
+            "open"
+        );
+
+    if (ouverture) {
+
+        document
+            .querySelectorAll(
+                ".sousMenu"
+            )
+            .forEach(menu => {
+
+                menu.classList.remove(
+                    "open"
+                );
+
+            });
+
+    }
+
+    sidebar.classList.toggle(
+        "open"
+    );
 
 };
 
@@ -39,6 +64,21 @@ function(type) {
     menu.classList.toggle(
         "open"
     );
+
+};
+
+window.replierTousSousMenus =
+function() {
+
+    document
+        .querySelectorAll(".sousMenu")
+        .forEach(menu => {
+
+            menu.classList.remove(
+                "open"
+            );
+
+        });
 
 };
 
