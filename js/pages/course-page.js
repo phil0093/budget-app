@@ -461,17 +461,21 @@ async function() {
             element.focus();
     
             if (
-                element.tagName === "INPUT"
+                element.tagName === "INPUT" &&
+                (
+                    element.type === "text" ||
+                    element.type === "number"
+                )
             ) {
-    
+            
                 const longueur =
                     element.value.length;
-    
+            
                 element.setSelectionRange(
                     longueur,
                     longueur
                 );
-    
+            
             }
     
         }
@@ -482,15 +486,6 @@ async function() {
 
 window.gererLigneCourse =
 async function(rayon) {
-
-    const produit =
-        document.getElementById(
-            `produit-${rayon}-${index}`
-        );
-
-    if (!produit) {
-        return;
-    }
 
     await sauvegarderCourseActive();
 
