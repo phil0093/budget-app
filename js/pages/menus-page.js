@@ -64,7 +64,15 @@ window.afficherMenus = async function() {
     
     const menu =
         menus[dateIso] || {};
+
+    const aRecettesMidi =
+        (menu.recettesMidi || [])
+            .length > 0;
     
+    const aRecettesSoir =
+        (menu.recettesSoir || [])
+            .length > 0;
+            
     recettesLieesMenus[
         `${dateIso}-midi`
     ] =
@@ -89,7 +97,25 @@ window.afficherMenus = async function() {
         
             <td>${jour}</td>
         
-            <td>
+            <td class="caseMenu">
+
+                ${
+                    aRecettesMidi
+                    ? `
+                        <button
+                            class="btnRecetteMenu"
+                            onclick="
+                                afficherRecettesMenu(
+                                    '${dateIso}',
+                                    'midi'
+                                )
+                            "
+                        >
+                            📖
+                        </button>
+                    `
+                    : ""
+                }
             
                 <textarea
                     id="midi-${dateIso}"
@@ -109,8 +135,26 @@ window.afficherMenus = async function() {
 
             </td>
             
-            <td>
+            <td class="caseMenu">
 
+                ${
+                    aRecettesSoir
+                    ? `
+                        <button
+                            class="btnRecetteMenu"
+                            onclick="
+                                afficherRecettesMenu(
+                                    '${dateIso}',
+                                    'soir'
+                                )
+                            "
+                        >
+                            📖
+                        </button>
+                    `
+                    : ""
+                }
+            
                 <textarea
                     id="soir-${dateIso}"
                     oninput="
