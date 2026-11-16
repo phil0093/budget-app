@@ -1,15 +1,15 @@
 import {
-    chargerListesCourses,
-    sauvegarderListeCourses,
-    supprimerListeCourses
+    chargerListe,
+    sauvegarderListe,
+    supprimerListe
 }
-from "../services/courses.js";
+from "../services/liste.js";
 import {masquerZones} from "../utils.js";
 
-let listesCourses = [];
-let listeCourseActive = "";
+let listes = [];
+let listeActive = "";
 
-window.afficherCourses = async function() {
+window.afficherListe = async function() {
     document
         .getElementById("sidebar")
         .classList
@@ -21,11 +21,11 @@ window.afficherCourses = async function() {
         "budgetActions"
     );
     
-    listesCourses = await chargerListesCourses();
+    listes = await chargerListe();
 
-    if (listesCourses.length === 0) {
+    if (listes.length === 0) {
 
-        await sauvegarderListeCourses("Ma liste", Array(20).fill().map(
+        await sauvegarderListe("Ma liste", Array(20).fill().map(
                 () => ({
                     texte: "",
                     coche: false
@@ -33,32 +33,32 @@ window.afficherCourses = async function() {
             )
         );
 
-        listesCourses = await chargerListesCourses();
+        listes = await chargerListe();
     }
 
-    if (!listeCourseActive) {
-        listeCourseActive = listesCourses[0].nom;
+    if (!listeActive) {
+        listeActive = listes[0].nom;
     }
 
-    afficherListeCourses();
+    afficherListe();
 
 };
 
-function afficherListeCourses() {
+function afficherListe() {
 
     const liste = 
-        listesCourses.find(x => x.nom === listeCourseActive);
+        listes.find(x => x.nom === listeActive);
     
     if (!liste) {
         return;
     }
 
     const options =
-        listesCourses.map(l => `
+        listes.map(l => `
 
             <option
                 value="${l.nom}"
-                ${l.nom === listeCourseActive ? "selected" : ""}>
+                ${l.nom === listeActive ? "selected" : ""}>
                 ${l.nom}
             </option>
 
@@ -80,7 +80,7 @@ function afficherListeCourses() {
                 ligne?.niveau || 0;
             return `
 
-                <div class="ligneCourse" style="padding-left: ${niveau * 25}px;">
+                <div class="ligneListe" style="padding-left: ${niveau * 25}px;">
 
                     ${
                         !vide
@@ -89,7 +89,7 @@ function afficherListeCourses() {
                                 type="checkbox"
                                 id="check-${index}"
                                 ${coche ? "checked" : ""}
-                                onchange="toggleCourse(${index})">
+                                onchange="toggleListe(${index})">
                           `
                         : ""
                     }
@@ -99,15 +99,15 @@ function afficherListeCourses() {
                         data-niveau="${niveau}"
                         class="
                             ${vide ? "ligneVide" : ""}
-                            ${coche ? "courseCochee" : ""}
+                            ${coche ? "listeCochee" : ""}
                         "
                         style="
                             font-size:${niveau ? "0.9em" : "1em"};
                         "
                         oninput="majAffichageLigne(${index})"
-                        onblur="sauvegarderCourses()"
+                        onblur="sauvegarderListe()"
                         onkeydown="
-                            gererEntreeCourse(
+                            gererEntreeListe(
                                 event,
                                 ${index}
                             )
@@ -123,10 +123,10 @@ function afficherListeCourses() {
         "contenu"
     ).innerHTML = `
 
-        <h2>Liste de courses</h2>
+        <h2>Listes</h2>
 
         <select
-            class="selectListeCourses"
+            class="selectListe"
             onchange="changerListe(this.value)">
 
             ${options}
@@ -135,7 +135,7 @@ function afficherListeCourses() {
 
         <button
             class="btnNouvelleListe"
-            onclick="nouvelleListeCourses()">
+            onclick="nouvelleListe()">
 
             ➕ Nouvelle liste
 
@@ -149,7 +149,7 @@ function afficherListeCourses() {
         
         </button>
 
-        <div class="listeCoursesContainer">
+        <div class="listeContainer">
 
             ${lignes}
 
@@ -158,7 +158,7 @@ function afficherListeCourses() {
     `;
 }
 
-window.toggleCourse = async function(index) {
+window.toggleListe = async function(index) {
 
     const checkbox =
         document.getElementById(`check-${index}`);
@@ -166,18 +166,18 @@ window.toggleCourse = async function(index) {
     const zone =
         document.getElementById(`ligne-${index}`);
 
-    zone.classList.toggle("courseCochee", checkbox.checked);
+    zone.classList.toggle("listeCochee", checkbox.checked);
 
-    await sauvegarderCourses();
+    await sauvegarderListe();
     
-    listesCourses = await chargerListesCourses();
-    afficherListeCourses();
+    listes = await chargerListe();
+    afficherListe();
     
     await verifierSuppressionAuto();
 
 };
 
-window.gererEntreeCourse = function(event, index) {
+window.gererEntreeListe = function(event, index) {
 
     const zone =
         document.getElementById(`ligne-${index}`);
@@ -188,12 +188,12 @@ window.gererEntreeCourse = function(event, index) {
     
         zone.dataset.niveau = "1";
 
-        zone.closest(".ligneCourse").style.paddingLeft = "25px";
+        zone.closest(".ligneListe").style.paddingLeft = "25px";
         
         zone.style.fontSize = "0.9em";
 
         majAffichageLigne(index);
-        sauvegarderCourses();
+        sauvegarderListe();
         
         return;
     
@@ -213,15 +213,15 @@ window.gererEntreeCourse = function(event, index) {
             document.createElement("div");
 
         div.className =
-            "ligneCourse";
+            "ligneListe";
 
         div.innerHTML = `
             <textarea
                 id="ligne-${nouveauIndex}"
                 oninput="majAffichageLigne(${nouveauIndex})"
-                onblur="sauvegarderCourses()"
+                onblur="sauvegarderListe()"
                 onkeydown="
-                    gererEntreeCourse(
+                    gererEntreeListe(
                         event,
                         ${nouveauIndex}
                     )
@@ -230,7 +230,7 @@ window.gererEntreeCourse = function(event, index) {
         `;
 
         zone
-            .closest(".ligneCourse")
+            .closest(".ligneListe")
             .after(div);
 
         document
@@ -245,10 +245,10 @@ window.gererEntreeCourse = function(event, index) {
     if (event.key === "Backspace" && zone.value.trim() === "") {
 
         const ligne =
-            zone.closest(".ligneCourse");
+            zone.closest(".ligneListe");
 
         const toutesLesLignes =
-            document.querySelectorAll(".ligneCourse");
+            document.querySelectorAll(".ligneListe");
 
         if (toutesLesLignes.length <= 1) {
             return;
@@ -267,39 +267,39 @@ window.gererEntreeCourse = function(event, index) {
                 .focus();
         }
 
-        sauvegarderCourses();
+        sauvegarderListe();
     }
 
 };
 
 window.changerListe = function(nom) {
 
-    listeCourseActive = nom;
+    listeActive = nom;
 
-    afficherListeCourses();
+    afficherListe();
 
 };
 
-window.nouvelleListeCourses = async function() {
+window.nouvelleListe = async function() {
 
     const nom =
         prompt("Nom de la liste");
 
     if (!nom) return;
 
-    await sauvegarderListeCourses(nom, [{texte: "", coche: false}]);
+    await sauvegarderListe(nom, [{texte: "", coche: false}]);
     
-    listesCourses =
-        await chargerListesCourses();
+    listes =
+        await chargerListe();
 
-    listeCourseActive =
+    listeActive =
         nom;
 
-    afficherListeCourses();
+    afficherListe();
 
 };
 
-window.sauvegarderCourses = async function() {
+window.sauvegarderListe = async function() {
 
     const lignes = [];
 
@@ -324,8 +324,8 @@ window.sauvegarderCourses = async function() {
 
         });
 
-    await sauvegarderListeCourses(listeCourseActive, lignes);
-    listesCourses = await chargerListesCourses();
+    await sauvegarderListe(listeActive, lignes);
+    listes = await chargerListe();
 
 };
 
@@ -335,7 +335,7 @@ window.majAffichageLigne = function(index) {
         document.getElementById(`ligne-${index}`);
 
     const ligne =
-        zone.closest(".ligneCourse");
+        zone.closest(".ligneListe");
 
     let checkbox =
         document.getElementById(`check-${index}`);
@@ -351,7 +351,7 @@ window.majAffichageLigne = function(index) {
 
         checkbox.id = `check-${index}`;
 
-        checkbox.onchange = () => toggleCourse(index);
+        checkbox.onchange = () => toggleListe(index);
 
         ligne.insertBefore(checkbox, zone);
 
@@ -361,7 +361,7 @@ window.majAffichageLigne = function(index) {
         checkbox.remove();
     }
 
-    sauvegarderCourses();
+    sauvegarderListe();
 };
 
 window.supprimerListeActive = async function(confirmer = true) {
@@ -369,7 +369,7 @@ window.supprimerListeActive = async function(confirmer = true) {
     if (confirmer) {
 
         const confirmation =
-            confirm(`Supprimer la liste "${listeCourseActive}" ?`);
+            confirm(`Supprimer la liste "${listeActive}" ?`);
 
         if (!confirmation) {
             return;
@@ -377,23 +377,23 @@ window.supprimerListeActive = async function(confirmer = true) {
 
     }
 
-    await supprimerListeCourses(listeCourseActive);
+    await supprimerListe(listeActive);
 
-    listesCourses =
-        await chargerListesCourses();
+    listes =
+        await chargerListe();
 
-    if (listesCourses.length === 0) {
+    if (listes.length === 0) {
 
-        await sauvegarderListeCourses("Ma liste", [{texte: "", coche: false}]);
+        await sauvegarderListe("Ma liste", [{texte: "", coche: false}]);
 
-        listesCourses =
-            await chargerListesCourses();
+        listes =
+            await chargerListe();
 
     }
 
-    listeCourseActive =listesCourses[0].nom;
+    listeActive =listes[0].nom;
 
-    afficherListeCourses();
+    afficherListe();
 
 };
 
