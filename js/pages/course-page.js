@@ -153,6 +153,7 @@ function dessinerCourses() {
                             "
                             onblur="
                                 gererLigneCourse(
+                                    this,
                                     '${rayon}'
                                 )
                             "
@@ -450,11 +451,50 @@ async function() {
 };
 
 window.gererLigneCourse =
-async function(rayon) {
+async function(champProduit, rayon) {
+
+    const valeur =
+        champProduit.value.trim();
+
+    if (valeur === "") {
+
+        await sauvegarderCourseActive();
+        return;
+
+    }
+
+    const ligne =
+        champProduit.closest(
+            ".ligneCourse"
+        );
+
+    const rayonDiv =
+        ligne.closest(
+            ".rayonCourse"
+        );
+
+    const lignes =
+        rayonDiv.querySelectorAll(
+            ".ligneCourse"
+        );
+
+    const derniereLigne =
+        lignes[
+            lignes.length - 1
+        ];
+
+    if (ligne === derniereLigne) {
+
+        ajouterLigneVide(
+            rayon
+        );
+
+    }
 
     await sauvegarderCourseActive();
 
 };
+
 
 window.toggleCourseCochee =
 function(checkbox) {
@@ -499,6 +539,20 @@ function(rayon) {
     const idLigne =
         `${rayon}-${index}`;
 
+    const derniereLigne =
+        rayonDiv.querySelector(
+            ".ligneCourse:last-child input[type='text']"
+        );
+    
+    if (
+        derniereLigne &&
+        derniereLigne.value.trim() === ""
+    ) {
+    
+        return;
+    
+    }
+    
     rayonDiv.insertAdjacentHTML(
         "beforeend",
 
@@ -525,6 +579,7 @@ function(rayon) {
                 placeholder="Produit"
                 onblur="
                     gererLigneCourse(
+                        this,
                         '${rayon}'
                     )
                 "
