@@ -573,5 +573,7 @@ async function(date) {
         }
     );
 
+    afficherMenus();
+
 };
 
