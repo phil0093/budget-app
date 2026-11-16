@@ -1038,24 +1038,54 @@ body {
     margin-bottom: 15px;
 
 }
+
 .ligneCourse {
 
     display: flex;
 
-    gap: 8px;
+    gap: 5px;
 
     align-items: center;
 
     margin-bottom: 8px;
 
 }
+
 .ligneCourse input[type="text"] {
 
     flex: 1;
-
+    min-width: 0;
 }
+
 .ligneCourse input[type="number"] {
 
-    width: 70px;
+    width: 60px;
+
+}
+.zoneCheckboxCourse {
+
+    width: 30px;
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+}
+
+.courseCochee {
+
+    text-decoration: line-through;
+
+    color: #888;
+
+}
+
+.rayonTermine {
+
+    text-decoration: line-through;
+
+    opacity: 0.6;
 
 }
