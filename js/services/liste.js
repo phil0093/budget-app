@@ -10,7 +10,7 @@ import {
 } from
 "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
-export async function chargerListe() {
+export async function chargerListes() {
 
     const snapshot =
         await getDocs(
