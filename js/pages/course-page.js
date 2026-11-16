@@ -86,19 +86,84 @@ function dessinerCourses() {
         .join("");
 
     const rayonsHtml =
-        RAYONS
-        .map(rayon => `
+    RAYONS
+    .map(rayon => {
+
+        const lignesRayon =
+            course.rayons?.[rayon] || [];
+
+        const lignesHtml =
+            lignesRayon
+            .map((ligne, index) => {
+
+                const idLigne =
+                    `${rayon}-${index}`;
+
+                return `
+
+                    <div
+                        class="ligneCourse"
+                        data-rayon="${rayon}"
+                        data-index="${index}"
+                    >
+
+                        ${
+                            ligne.produit
+                            ? `
+                                <input
+                                    type="checkbox"
+                                    ${ligne.coche ? "checked" : ""}
+                                >
+                            `
+                            : ""
+                        }
+
+                        <input
+                            id="produit-${idLigne}"
+                            type="text"
+                            placeholder="Produit"
+                            value="${ligne.produit || ""}"
+                        >
+
+                        <input
+                            id="quantite-${idLigne}"
+                            type="number"
+                            min="1"
+                            value="${ligne.quantite || 1}"
+                        >
+
+                        <input
+                            id="prix-${idLigne}"
+                            type="number"
+                            step="0.01"
+                            value="${ligne.prix || 0}"
+                        >
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+
+        return `
 
             <div class="rayonCourse">
 
                 <h3>
+
                     ${rayon}
+
                 </h3>
+
+                ${lignesHtml}
 
             </div>
 
-        `)
-        .join("");
+        `;
+
+    })
+    .join("");
 
     document
         .getElementById(
