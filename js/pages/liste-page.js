@@ -1,5 +1,5 @@
 import {
-    chargerListess,
+    chargerListes,
     sauvegarderListe,
     supprimerListe
 }
@@ -40,11 +40,11 @@ window.afficherListe = async function() {
         listeActive = listes[0].nom;
     }
 
-    afficherListe();
+    dessinerListe();
 
 };
 
-function afficherListe() {
+function dessinerListe() {
 
     const liste = 
         listes.find(x => x.nom === listeActive);
@@ -105,7 +105,7 @@ function afficherListe() {
                             font-size:${niveau ? "0.9em" : "1em"};
                         "
                         oninput="majAffichageLigne(${index})"
-                        onblur="sauvegarderListe()"
+                        onblur="sauvegarderListeActive()"
                         onkeydown="
                             gererEntreeListe(
                                 event,
@@ -168,10 +168,11 @@ window.toggleListe = async function(index) {
 
     zone.classList.toggle("listeCochee", checkbox.checked);
 
-    await sauvegarderListe();
-    
+    await sauvegarderListeActive();
+
     listes = await chargerListes();
-    afficherListe();
+    
+    dessinerListe();
     
     await verifierSuppressionAuto();
 
@@ -193,7 +194,7 @@ window.gererEntreeListe = function(event, index) {
         zone.style.fontSize = "0.9em";
 
         majAffichageLigne(index);
-        sauvegarderListe();
+        sauvegarderListeActive();
         
         return;
     
@@ -219,7 +220,7 @@ window.gererEntreeListe = function(event, index) {
             <textarea
                 id="ligne-${nouveauIndex}"
                 oninput="majAffichageLigne(${nouveauIndex})"
-                onblur="sauvegarderListe()"
+                onblur="sauvegarderListeActive()"
                 onkeydown="
                     gererEntreeListe(
                         event,
@@ -267,7 +268,7 @@ window.gererEntreeListe = function(event, index) {
                 .focus();
         }
 
-        sauvegarderListe();
+        sauvegarderListeActive();
     }
 
 };
@@ -276,7 +277,7 @@ window.changerListe = function(nom) {
 
     listeActive = nom;
 
-    afficherListe();
+    dessinerListe();
 
 };
 
@@ -295,11 +296,11 @@ window.nouvelleListe = async function() {
     listeActive =
         nom;
 
-    afficherListe();
+    dessinerListe();
 
 };
 
-window.sauvegarderListe = async function() {
+window.sauvegarderListeActive = async function() {
 
     const lignes = [];
 
@@ -361,7 +362,7 @@ window.majAffichageLigne = function(index) {
         checkbox.remove();
     }
 
-    sauvegarderListe();
+    sauvegarderListeActive();
 };
 
 window.supprimerListeActive = async function(confirmer = true) {
@@ -393,7 +394,7 @@ window.supprimerListeActive = async function(confirmer = true) {
 
     listeActive =listes[0].nom;
 
-    afficherListe();
+    dessinerListe();
 
 };
 
