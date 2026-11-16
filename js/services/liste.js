@@ -10,13 +10,13 @@ import {
 } from
 "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
-export async function chargerListesCourses() {
+export async function chargerListe() {
 
     const snapshot =
         await getDocs(
             collection(
                 db,
-                "listesCourses"
+                "listes"
             )
         );
 
@@ -27,7 +27,7 @@ export async function chargerListesCourses() {
 
 }
 
-export async function sauvegarderListeCourses(
+export async function sauvegarderListe(
     nom,
     lignes
 ) {
@@ -35,7 +35,7 @@ export async function sauvegarderListeCourses(
     await setDoc(
         doc(
             db,
-            "listesCourses",
+            "listes",
             nom
         ),
         {
@@ -46,12 +46,12 @@ export async function sauvegarderListeCourses(
 
 }
 
-export async function supprimerListeCourses(nom) {
+export async function supprimerListe(nom) {
 
     await deleteDoc(
         doc(
             db,
-            "listesCourses",
+            "listes",
             nom
         )
     );
