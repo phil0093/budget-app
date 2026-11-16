@@ -6,7 +6,10 @@ import {
 from "../services/course.js";
 
 import {masquerZones} from "../utils.js";
-import {RAYONS} from "../constants/rayons.js";
+import {
+    RAYONS,
+    ICONES_RAYONS
+} from "../constants/rayons.js";
 import {creerStructureCourses} from "../utils-courses.js";
 
 let courses = [];
