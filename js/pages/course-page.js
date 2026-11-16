@@ -190,7 +190,10 @@ function dessinerCourses() {
 
         return `
 
-            <div class="rayonCourse">
+            <div
+                class="rayonCourse"
+                data-rayon="${rayon}"
+            >
 
                 <h3
                     class="
@@ -349,9 +352,6 @@ async function() {
 window.sauvegarderCourseActive =
 async function() {
     
-    const elementActif =
-        document.activeElement?.id;
-    
     const rayons = {};
 
     RAYONS.forEach(rayon => {
@@ -445,42 +445,7 @@ async function() {
     );
 
     courses =
-        await chargerCourses();
-    
-    dessinerCourses();
-    
-    if (elementActif) {
-    
-        const element =
-            document.getElementById(
-                elementActif
-            );
-    
-        if (element) {
-    
-            element.focus();
-    
-            if (
-                element.tagName === "INPUT" &&
-                (
-                    element.type === "text" ||
-                    element.type === "number"
-                )
-            ) {
-            
-                const longueur =
-                    element.value.length;
-            
-                element.setSelectionRange(
-                    longueur,
-                    longueur
-                );
-            
-            }
-    
-        }
-    
-    }
+        await chargerCourses();   
 
 };
 
@@ -513,3 +478,82 @@ function(checkbox) {
 
 };
 
+window.ajouterLigneVide =
+function(rayon) {
+
+    const rayonDiv =
+        document
+            .querySelector(
+                `.rayonCourse[data-rayon="${rayon}"]`
+            );
+
+    if (!rayonDiv) {
+        return;
+    }
+
+    const index =
+        rayonDiv.querySelectorAll(
+            ".ligneCourse"
+        ).length;
+
+    const idLigne =
+        `${rayon}-${index}`;
+
+    rayonDiv.insertAdjacentHTML(
+        "beforeend",
+
+        `
+
+        <div
+            class="ligneCourse"
+            data-rayon="${rayon}"
+            data-index="${index}"
+        >
+
+            <div class="zoneCheckboxCourse">
+
+                <input
+                    type="checkbox"
+                    style="visibility:hidden"
+                >
+
+            </div>
+
+            <input
+                id="produit-${idLigne}"
+                type="text"
+                placeholder="Produit"
+                onblur="
+                    gererLigneCourse(
+                        '${rayon}'
+                    )
+                "
+            >
+
+            <input
+                id="quantite-${idLigne}"
+                type="number"
+                min="1"
+                value="1"
+                onblur="
+                    sauvegarderCourseActive()
+                "
+            >
+
+            <input
+                id="prix-${idLigne}"
+                type="number"
+                min="0"
+                step="0.01"
+                value="0.00"
+                onblur="
+                    sauvegarderCourseActive()
+                "
+            >
+
+        </div>
+
+        `
+    );
+
+};
