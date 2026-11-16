@@ -25,6 +25,23 @@ window.toggleMenu = function() {
 
 };
 
+window.toggleSousMenu =
+function(type) {
+
+    const menu =
+        document.getElementById(
+            `sousMenu${
+                type.charAt(0).toUpperCase()
+                + type.slice(1)
+            }`
+        );
+
+    menu.classList.toggle(
+        "open"
+    );
+
+};
+
 window.afficherAccueil = function() {
 
     document.getElementById(
