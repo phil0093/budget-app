@@ -292,6 +292,36 @@ body {
     background-color: #f9f9f9;
 }
 
+.caseMenu {
+
+    position: relative;
+
+}
+
+.btnRecetteMenu {
+
+    position: absolute;
+
+    top: 2px;
+
+    right: 2px;
+
+    z-index: 10;
+
+    border: none;
+
+    background: white;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    padding: 2px 5px;
+
+}
+
 .listeCoursesContainer {
     background: white;
     border-radius: 10px;
