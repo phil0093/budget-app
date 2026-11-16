@@ -277,23 +277,21 @@ function(date, repas) {
                         ${recette.type || ""}
                     </p>
 
-                    <p>
-                        👥
-                        ${recette.portions || ""}
-                        portions
-                    </p>
+                    <div class="infosRecettePopup">
 
-                    <p>
-                        ⏱️
-                        ${recette.tempsPreparation || 0}
-                        min
-                    </p>
-
-                    <p>
-                        🔥
-                        ${recette.tempsCuisson || 0}
-                        min
-                    </p>
+                        <span>
+                            👥 ${recette.portions || ""}
+                        </span>
+                    
+                        <span>
+                            ⏱️ ${recette.tempsPreparation || 0} min
+                        </span>
+                    
+                        <span>
+                            🔥 ${recette.tempsCuisson || 0} min
+                        </span>
+                    
+                    </div>
 
                     <h3>
                         🛒 Ingrédients
@@ -440,7 +438,7 @@ function(zone, date, repas) {
 };
 
 window.choisirRecette =
-function(date, repas, nom, recetteId) {
+async function(date, repas, nom, recetteId) {
 
     const zone =
         document.getElementById(
@@ -488,7 +486,15 @@ function(date, repas, nom, recetteId) {
         `suggestions-${repas}-${date}`
     ).innerHTML = "";
 
-    sauvegarderMenuLigne(date);
+    await sauvegarderMenuLigne(date);
+
+    const menus =
+        await chargerMenus();
+    
+    recettes =
+        await chargerRecettes();
+    
+    afficherMenus();
 
 };
 
