@@ -41,7 +41,8 @@ export const RAYONS = [
     "Desserts"
 
 ];
-const ICONES_RAYONS = {
+
+export const ICONES_RAYONS = {
 
     "Bébé": "🍼",
 
