@@ -92,6 +92,19 @@ function dessinerCourses() {
         const lignesRayon =
             course.rayons?.[rayon] || [];
 
+        const lignesAvecProduit =
+            lignesRayon.filter(
+                ligne =>
+                    ligne.produit &&
+                    ligne.produit.trim() !== ""
+            );
+        
+        const toutesCochees =
+            lignesAvecProduit.length > 0 &&
+            lignesAvecProduit.every(
+                ligne => ligne.coche
+            );
+        
         const lignesHtml =
             lignesRayon
             .map((ligne, index) => {
@@ -107,22 +120,32 @@ function dessinerCourses() {
                         data-index="${index}"
                     >
 
-                        ${
-                            ligne.produit
-                            ? `
-                                <input
-                                    type="checkbox"
-                                    ${ligne.coche ? "checked" : ""}
-                                >
-                            `
-                            : ""
-                        }
+                        <div class="zoneCheckboxCourse">
+
+                            <input
+                                id="coche-${idLigne}"
+                                type="checkbox"
+                                ${ligne.coche ? "checked" : ""}
+                                ${!ligne.produit ? "style='visibility:hidden'" : ""}
+                                onchange="
+                                    sauvegarderCourseActive()
+                                "
+                            >
+                        
+                        </div>
 
                         <input
                             id="produit-${idLigne}"
                             type="text"
                             placeholder="Produit"
                             value="${ligne.produit || ""}"
+                            class="
+                                ${
+                                    ligne.coche
+                                    ? "courseCochee"
+                                    : ""
+                                }
+                            "
                             onblur="
                                 sauvegarderCourseActive()
                             "
@@ -159,10 +182,19 @@ function dessinerCourses() {
 
             <div class="rayonCourse">
 
-                <h3>
-
+                <h3
+                    class="
+                        ${
+                            toutesCochees
+                            ? "rayonTermine"
+                            : ""
+                        }
+                    "
+                >
+                
+                    ${ICONES_RAYONS[rayon]}
                     ${rayon}
-
+                
                 </h3>
 
                 ${lignesHtml}
@@ -338,21 +370,26 @@ async function() {
                         )?.value || 0
                     );
 
+                const coche =
+                    document.getElementById(
+                        `coche-${rayon}-${index}`
+                    )?.checked || false;
+                
                 if (
                     produit.trim() !== ""
                 ) {
 
                     rayons[rayon]
                     .push({
-
+                    
                         produit,
-
+                    
                         quantite,
-
+                    
                         prix,
-
-                        coche: false
-
+                    
+                        coche
+                    
                     });
 
                 }
@@ -393,7 +430,5 @@ async function() {
 
     courses =
         await chargerCourses();
-
-    dessinerCourses();
 
 };
