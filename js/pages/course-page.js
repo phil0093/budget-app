@@ -152,7 +152,7 @@ function dessinerCourses() {
                                 }
                             "
                             onblur="
-                                majAffichageCourse(
+                                gererLigneCourse(
                                     '${rayon}',
                                     ${index}
                                 )
@@ -172,8 +172,11 @@ function dessinerCourses() {
                         <input
                             id="prix-${idLigne}"
                             type="number"
+                            min="0"
                             step="0.01"
-                            value="${ligne.prix || 0}"
+                            value="${Number(
+                                ligne.prix || 0
+                            ).toFixed(2)}"
                             onblur="
                                 sauvegarderCourseActive()
                             "
@@ -444,7 +447,7 @@ async function() {
 
 };
 
-window.majAffichageCourse =
+window.gererLigneCourse =
 async function(rayon, index) {
 
     const produit =
@@ -453,12 +456,6 @@ async function(rayon, index) {
         );
 
     if (!produit) {
-        return;
-    }
-
-    if (
-        produit.value.trim() === ""
-    ) {
         return;
     }
 
@@ -484,12 +481,7 @@ function(checkbox) {
         checkbox.checked
     );
 
-    sauvegarderCourseActive()
-        .then(() => {
-    
-            dessinerCourses();
-    
-        });
+    sauvegarderCourseActive();
 
 };
 
