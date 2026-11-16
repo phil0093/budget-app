@@ -1026,3 +1026,36 @@ body {
     font-size: 0.9em;
 
 }
+
+.rayonCourse {
+
+    background: white;
+
+    border-radius: 10px;
+
+    padding: 15px;
+
+    margin-bottom: 15px;
+
+}
+.ligneCourse {
+
+    display: flex;
+
+    gap: 8px;
+
+    align-items: center;
+
+    margin-bottom: 8px;
+
+}
+.ligneCourse input[type="text"] {
+
+    flex: 1;
+
+}
+.ligneCourse input[type="number"] {
+
+    width: 70px;
+
+}
