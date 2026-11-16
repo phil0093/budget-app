@@ -339,6 +339,29 @@ body {
     white-space: normal;
 
 }
+
+#popupRecette {
+
+    position: fixed;
+
+    inset: 0;
+
+    overflow-y: auto;
+
+    -webkit-overflow-scrolling: touch;
+
+}
+
+#popupRecette .modalCalendrierContenu {
+
+    max-height: calc(100vh - 20px);
+
+    overflow-y: auto;
+
+    -webkit-overflow-scrolling: touch;
+
+}
+
 .listeCoursesContainer {
     background: white;
     border-radius: 10px;
