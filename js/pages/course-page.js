@@ -153,8 +153,7 @@ function dessinerCourses() {
                             "
                             onblur="
                                 gererLigneCourse(
-                                    '${rayon}',
-                                    ${index}
+                                    '${rayon}'
                                 )
                             "
                         >
@@ -306,7 +305,7 @@ async function() {
 
 window.supprimerCourseActive =
 async function() {
-
+    
     const confirmation =
         confirm(
             `Supprimer "${courseActive}" ?`
@@ -340,13 +339,19 @@ async function() {
     courseActive =
         courses[0].nom;
 
+    courses =
+        await chargerCourses();
+    
     dessinerCourses();
 
 };
 
 window.sauvegarderCourseActive =
 async function() {
-
+    
+    const elementActif =
+        document.activeElement?.id;
+    
     const rayons = {};
 
     RAYONS.forEach(rayon => {
@@ -441,14 +446,42 @@ async function() {
 
     courses =
         await chargerCourses();
-
+    
     dessinerCourses();
-
+    
+    if (elementActif) {
+    
+        const element =
+            document.getElementById(
+                elementActif
+            );
+    
+        if (element) {
+    
+            element.focus();
+    
+            if (
+                element.tagName === "INPUT"
+            ) {
+    
+                const longueur =
+                    element.value.length;
+    
+                element.setSelectionRange(
+                    longueur,
+                    longueur
+                );
+    
+            }
+    
+        }
+    
+    }
 
 };
 
 window.gererLigneCourse =
-async function(rayon, index) {
+async function(rayon) {
 
     const produit =
         document.getElementById(
