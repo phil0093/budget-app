@@ -210,6 +210,167 @@ window.afficherMenus = async function() {
     
 };
 
+window.afficherRecettesMenu =
+function(date, repas) {
+
+    const recettesLiees =
+        recettesLieesMenus[
+            `${date}-${repas}`
+        ] || [];
+
+    if (
+        recettesLiees.length === 0
+    ) {
+
+        alert(
+            "Aucune recette liée."
+        );
+
+        return;
+
+    }
+
+    const contenu =
+        recettesLiees
+        .map(recetteLiee => {
+
+            const recette =
+                recettes.find(
+                    r =>
+                        r.id ===
+                        recetteLiee.id
+                );
+
+            if (!recette) {
+                return "";
+            }
+
+            const ingredients =
+                (recette.ingredients || [])
+                .map(ing => `
+
+                    <tr>
+
+                        <td>
+                            ${ing.quantite || ""}
+                        </td>
+
+                        <td>
+                            ${ing.ingredient || ""}
+                        </td>
+
+                    </tr>
+
+                `)
+                .join("");
+
+            return `
+
+                <div class="blocRecetteMenu">
+
+                    <h2>
+                        ${recette.nom}
+                    </h2>
+
+                    <p>
+                        <b>Type :</b>
+                        ${recette.type || ""}
+                    </p>
+
+                    <p>
+                        👥
+                        ${recette.portions || ""}
+                        portions
+                    </p>
+
+                    <p>
+                        ⏱️
+                        ${recette.tempsPreparation || 0}
+                        min
+                    </p>
+
+                    <p>
+                        🔥
+                        ${recette.tempsCuisson || 0}
+                        min
+                    </p>
+
+                    <h3>
+                        🛒 Ingrédients
+                    </h3>
+
+                    <table
+                        class="tableIngredients"
+                    >
+
+                        ${ingredients}
+
+                    </table>
+
+                    <h3>
+                        👨‍🍳 Étapes
+                    </h3>
+
+                    <div
+                        class="lectureRecette"
+                    >
+
+                        ${(recette.etapes || "")
+                            .replaceAll(
+                                "\n",
+                                "<br>"
+                            )}
+
+                    </div>
+
+                </div>
+
+            `;
+
+        })
+        .join("<hr>");
+
+    document.body.insertAdjacentHTML(
+        "beforeend",
+
+        `
+
+        <div
+            id="popupRecette"
+            class="modalCalendrier"
+        >
+
+            <div
+                class="modalCalendrierContenu"
+            >
+
+                ${contenu}
+
+                <br>
+
+                <button
+                    onclick="
+                        document
+                            .getElementById(
+                                'popupRecette'
+                            )
+                            .remove()
+                    "
+                >
+
+                    Fermer
+
+                </button>
+
+            </div>
+
+        </div>
+
+        `
+    );
+
+};
+
 window.rechercherRecettes =
 function(zone, date, repas) {
 
