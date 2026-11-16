@@ -322,6 +322,23 @@ body {
 
 }
 
+.blocRecetteMenu {
+
+    margin-bottom: 20px;
+
+}
+
+.blocRecetteMenu:last-child {
+
+    margin-bottom: 0;
+
+}
+
+.lectureRecette {
+
+    white-space: normal;
+
+}
 .listeCoursesContainer {
     background: white;
     border-radius: 10px;
