@@ -28,30 +28,52 @@
         <button onclick="afficherAccueil()">
             🏠 Accueil
         </button>
-    
+        
         <button onclick="afficherBudget()">
             💰 Budget
         </button>
-    
-        <button onclick="afficherMenus()">
-            🍽️ Menus
-        </button>
-
-        <button onclick="afficherRecettes()">
-            🍝 Recettes
+        
+        <button onclick="toggleSousMenu('repas')">
+            🍽️ Repas ▼
         </button>
         
-        <button onclick="afficherCourses()">
-            🛒 Liste de courses
+        <div
+            id="sousMenuRepas"
+            class="sousMenu"
+        >
+        
+            <button onclick="afficherMenus()">
+                Menus
+            </button>
+        
+            <button onclick="afficherRecettes()">
+                Recettes
+            </button>
+        
+            <button onclick="afficherCourses()">
+                Courses
+            </button>
+        
+        </div>
+        
+        <button onclick="toggleSousMenu('listes')">
+            📝 Listes ▼
         </button>
-    
-        <button onclick="afficherTodo()">
-            ✅ To Do List
-        </button>
-
-        <button onclick="afficherNotes()">
-            📝 Notes
-        </button>
+        
+        <div
+            id="sousMenuListes"
+            class="sousMenu"
+        >
+        
+            <button onclick="afficherTodo()">
+                Todo
+            </button>
+        
+            <button onclick="afficherNotes()">
+                Notes
+            </button>
+        
+        </div>
         
         <button onclick="afficherCalendrier()">
             📅 Calendrier
