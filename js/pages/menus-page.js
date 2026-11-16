@@ -506,6 +506,46 @@ async function(date) {
             `soir-${date}`
         ).value;
 
+    const lignesMidi =
+        midi
+            .split("\n")
+            .map(x => x.trim())
+            .filter(Boolean);
+    
+    const lignesSoir =
+        soir
+            .split("\n")
+            .map(x => x.trim())
+            .filter(Boolean);
+    
+    recettesLieesMenus[
+        `${date}-midi`
+    ] =
+        (
+            recettesLieesMenus[
+                `${date}-midi`
+            ] || []
+        )
+        .filter(recette =>
+            lignesMidi.includes(
+                recette.nom
+            )
+        );
+    
+    recettesLieesMenus[
+        `${date}-soir`
+    ] =
+        (
+            recettesLieesMenus[
+                `${date}-soir`
+            ] || []
+        )
+        .filter(recette =>
+            lignesSoir.includes(
+                recette.nom
+            )
+        );
+    
     await sauverMenu(
         date,
         {
