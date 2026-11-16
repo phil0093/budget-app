@@ -65,7 +65,7 @@ async function() {
         await getDocs(
             collection(
                 db,
-                "listeCourses"
+                "listesCourses"
             )
         );
 
