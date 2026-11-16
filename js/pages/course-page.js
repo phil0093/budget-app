@@ -123,6 +123,9 @@ function dessinerCourses() {
                             type="text"
                             placeholder="Produit"
                             value="${ligne.produit || ""}"
+                            onblur="
+                                sauvegarderCourseActive()
+                            "
                         >
 
                         <input
@@ -130,13 +133,19 @@ function dessinerCourses() {
                             type="number"
                             min="1"
                             value="${ligne.quantite || 1}"
+                            onblur="
+                                sauvegarderCourseActive()
+                            "
                         >
-
+                        
                         <input
                             id="prix-${idLigne}"
                             type="number"
                             step="0.01"
                             value="${ligne.prix || 0}"
+                            onblur="
+                                sauvegarderCourseActive()
+                            "
                         >
 
                     </div>
@@ -287,6 +296,103 @@ async function() {
 
     courseActive =
         courses[0].nom;
+
+    dessinerCourses();
+
+};
+
+window.sauvegarderCourseActive =
+async function() {
+
+    const rayons = {};
+
+    RAYONS.forEach(rayon => {
+
+        rayons[rayon] = [];
+
+        document
+            .querySelectorAll(
+                `[data-rayon="${rayon}"]`
+            )
+            .forEach(ligne => {
+
+                const index =
+                    ligne.dataset.index;
+
+                const produit =
+                    document.getElementById(
+                        `produit-${rayon}-${index}`
+                    )?.value || "";
+
+                const quantite =
+                    parseInt(
+                        document.getElementById(
+                            `quantite-${rayon}-${index}`
+                        )?.value || 1
+                    );
+
+                const prix =
+                    parseFloat(
+                        document.getElementById(
+                            `prix-${rayon}-${index}`
+                        )?.value || 0
+                    );
+
+                if (
+                    produit.trim() !== ""
+                ) {
+
+                    rayons[rayon]
+                    .push({
+
+                        produit,
+
+                        quantite,
+
+                        prix,
+
+                        coche: false
+
+                    });
+
+                }
+
+            });
+
+        const contientLigneVide =
+            rayons[rayon]
+            .some(
+                l => !l.produit
+            );
+
+        if (
+            !contientLigneVide
+        ) {
+
+            rayons[rayon]
+            .push({
+
+                produit: "",
+
+                quantite: 1,
+
+                prix: 0,
+
+                coche: false
+
+            });
+
+        }
+
+    });
+
+    await sauvegarderCourse(
+        courseActive,
+        rayons
+    );
+
+    courses =
+        await chargerCourses();
 
     dessinerCourses();
 
