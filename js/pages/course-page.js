@@ -152,15 +152,11 @@ function dessinerCourses() {
                                 }
                             "
                             onblur="
-                                sauvegarderCourseActive()
-                            "
-                            oninput="
                                 majAffichageCourse(
                                     '${rayon}',
                                     ${index}
                                 )
                             "
-
                         >
 
                         <input
@@ -449,7 +445,7 @@ async function() {
 };
 
 window.majAffichageCourse =
-function(rayon, index) {
+async function(rayon, index) {
 
     const produit =
         document.getElementById(
@@ -466,19 +462,11 @@ function(rayon, index) {
         return;
     }
 
-    const ligne =
-        produit.closest(
-            ".ligneCourse"
-        );
-
-    const rayonDiv =
-        ligne.closest(
-            ".rayonCourse"
-        );
+    await sauvegarderCourseActive();
 
     const lignesDuRayon =
-        rayonDiv.querySelectorAll(
-            ".ligneCourse"
+        document.querySelectorAll(
+            `[data-rayon="${rayon}"]`
         );
 
     const derniereLigne =
@@ -486,17 +474,19 @@ function(rayon, index) {
             lignesDuRayon.length - 1
         ];
 
-    if (
-        ligne !== derniereLigne
-    ) {
+    const champProduit =
+        derniereLigne.querySelector(
+            'input[type="text"]'
+        );
 
-        return;
+    if (champProduit) {
+
+        champProduit.focus();
 
     }
 
-    sauvegarderCourseActive();
-    
 };
+
 
 window.toggleCourseCochee =
 function(checkbox) {
