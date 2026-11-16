@@ -443,6 +443,9 @@ async function() {
     courses =
         await chargerCourses();
 
+    dessinerCourses();
+
+
 };
 
 window.majAffichageCourse =
@@ -513,7 +516,12 @@ function(checkbox) {
         checkbox.checked
     );
 
-    sauvegarderCourseActive();
+    sauvegarderCourseActive()
+        .then(() => {
+    
+            dessinerCourses();
+    
+        });
 
 };
 
