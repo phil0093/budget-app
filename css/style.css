@@ -1113,10 +1113,16 @@ body {
 
     flex: 1;
     min-width: 0;
+
+    border: 1px solid #ccc;
+    background: white;
+
 }
 
 .ligneCourse input[type="number"] {
 
+    border: 1px solid #ccc;
+    background: white;
     width: 50px;
 
     flex-shrink: 0;
@@ -1145,11 +1151,7 @@ body {
 }
 
 .rayonTermine {
-
-    text-decoration: line-through;
-
-    opacity: 0.6;
-
+    color: #999;
 }
 
 .suggestionsProduits {
