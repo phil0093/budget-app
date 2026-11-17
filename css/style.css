@@ -1156,17 +1156,7 @@ body {
 
 .suggestionsProduits {
 
-    position: absolute;
-
-    background: white;
-
-    border: 1px solid #ddd;
-
-    border-radius: 8px;
-
-    z-index: 100;
-
-    width: 250px;
+    display: none;
 
 }
 
@@ -1182,5 +1172,11 @@ body {
 .suggestionProduit:hover {
 
     background: #f3f3f3;
+
+}
+
+.suggestionsProduits:empty {
+
+    display: none;
 
 }
