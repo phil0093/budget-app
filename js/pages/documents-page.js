@@ -111,32 +111,36 @@ async function() {
                     📁 ${dossier.nom}
                 </h2>
     
-                <button
-                    class="btnNouvelleListe"
-                    onclick="
-                        retourDocuments()
-                    "
-                >
-                    ⬅ Retour
-                </button>
-    
-                <button
-                    class="btnNouvelleListe"
-                    onclick="
-                        nouveauSousDossier()
-                    "
-                >
-                    ➕ Sous-dossier
-                </button>
-    
-                <button
-                    class="btnNouvelleListe"
-                    onclick="
-                        nouveauDocument()
-                    "
-                >
-                    📤 Ajouter un document
-                </button>
+                <div class="actionsDocuments">
+
+                    <button
+                        class="btnRetourDocument"
+                        onclick="
+                            retourDocuments()
+                        "
+                    >
+                        ⬅ Retour
+                    </button>
+                
+                    <button
+                        class="btnSousDossier"
+                        onclick="
+                            nouveauSousDossier()
+                        "
+                    >
+                        ➕ Sous-dossier
+                    </button>
+                
+                    <button
+                        class="btnAjoutDocument"
+                        onclick="
+                            nouveauDocument()
+                        "
+                    >
+                        📤 Document
+                    </button>
+                
+                </div>
     
                 ${sousDossiers}
 
