@@ -1,5 +1,7 @@
 export const RAYONS = [
 
+    "Bricolage",
+    
     "Bébé",
 
     "Animaux",
@@ -44,6 +46,8 @@ export const RAYONS = [
 
 export const ICONES_RAYONS = {
 
+    "Bricolage": "🔨",
+    
     "Bébé": "🍼",
 
     "Animaux": "🐶",
@@ -72,7 +76,7 @@ export const ICONES_RAYONS = {
 
     "Alcools": "🍷",
 
-    "Eau": "💧",
+    "Eaux": "💧",
 
     "Lait et ovoproduits": "🥚",
 
