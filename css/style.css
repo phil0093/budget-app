@@ -1151,12 +1151,10 @@ body {
 }
 
 .rayonTermine {
+
+    text-decoration: line-through;
+
     color: #999;
-}
-
-.suggestionsProduits {
-
-    display: none;
 
 }
 
@@ -1175,8 +1173,63 @@ body {
 
 }
 
-.suggestionsProduits:empty {
+.suggestionsProduits:empty,
+.suggestionsRecettes:empty,
+#suggestionsPopup:empty {
 
     display: none;
 
 }
+
+.suggestionsProduits,
+.suggestionsRecettes,
+#suggestionsPopup {
+
+    position: absolute;
+
+    background: #f0f7fb;
+
+    border: 1px solid #90c4df;
+
+    border-radius: 8px;
+
+    z-index: 100;
+
+    width: 250px;
+
+    margin-top: 2px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 2px 6px rgba(
+            0,
+            0,
+            0,
+            0.08
+        );
+
+}
+
+.suggestionProduit,
+.suggestionRecette {
+
+    padding: 6px 8px;
+
+    font-size: 12px;
+
+    font-style: italic;
+
+    cursor: pointer;
+
+    background: #f0f7fb;
+
+}
+
+.suggestionProduit:hover,
+.suggestionRecette:hover {
+
+    background: #d9edf7;
+
+}
+
