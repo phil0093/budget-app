@@ -452,6 +452,10 @@ async function(champProduit, rayon) {
         if (lignes.length > 1) {
     
             ligne.remove();
+
+            majRayonCoche(
+                ligne
+            );
     
         }
     
@@ -480,15 +484,6 @@ async function(champProduit, rayon) {
         lignes[
             lignes.length - 1
         ];
-    
-    console.log(
-        "gererLigneCourse",
-        rayon
-    );
-    console.log(
-        "ligne === derniereLigne",
-        ligne === derniereLigne
-    );
     
     if (ligne === derniereLigne) {
 
@@ -620,10 +615,6 @@ function(ligne) {
 
 window.ajouterLigneVide =
 function(rayon) {
-    console.log(
-        "Ajout ligne vide dans",
-        rayon
-    );
     
     const rayonDiv =
         document
