@@ -23,6 +23,7 @@ from "https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
 
 let dossiers = [];
 let dossierActif = null;
+let documents = [];
 
 window.afficherDocuments =
 async function() {
@@ -40,14 +41,47 @@ async function() {
 
     dossiers =
         await chargerDossiers();
-
+    
+    documents =
+        await chargerDocuments();
+    
     if (dossierActif) {
 
         const dossier =
             dossiers.find(
                 d => d.id === dossierActif
             );
-    
+
+        const documentsDossier =
+            documents
+            .filter(
+                d =>
+                    d.dossierId ===
+                    dossierActif
+            )
+            .map(doc => `
+                <div
+                    class="carteDocument"
+                    onclick="
+                        window.open(
+                            '${doc.url}',
+                            '_blank'
+                        )
+                    "
+                >
+        
+                    📄 ${doc.titre}
+        
+                    <br>
+        
+                    <small>
+                        ${doc.date}
+                    </small>
+        
+                </div>
+            `)
+            .join("");
+        
         const sousDossiers =
             dossiers
             .filter(
@@ -105,6 +139,8 @@ async function() {
                 </button>
     
                 ${sousDossiers}
+
+                ${documentsDossier}
     
             `;
     
