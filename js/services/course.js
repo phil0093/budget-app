@@ -5,7 +5,9 @@ import {
     getDocs,
     deleteDoc,
     doc,
-    setDoc
+    setDoc,
+    getDoc,
+    updateDoc
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
@@ -55,6 +57,50 @@ export async function supprimerCourse(
             "courses",
             nom
         )
+    );
+
+}
+
+export async function mettreAJourCoche(
+    nomCourse,
+    rayon,
+    index,
+    coche
+) {
+
+    const ref =
+        doc(
+            db,
+            "courses",
+            nomCourse
+        );
+
+    const snapshot =
+        await getDoc(
+            ref
+        );
+
+    if (!snapshot.exists()) {
+        return;
+    }
+
+    const data =
+        snapshot.data();
+
+    if (
+        !data.rayons?.[rayon]?.[index]
+    ) {
+        return;
+    }
+
+    data.rayons[rayon][index].coche =
+        coche;
+
+    await updateDoc(
+        ref,
+        {
+            rayons: data.rayons
+        }
     );
 
 }
