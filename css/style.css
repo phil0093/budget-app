@@ -1233,3 +1233,24 @@ body {
 
 }
 
+.carteDossier {
+
+    background: white;
+
+    border-radius: 10px;
+
+    padding: 12px;
+
+    margin-bottom: 8px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+}
+
+.carteDossier:hover {
+
+    background: #f0f7fb;
+
+}
