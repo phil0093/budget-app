@@ -22,6 +22,11 @@ import {
 from "../services/produit.js";
 
 import {
+    ICONES_RAYONS
+}
+from "../constants/rayons.js";
+
+import {
     formatDateLocale,
     masquerZones
 }
@@ -755,8 +760,10 @@ function(texte) {
             >
 
                 ${produit.nom}
-                -
-                ${produit.rayon}
+                (
+                    ${ICONES_RAYONS[produit.rayon]}
+                    ${produit.rayon}
+                )
 
             </div>
 
@@ -825,18 +832,40 @@ async function() {
         return;
     }
 
-    course.rayons[
-        produitSelectionne.rayon
-    ].push({
+    const rayon =
+        course.rayons[
+            produitSelectionne.rayon
+        ];
 
-        produit:
-            produitSelectionne.nom,
+    if (!rayon) {
 
-        quantite,
+        alert(
+            "Rayon introuvable."
+        );
+    
+        return;
+    
+    }
+    
+    const indexLigneVide =
+        rayon.findIndex(
+            ligne =>
+                !ligne.produit ||
+                ligne.produit.trim() === ""
+        );
 
-        coche: false
+    rayon.splice(
+        indexLigneVide,
+        0,
+        {
+            produit:
+                produitSelectionne.nom,
 
-    });
+            quantite,
+
+            coche: false
+        }
+    );
 
     await sauvegarderCourse(
         nomListe,
