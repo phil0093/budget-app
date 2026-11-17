@@ -601,6 +601,7 @@ function(checkbox) {
 
     sauvegarderCourseActive();
 
+    dessinerCourses();
 };
 
 window.majRayonCoche =
