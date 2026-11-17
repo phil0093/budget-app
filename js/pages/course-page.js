@@ -730,6 +730,13 @@ function(rayon) {
                 id="produit-${idLigne}"
                 type="text"
                 placeholder="Produit"
+                oninput="
+                    afficherSuggestions(
+                        this,
+                        '${rayon}',
+                        '${idLigne}'
+                    )
+                "
                 onblur="
                     gererLigneCourse(
                         this,
@@ -737,6 +744,11 @@ function(rayon) {
                     )
                 "
             >
+            
+            <div
+                id="suggestions-${idLigne}"
+                class="suggestionsProduits"
+            ></div>
 
             <input
                 id="quantite-${idLigne}"
