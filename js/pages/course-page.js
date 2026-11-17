@@ -196,7 +196,11 @@ function dessinerCourses() {
                             id="quantite-${idLigne}"
                             type="number"
                             min="1"
-                            value="${ligne.quantite || 1}"
+                            value="${
+                                ligne.produit
+                                    ? (ligne.quantite || 1)
+                                    : ""
+                            }"
                             onblur="
                                 sauvegarderCourseActive()
                             "
@@ -465,6 +469,29 @@ async function(champProduit, rayon) {
     const valeur =
         champProduit.value.trim();
 
+    if (valeur !== "") {
+
+        const ligne =
+            champProduit.closest(
+                ".ligneCourse"
+            );
+    
+        const quantite =
+            ligne.querySelector(
+                'input[type="number"]'
+            );
+    
+        if (
+            quantite &&
+            quantite.value === ""
+        ) {
+    
+            quantite.value = 1;
+    
+        }
+    
+    }
+    
     const existe =
         produits.some(
             produit =>
@@ -764,7 +791,7 @@ function(rayon) {
                 id="quantite-${idLigne}"
                 type="number"
                 min="1"
-                value="1"
+                value=""
                 onblur="
                     sauvegarderCourseActive()
                 "
