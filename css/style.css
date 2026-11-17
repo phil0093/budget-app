@@ -1274,3 +1274,66 @@ body {
 
 }
 
+.actionsDocuments {
+
+    display: flex;
+
+    gap: 8px;
+
+    margin-bottom: 15px;
+
+}
+
+.actionsDocuments button {
+
+    flex: 1;
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 10px;
+
+    font-weight: bold;
+
+    color: white;
+
+    cursor: pointer;
+
+}
+
+.btnRetourDocument {
+
+    background: #7f8c8d;
+
+}
+
+.btnSousDossier {
+
+    background: #27ae60;
+
+}
+
+.btnAjoutDocument {
+
+    background: #2980b9;
+
+}
+
+.btnRetourDocument:hover {
+
+    background: #6c7a7b;
+
+}
+
+.btnSousDossier:hover {
+
+    background: #1f8a4d;
+
+}
+
+.btnAjoutDocument:hover {
+
+    background: #216694;
+
+}
