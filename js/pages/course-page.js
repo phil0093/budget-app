@@ -12,8 +12,15 @@ import {
 } from "../constants/rayons.js";
 import {creerStructureCourses} from "../utils-courses.js";
 
+import {
+    chargerProduits,
+    ajouterProduit
+}
+from "../services/produit.js";
+
 let courses = [];
 let courseActive = "";
+let produits = [];
 
 window.afficherCourses =
 async function() {
@@ -31,6 +38,9 @@ async function() {
 
     courses =
         await chargerCourses();
+
+    produits =
+        await chargerProduits();
 
     if (
         courses.length === 0
@@ -433,37 +443,46 @@ async function(champProduit, rayon) {
     const valeur =
         champProduit.value.trim();
 
+    const existe =
+        produits.some(
+            produit =>
+                produit.nom.toLowerCase() ===
+                valeur.toLowerCase()
+                &&
+                produit.rayon === rayon
+        );
+
     if (valeur === "") {
 
         const ligne =
             champProduit.closest(
                 ".ligneCourse"
             );
-    
+
         const rayonDiv =
             ligne.closest(
                 ".rayonCourse"
             );
-    
+
         const lignes =
             rayonDiv.querySelectorAll(
                 ".ligneCourse"
             );
-    
+
         if (lignes.length > 1) {
-    
+
             ligne.remove();
 
             majRayonCoche(
                 ligne
             );
-    
+
         }
-    
+
         await sauvegarderCourseActive();
-    
+
         return;
-    
+
     }
 
     const ligne =
@@ -485,7 +504,7 @@ async function(champProduit, rayon) {
         lignes[
             lignes.length - 1
         ];
-    
+
     if (ligne === derniereLigne) {
 
         ajouterLigneVide(
@@ -498,22 +517,35 @@ async function(champProduit, rayon) {
         ligne.querySelector(
             'input[type="checkbox"]'
         );
-    
+
     if (checkbox) {
-    
+
         checkbox.style.visibility =
             "visible";
-    
+
     }
 
     majRayonCoche(
         ligne
     );
-    
+
+    if (
+        !existe
+    ) {
+
+        await ajouterProduit(
+            valeur,
+            rayon
+        );
+
+        produits =
+            await chargerProduits();
+
+    }
+
     await sauvegarderCourseActive();
 
 };
-
 
 window.toggleCourseCochee =
 function(checkbox) {
