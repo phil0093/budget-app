@@ -1,7 +1,15 @@
 import {
+    chargerDossiers,
+    ajouterDossier
+}
+from "../services/document-folder.js";
+
+import {
     masquerZones
 }
 from "../utils.js";
+
+let dossiers = [];
 
 window.afficherDocuments =
 async function() {
@@ -17,6 +25,23 @@ async function() {
         "budgetActions"
     );
 
+    dossiers =
+        await chargerDossiers();
+
+    const htmlDossiers =
+        dossiers
+        .filter(
+            d => !d.parent
+        )
+        .map(dossier => `
+            <div
+                class="carteDossier"
+            >
+                📁 ${dossier.nom}
+            </div>
+        `)
+        .join("");
+
     document
         .getElementById(
             "contenu"
@@ -28,6 +53,7 @@ async function() {
             </h2>
 
             <button
+                class="btnNouvelleListe"
                 onclick="
                     nouveauDossier()
                 "
@@ -36,6 +62,7 @@ async function() {
             </button>
 
             <button
+                class="btnNouvelleListe"
                 onclick="
                     nouveauDocument()
                 "
@@ -43,10 +70,28 @@ async function() {
                 📤 Ajouter un document
             </button>
 
-            <div
-                id="listeDocuments"
-            ></div>
+            ${htmlDossiers}
 
         `;
+
+};
+
+window.nouveauDossier =
+async function() {
+
+    const nom =
+        prompt(
+            "Nom du dossier"
+        );
+
+    if (!nom) {
+        return;
+    }
+
+    await ajouterDossier(
+        nom
+    );
+
+    afficherDocuments();
 
 };
