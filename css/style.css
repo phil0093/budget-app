@@ -443,6 +443,12 @@ body {
         );
 
 }
+.suggestionsProduits,
+#suggestionsPopup {
+
+    font-size: 0.9rem;
+
+}
 
 .listeContainer {
     background: white;
@@ -1148,22 +1154,31 @@ body {
 
 .suggestionsProduits {
 
+    position: absolute;
+
     background: white;
 
     border: 1px solid #ddd;
 
     border-radius: 8px;
 
-    margin-top: 2px;
+    z-index: 100;
 
-    overflow: hidden;
+    width: 250px;
 
 }
 
 .suggestionProduit {
 
-    padding: 8px;
+    padding: 6px 8px;
+
+    font-size: inherit;
 
     cursor: pointer;
+
+}
+.suggestionProduit:hover {
+
+    background: #f3f3f3;
 
 }
