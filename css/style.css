@@ -1254,3 +1254,23 @@ body {
     background: #f0f7fb;
 
 }
+
+.carteDocument {
+
+    background: white;
+
+    border-radius: 10px;
+
+    padding: 10px;
+
+    margin-top: 6px;
+
+    cursor: pointer;
+
+}
+.carteDocument:hover {
+
+    background: #f0f7fb;
+
+}
+
