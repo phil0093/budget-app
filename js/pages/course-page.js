@@ -805,20 +805,35 @@ function(
 
     }
 
+    const recherche =
+        normaliserTexte(
+            texte
+        );
+    
     const suggestions =
         produits
-        .filter(produit =>
-            produit.rayon === rayon
-            &&
-            normaliserTexte(
-                produit.nom
-            )
-            .includes(
+        .filter(produit => {
+    
+            if (
+                produit.rayon !== rayon
+            ) {
+                return false;
+            }
+    
+            const mots =
                 normaliserTexte(
-                    texte
+                    produit.nom
                 )
-            )
-        )
+                .split(" ");
+    
+            return mots.some(
+                mot =>
+                    mot.startsWith(
+                        recherche
+                    )
+            );
+    
+        })
         .sort(
             (a, b) =>
                 a.nom.localeCompare(
