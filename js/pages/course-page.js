@@ -502,6 +502,10 @@ async function(champProduit, rayon) {
             "visible";
     
     }
+
+    majRayonCoche(
+        ligne
+    );
     
     await sauvegarderCourseActive();
 
@@ -587,11 +591,23 @@ function(ligne) {
 
     });
 
-    titreRayon.classList.toggle(
-        "rayonTermine",
+    if (
         total > 0 &&
         total === coches
-    );
+    ) {
+    
+        titreRayon.classList.add(
+            "rayonTermine"
+        );
+    
+    }
+    else {
+    
+        titreRayon.classList.remove(
+            "rayonTermine"
+        );
+    
+    }
 
 };
 
