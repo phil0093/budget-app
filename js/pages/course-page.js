@@ -67,6 +67,15 @@ async function() {
 
 };
 
+function normaliserTexte(texte) {
+
+    return texte
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+}
+
 function dessinerCourses() {
 
     const course =
@@ -162,6 +171,13 @@ function dessinerCourses() {
                                     : ""
                                 }
                             "
+                            oninput="
+                                afficherSuggestions(
+                                    this,
+                                    '${rayon}',
+                                    '${idLigne}'
+                                )
+                            "
                             onblur="
                                 gererLigneCourse(
                                     this,
@@ -169,6 +185,11 @@ function dessinerCourses() {
                                 )
                             "
                         >
+                        
+                        <div
+                            id="suggestions-${idLigne}"
+                            class="suggestionsProduits"
+                        ></div>
 
                         <input
                             id="quantite-${idLigne}"
@@ -446,8 +467,12 @@ async function(champProduit, rayon) {
     const existe =
         produits.some(
             produit =>
-                produit.nom.toLowerCase() ===
-                valeur.toLowerCase()
+                normaliserTexte(
+                    produit.nom
+                ) ===
+                normaliserTexte(
+                    valeur
+                )
                 &&
                 produit.rayon === rayon
         );
@@ -727,5 +752,114 @@ function(rayon) {
 
         `
     );
+
+};
+
+window.afficherSuggestions =
+function(
+    champProduit,
+    rayon,
+    idLigne
+) {
+
+    const texte =
+        champProduit.value
+        .trim()
+        .toLowerCase();
+
+    const conteneur =
+        document.getElementById(
+            `suggestions-${idLigne}`
+        );
+
+    if (
+        !conteneur
+    ) {
+        return;
+    }
+
+    if (
+        texte === ""
+    ) {
+
+        conteneur.innerHTML = "";
+
+        return;
+
+    }
+
+    const suggestions =
+        produits
+        .filter(produit =>
+            produit.rayon === rayon
+            &&
+            normaliserTexte(
+                produit.nom
+            )
+            .includes(
+                normaliserTexte(
+                    texte
+                )
+            )
+        )
+        .sort(
+            (a, b) =>
+                a.nom.localeCompare(
+                    b.nom
+                )
+        )
+        .slice(0, 5);
+
+    conteneur.innerHTML =
+        suggestions
+        .map(produit => `
+
+            <div
+                class="suggestionProduit"
+                onclick="
+                    choisirProduit(
+                        '${idLigne}',
+                        '${produit.nom.replace(/'/g, "\\'")}'
+                    )
+                "
+            >
+
+                ${produit.nom}
+
+            </div>
+
+        `)
+        .join("");
+
+};
+
+window.choisirProduit =
+function(
+    idLigne,
+    nomProduit
+) {
+
+    const champ =
+        document.getElementById(
+            `produit-${idLigne}`
+        );
+
+    if (!champ) {
+        return;
+    }
+
+    champ.value =
+        nomProduit;
+
+    const suggestions =
+        document.getElementById(
+            `suggestions-${idLigne}`
+        );
+
+    if (suggestions) {
+
+        suggestions.innerHTML = "";
+
+    }
 
 };
