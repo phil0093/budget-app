@@ -848,7 +848,7 @@ async function() {
         course.rayons[
             produitSelectionne.rayon
         ];
-
+    
     if (!rayon) {
 
         alert(
@@ -858,36 +858,104 @@ async function() {
         return;
     
     }
-    
-    const indexLigneVide =
-        rayon.findIndex(
+
+    const ligneExistante =
+        rayon.find(
             ligne =>
-                !ligne.produit ||
-                ligne.produit.trim() === ""
+                ligne.produit &&
+                normaliserTexte(
+                    ligne.produit.trim()
+                ) ===
+                normaliserTexte(
+                    produitSelectionne.nom.trim()
+                )
         );
+    
+    if (ligneExistante) {
 
-    rayon.splice(
-        indexLigneVide,
-        0,
-        {
-            produit:
-                produitSelectionne.nom,
-
-            quantite,
-
-            coche: false
+        const confirmer =
+            confirm(
+                `${produitSelectionne.nom} est déjà présent dans cette liste.\n\nAjouter la quantité à la ligne existante ?`
+            );
+    
+        if (!confirmer) {
+    
+            produitSelectionne = null;
+    
+            document.getElementById(
+                "produitPopup"
+            ).value = "";
+    
+            document.getElementById(
+                "quantitePopup"
+            ).value = 1;
+    
+            document.getElementById(
+                "suggestionsPopup"
+            ).innerHTML = "";
+    
+            document.getElementById(
+                "produitPopup"
+            ).focus();
+    
+            return;
+    
         }
-    );
+    
+        ligneExistante.quantite =
+            Number(
+                ligneExistante.quantite || 0
+            ) +
+            Number(
+                quantite || 0
+            );
+    
+    }
+    else {
+    
+        const indexLigneVide =
+            rayon.findIndex(
+                ligne =>
+                    !ligne.produit ||
+                    ligne.produit.trim() === ""
+            );
+    
+        rayon.splice(
+            indexLigneVide,
+            0,
+            {
+                produit:
+                    produitSelectionne.nom,
+    
+                quantite,
+    
+                coche: false
+            }
+        );
+    
+    }
 
     await sauvegarderCourse(
         nomListe,
         course.rayons
     );
-
-    document
-        .getElementById(
-            "popupAjoutCourse"
-        )
-        .remove();
+    
+    produitSelectionne = null;
+    
+    document.getElementById(
+        "produitPopup"
+    ).value = "";
+    
+    document.getElementById(
+        "quantitePopup"
+    ).value = 1;
+    
+    document.getElementById(
+        "suggestionsPopup"
+    ).innerHTML = "";
+    
+    document.getElementById(
+        "produitPopup"
+    ).focus();
 
 };
