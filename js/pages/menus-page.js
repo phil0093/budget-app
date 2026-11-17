@@ -730,18 +730,30 @@ function(texte) {
 
     const suggestions =
         produitsPopup
-        .filter(produit =>
-
-            normaliserTexte(
-                produit.nom
-            )
-            .includes(
-                recherche
-            )
-
+        .filter(produit => {
+    
+            const mots =
+                normaliserTexte(
+                    produit.nom
+                )
+                .split(" ");
+    
+            return mots.some(
+                mot =>
+                    mot.startsWith(
+                        recherche
+                    )
+            );
+    
+        })
+        .sort(
+            (a, b) =>
+                a.nom.localeCompare(
+                    b.nom
+                )
         )
-        .slice(0, 10);
-
+        .slice(0, 5);
+    
     document
         .getElementById(
             "suggestionsPopup"
