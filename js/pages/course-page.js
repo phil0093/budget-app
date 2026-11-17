@@ -46,24 +46,35 @@ async function() {
     if (
         courses.length === 0
     ) {
-
-        await sauvegarderCourse(
-            "Ma liste",
-            creerStructureCourses()
-        );
-
-        courses =
-            await chargerCourses();
-
+    
+        document.getElementById(
+            "contenu"
+        ).innerHTML = `
+    
+            <h2>🛒 Courses</h2>
+    
+            <button
+                class="btnNouvelleListe"
+                onclick="
+                    nouvelleCourse()
+                "
+            >
+                ➕ Nouvelle liste
+            </button>
+    
+        `;
+    
+        return;
+    
     }
-
+    
     if (!courseActive) {
-
+    
         courseActive =
             courses[0].nom;
-
+    
     }
-
+    
     dessinerCourses();
 
 };
@@ -320,15 +331,14 @@ async function() {
         nom,
         creerStructureCourses()
     );
-
+    
     courses =
         await chargerCourses();
-
+    
     courseActive =
         nom;
-
-    dessinerCourses();
-
+    
+    afficherCourses();
 };
 
 window.supprimerCourseActive =
@@ -353,22 +363,17 @@ async function() {
     if (
         courses.length === 0
     ) {
-
-        await sauvegarderCourse(
-            "Ma liste",
-            creerStructureCourses()
-        );
-
-        courses =
-            await chargerCourses();
-
+    
+        courseActive = "";
+    
+        afficherCourses();
+    
+        return;
+    
     }
-
+    
     courseActive =
         courses[0].nom;
-
-    courses =
-        await chargerCourses();
     
     dessinerCourses();
 
@@ -698,15 +703,13 @@ async function(checkbox) {
             if (
                 courses.length === 0
             ) {
-    
-                await sauvegarderCourse(
-                    "Ma liste",
-                    creerStructureCourses()
-                );
-    
-                courses =
-                    await chargerCourses();
-    
+            
+                courseActive = "";
+            
+                afficherCourses();
+            
+                return;
+            
             }
     
             courseActive =
