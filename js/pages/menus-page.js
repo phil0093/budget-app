@@ -11,6 +11,17 @@ import {
 from "../services/recette.js";
 
 import {
+    chargerCourses,
+    sauvegarderCourse
+}
+from "../services/course.js";
+
+import {
+    chargerProduits
+}
+from "../services/produit.js";
+
+import {
     formatDateLocale,
     masquerZones
 }
@@ -18,6 +29,9 @@ from "../utils.js";
 
 let recettes = [];
 let recettesLieesMenus = {};
+let produitsPopup = [];
+let listesCoursesPopup = [];
+let produitSelectionne = null;
 
 window.afficherMenus = async function() {
     
@@ -95,7 +109,14 @@ window.afficherMenus = async function() {
     
         <tr>
         
-            <td>${jour}</td>
+            <td
+                class="jourMenu"
+                onclick="
+                    ouvrirPopupAjoutCourse()
+                "
+            >
+                ${jour}
+            </td>
         
             <td class="caseMenu">
 
@@ -577,3 +598,255 @@ async function(date) {
 
 };
 
+window.ouvrirPopupAjoutCourse =
+async function(jour) {
+
+    const popupExistant =
+        document.getElementById(
+            "popupAjoutCourse"
+        );
+    
+    if (popupExistant) {
+    
+        popupExistant.remove();
+    
+    }
+    
+    produitsPopup =
+        await chargerProduits();
+
+    listesCoursesPopup =
+        await chargerCourses();
+
+    produitSelectionne =
+        null;
+
+    const options =
+        listesCoursesPopup
+        .map(course => `
+            <option
+                value="${course.nom}"
+            >
+                ${course.nom}
+            </option>
+        `)
+        .join("");
+
+    document.body.insertAdjacentHTML(
+        "beforeend",
+        `
+
+        <div
+            id="popupAjoutCourse"
+            class="popupFond"
+        >
+
+            <div
+                class="popupContenu"
+            >
+
+                <h3>
+                    Ajouter à une liste
+                </h3>
+
+                <select
+                    id="listeCoursePopup"
+                >
+                    ${options}
+                </select>
+
+                <input
+                    id="produitPopup"
+                    type="text"
+                    placeholder="Produit"
+                    oninput="
+                        rechercherProduitPopup(
+                            this.value
+                        )
+                    "
+                >
+
+                <div
+                    id="suggestionsPopup"
+                ></div>
+
+                <input
+                    id="quantitePopup"
+                    type="number"
+                    min="1"
+                    value="1"
+                >
+
+                <button
+                    onclick="
+                        ajouterProduitListePopup()
+                    "
+                >
+                    Ajouter
+                </button>
+
+                <button
+                    onclick="
+                        document
+                            .getElementById(
+                                'popupAjoutCourse'
+                            )
+                            .remove()
+                    "
+                >
+                    Fermer
+                </button>
+
+            </div>
+
+        </div>
+
+        `
+    );
+
+};
+
+function normaliserTexte(texte) {
+
+    return texte
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+}
+
+window.rechercherProduitPopup =
+function(texte) {
+
+    const recherche =
+        normaliserTexte(
+            texte
+        );
+
+    const suggestions =
+        produitsPopup
+        .filter(produit =>
+
+            normaliserTexte(
+                produit.nom
+            )
+            .includes(
+                recherche
+            )
+
+        )
+        .slice(0, 10);
+
+    document
+        .getElementById(
+            "suggestionsPopup"
+        )
+        .innerHTML = suggestions
+        .map(produit => `
+
+            <div
+                class="suggestionProduit"
+                onclick="
+                    choisirProduitPopup(
+                        '${produit.nom.replace(/'/g, "\\'")}',
+                        '${produit.rayon}'
+                    )
+                "
+            >
+
+                ${produit.nom}
+                -
+                ${produit.rayon}
+
+            </div>
+
+        `)
+        .join("");
+
+};
+
+window.choisirProduitPopup =
+function(
+    nom,
+    rayon
+) {
+
+    produitSelectionne = {
+
+        nom,
+
+        rayon
+
+    };
+
+    document.getElementById(
+        "produitPopup"
+    ).value = nom;
+
+    document.getElementById(
+        "suggestionsPopup"
+    ).innerHTML = "";
+
+};
+
+window.ajouterProduitListePopup =
+async function() {
+
+    if (
+        !produitSelectionne
+    ) {
+
+        alert(
+            "Choisissez un produit existant."
+        );
+
+        return;
+
+    }
+
+    const nomListe =
+        document.getElementById(
+            "listeCoursePopup"
+        ).value;
+
+    const quantite =
+        parseInt(
+            document.getElementById(
+                "quantitePopup"
+            ).value
+        );
+
+    const course =
+        listesCoursesPopup.find(
+            c => c.nom === nomListe
+        );
+
+    if (!course) {
+        return;
+    }
+
+    course.rayons[
+        produitSelectionne.rayon
+    ].push({
+
+        produit:
+            produitSelectionne.nom,
+
+        quantite,
+
+        coche: false
+
+    });
+
+    await sauvegarderCourse(
+        nomListe,
+        course.rayons
+    );
+
+    document
+        .getElementById(
+            "popupAjoutCourse"
+        )
+        .remove();
+
+};
