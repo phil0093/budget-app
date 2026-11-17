@@ -434,9 +434,31 @@ async function(champProduit, rayon) {
 
     if (valeur === "") {
 
+        const ligne =
+            champProduit.closest(
+                ".ligneCourse"
+            );
+    
+        const rayonDiv =
+            ligne.closest(
+                ".rayonCourse"
+            );
+    
+        const lignes =
+            rayonDiv.querySelectorAll(
+                ".ligneCourse"
+            );
+    
+        if (lignes.length > 1) {
+    
+            ligne.remove();
+    
+        }
+    
         await sauvegarderCourseActive();
+    
         return;
-
+    
     }
 
     const ligne =
@@ -458,7 +480,16 @@ async function(champProduit, rayon) {
         lignes[
             lignes.length - 1
         ];
-
+    
+    console.log(
+        "gererLigneCourse",
+        rayon
+    );
+    console.log(
+        "ligne === derniereLigne",
+        ligne === derniereLigne
+    );
+    
     if (ligne === derniereLigne) {
 
         ajouterLigneVide(
@@ -589,7 +620,11 @@ function(ligne) {
 
 window.ajouterLigneVide =
 function(rayon) {
-
+    console.log(
+        "Ajout ligne vide dans",
+        rayon
+    );
+    
     const rayonDiv =
         document
             .querySelector(
