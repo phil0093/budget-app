@@ -631,7 +631,93 @@ async function(checkbox) {
     courses =
         await chargerCourses();
 
+    const course =
+        courses.find(
+            c => c.nom === courseActive
+        );
+
+    if (!course) {
+
+        dessinerCourses();
+        return;
+    
+    }
+    
+    let toutCoche = true;
+    let nbProduits = 0;
+
+    
+    RAYONS.forEach(rayon => {
+    
+        const lignes =
+            course.rayons?.[rayon] || [];
+    
+        lignes.forEach(ligne => {
+    
+            if (
+                ligne.produit &&
+                ligne.produit.trim() !== ""
+            ) {
+            
+                nbProduits++;
+            
+                if (
+                    !ligne.coche
+                ) {
+            
+                    toutCoche = false;
+            
+                }
+            
+            }
+    
+        });
+    
+    });
+    
+    if (
+        nbProduits > 0 &&
+        toutCoche
+    ) {
+
+    
+        const supprimer =
+            confirm(
+                `Tous les produits de "${courseActive}" sont cochés.\n\nVoulez-vous supprimer cette liste ?`
+            );
+    
+        if (supprimer) {
+    
+            await supprimerCourse(
+                courseActive
+            );
+    
+            courses =
+                await chargerCourses();
+    
+            if (
+                courses.length === 0
+            ) {
+    
+                await sauvegarderCourse(
+                    "Ma liste",
+                    creerStructureCourses()
+                );
+    
+                courses =
+                    await chargerCourses();
+    
+            }
+    
+            courseActive =
+                courses[0].nom;
+    
+        }
+    
+    }
+    
     dessinerCourses();
+
 
 };
 
