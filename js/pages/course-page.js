@@ -578,7 +578,7 @@ async function(champProduit, rayon) {
 };
 
 window.toggleCourseCochee =
-function(checkbox) {
+async function(checkbox) {
 
     const ligne =
         checkbox.closest(
@@ -599,9 +599,10 @@ function(checkbox) {
         ligne
     );
 
-    sauvegarderCourseActive();
+    await sauvegarderCourseActive();
 
     dessinerCourses();
+
 };
 
 window.majRayonCoche =
