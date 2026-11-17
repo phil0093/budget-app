@@ -103,10 +103,11 @@ function dessinerCourses() {
             );
         
         const toutesCochees =
-            lignesAvecProduit.length > 0 &&
+            lignesAvecProduit.length === 0 ||
             lignesAvecProduit.every(
                 ligne => ligne.coche
             );
+
         
         const lignesHtml =
             lignesRayon
@@ -594,7 +595,7 @@ function(ligne) {
     });
 
     if (
-        total > 0 &&
+        total === 0 ||
         total === coches
     ) {
     
