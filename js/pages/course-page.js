@@ -1,7 +1,8 @@
 import {
     chargerCourses,
     sauvegarderCourse,
-    supprimerCourse
+    supprimerCourse,
+    mettreAJourCoche
 }
 from "../services/course.js";
 
@@ -585,21 +586,23 @@ async function(checkbox) {
             ".ligneCourse"
         );
 
-    const produit =
-        ligne.querySelector(
-            'input[type="text"]'
+    const rayon =
+        ligne.dataset.rayon;
+
+    const index =
+        parseInt(
+            ligne.dataset.index
         );
 
-    produit.classList.toggle(
-        "courseCochee",
+    await mettreAJourCoche(
+        courseActive,
+        rayon,
+        index,
         checkbox.checked
     );
 
-    majRayonCoche(
-        ligne
-    );
-
-    await sauvegarderCourseActive();
+    courses =
+        await chargerCourses();
 
     dessinerCourses();
 
