@@ -14,7 +14,6 @@ export function creerStructureCourses() {
             {
                 produit: "",
                 quantite: 1,
-                prix: 0,
                 coche: false
             }
 
