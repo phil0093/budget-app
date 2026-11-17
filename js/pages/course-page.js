@@ -169,19 +169,6 @@ function dessinerCourses() {
                             "
                         >
                         
-                        <input
-                            id="prix-${idLigne}"
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            value="${Number(
-                                ligne.prix || 0
-                            ).toFixed(2)}"
-                            onblur="
-                                sauvegarderCourseActive()
-                            "
-                        >
-
                     </div>
 
                 `;
@@ -380,13 +367,6 @@ async function() {
                         )?.value || 1
                     );
 
-                const prix =
-                    parseFloat(
-                        document.getElementById(
-                            `prix-${rayon}-${index}`
-                        )?.value || 0
-                    );
-
                 const coche =
                     document.getElementById(
                         `coche-${rayon}-${index}`
@@ -402,8 +382,6 @@ async function() {
                         produit,
                     
                         quantite,
-                    
-                        prix,
                     
                         coche
                     
@@ -429,8 +407,6 @@ async function() {
                 produit: "",
 
                 quantite: 1,
-
-                prix: 0,
 
                 coche: false
 
@@ -687,18 +663,7 @@ function(rayon) {
                     sauvegarderCourseActive()
                 "
             >
-
-            <input
-                id="prix-${idLigne}"
-                type="number"
-                min="0"
-                step="0.01"
-                value="0.00"
-                onblur="
-                    sauvegarderCourseActive()
-                "
-            >
-
+            
         </div>
 
         `
