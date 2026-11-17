@@ -1103,3 +1103,25 @@ body {
     opacity: 0.6;
 
 }
+
+.suggestionsProduits {
+
+    background: white;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+
+    margin-top: 2px;
+
+    overflow: hidden;
+
+}
+
+.suggestionProduit {
+
+    padding: 8px;
+
+    cursor: pointer;
+
+}
