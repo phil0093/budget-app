@@ -491,6 +491,18 @@ async function(champProduit, rayon) {
 
     }
 
+    const checkbox =
+        ligne.querySelector(
+            'input[type="checkbox"]'
+        );
+    
+    if (checkbox) {
+    
+        checkbox.style.visibility =
+            "visible";
+    
+    }
+    
     await sauvegarderCourseActive();
 
 };
@@ -514,7 +526,72 @@ function(checkbox) {
         checkbox.checked
     );
 
+    majRayonCoche(
+        ligne
+    );
+
     sauvegarderCourseActive();
+
+};
+
+window.majRayonCoche =
+function(ligne) {
+
+    const rayonDiv =
+        ligne.closest(
+            ".rayonCourse"
+        );
+
+    const titreRayon =
+        rayonDiv.querySelector(
+            "h3"
+        );
+
+    const produits =
+        rayonDiv.querySelectorAll(
+            ".ligneCourse"
+        );
+
+    let total = 0;
+    let coches = 0;
+
+    produits.forEach(ligneProduit => {
+
+        const texte =
+            ligneProduit.querySelector(
+                'input[type="text"]'
+            );
+
+        if (
+            texte &&
+            texte.value.trim() !== ""
+        ) {
+
+            total++;
+
+            const coche =
+                ligneProduit.querySelector(
+                    'input[type="checkbox"]'
+                );
+
+            if (
+                coche &&
+                coche.checked
+            ) {
+
+                coches++;
+
+            }
+
+        }
+
+    });
+
+    titreRayon.classList.toggle(
+        "rayonTermine",
+        total > 0 &&
+        total === coches
+    );
 
 };
 
