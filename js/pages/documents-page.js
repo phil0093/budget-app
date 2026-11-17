@@ -99,6 +99,7 @@ async function() {
         return;
     
     }
+    
     const htmlDossiers =
         dossiers
         .filter(
@@ -117,17 +118,17 @@ async function() {
             </div>
         `)
         .join("");
-
+    
     document
         .getElementById(
             "contenu"
         )
         .innerHTML = `
-
+    
             <h2>
                 📁 Documents
             </h2>
-
+    
             <button
                 class="btnNouvelleListe"
                 onclick="
@@ -136,20 +137,10 @@ async function() {
             >
                 ➕ Nouveau dossier
             </button>
-
-            <button
-                class="btnNouvelleListe"
-                onclick="
-                    nouveauDocument()
-                "
-            >
-                📤 Ajouter un document
-            </button>
-
+    
             ${htmlDossiers}
-
+    
         `;
-
 };
 
 window.nouveauDossier =
@@ -209,5 +200,24 @@ function() {
     dossierActif = null;
 
     afficherDocuments();
+
+};
+
+window.nouveauDocument =
+function() {
+
+    if (!dossierActif) {
+
+        alert(
+            "Sélectionnez un dossier."
+        );
+
+        return;
+
+    }
+
+    alert(
+        "Ajout de document à venir."
+    );
 
 };
