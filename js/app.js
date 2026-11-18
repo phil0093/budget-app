@@ -96,6 +96,10 @@ async function() {
         "zoneBudget"
     ).style.display = "block";
 
+    document.getElementById(
+        "searchButton"
+    ).style.display = "block";
+    
     masquerZones("budgetActions");
 
     const rdvsMois =
