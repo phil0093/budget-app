@@ -16,7 +16,9 @@ import {creerStructureCourses} from "../utils-courses.js";
 
 import {
     chargerProduits,
-    ajouterProduit
+    ajouterProduit,
+    modifierProduit,
+    supprimerProduit
 }
 from "../services/produit.js";
 
@@ -54,14 +56,27 @@ async function() {
     
             <h2>🛒 Courses</h2>
     
-            <button
-                class="btnNouvelleListe"
-                onclick="
-                    nouvelleCourse()
-                "
-            >
-                ➕ Nouvelle liste
-            </button>
+            <div class="actionsListes">
+
+                <button
+                    class="btnNouvelleListe"
+                    onclick="
+                        nouvelleCourse()
+                    "
+                >
+                    ➕ Nouvelle liste
+                </button>
+            
+                <button
+                    class="btnGestionProduits"
+                    onclick="
+                        ouvrirGestionProduits()
+                    "
+                >
+                    🗃️ Gérer la base
+                </button>
+            
+            </div>
     
         `;
     
@@ -273,14 +288,27 @@ function dessinerCourses() {
                 🛒 Courses
             </h2>
 
-            <button
-                class="btnNouvelleListe"
-                onclick="
-                    nouvelleCourse()
-                "
-            >
-                ➕ Nouvelle liste
-            </button>
+            <div class="actionsListes">
+
+                <button
+                    class="btnNouvelleListe"
+                    onclick="
+                        nouvelleCourse()
+                    "
+                >
+                    ➕ Nouvelle liste
+                </button>
+            
+                <button
+                    class="btnGestionProduits"
+                    onclick="
+                        ouvrirGestionProduits()
+                    "
+                >
+                    🗃️ Gérer la base
+                </button>
+            
+            </div>
             
             <div class="enteteCourses">
 
@@ -1151,5 +1179,249 @@ function(rayonDiv) {
         );
 
     }
+
+};
+
+window.ouvrirGestionProduits =
+async function() {
+
+    const popupExistante =
+        document.getElementById(
+            "popupProduitsBDD"
+        );
+
+    if (popupExistante) {
+
+        popupExistante.remove();
+
+    }
+    
+    const produits =
+        await chargerProduits();
+
+    const htmlProduits =
+        produits
+        .sort(
+            (a, b) =>
+                a.nom.localeCompare(
+                    b.nom,
+                    "fr",
+                    {
+                        sensitivity:
+                            "base"
+                    }
+                )
+        )
+        .map(produit => `
+
+            <div class="ligneProduitBDD">
+
+                <div class="infosProduitBDD">
+
+                    <strong>
+                        ${produit.nom}
+                    </strong>
+
+                    <small>
+
+                        ${ICONES_RAYONS[produit.rayon] || "📦"}
+                        ${produit.rayon}
+                    
+                    </small>
+
+                </div>
+
+                <div
+                    class="actionsProduitBDD"
+                >
+
+                    <button
+                        class="btn-action"
+                        onclick="
+                            modifierProduitBDD(
+                                '${produit.id}'
+                            )
+                        "
+                    >
+                        ✏️
+                    </button>
+
+                    <button
+                        class="btn-action"
+                        onclick="
+                            supprimerProduitBDD(
+                                '${produit.id}'
+                            )
+                        "
+                    >
+                        🗑️
+                    </button>
+
+                </div>
+
+            </div>
+
+        `)
+        .join("");
+
+    document.body.insertAdjacentHTML(
+        "beforeend",
+        `
+
+        <div
+            id="popupProduitsBDD"
+            class="popupFond"
+        >
+
+            <div
+                class="popupContenu"
+                style="
+                    max-height:80vh;
+                    overflow-y:auto;
+                "
+            >
+
+                <h3>
+                    Gestion des produits
+                </h3>
+
+                ${htmlProduits}
+
+                <div
+                    class="actionsCoursePopup"
+                    style="
+                        margin-top:15px;
+                    "
+                >
+
+                    <button
+                        class="
+                            btnFermerCoursePopup
+                        "
+                        onclick="
+                            document
+                                .getElementById(
+                                    'popupProduitsBDD'
+                                )
+                                .remove()
+                        "
+                    >
+                        Fermer
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `
+    );
+
+};
+
+window.modifierProduitBDD =
+async function(id) {
+
+    const produits =
+        await chargerProduits();
+
+    const produit =
+        produits.find(
+            p => p.id === id
+        );
+
+    if (!produit) {
+        return;
+    }
+
+    const nouveauNom =
+        prompt(
+            "Nom du produit",
+            produit.nom
+        );
+
+    if (
+        !nouveauNom ||
+        nouveauNom.trim() === ""
+    ) {
+        return;
+    }
+
+    const existe =
+        produits.some(
+            p =>
+                p.id !== id &&
+                normaliserTexte(
+                    p.nom
+                ) ===
+                normaliserTexte(
+                    nouveauNom
+                )
+        );
+    
+    if (existe) {
+    
+        alert(
+            "Ce produit existe déjà."
+        );
+    
+        return;
+    
+    }
+    
+    await modifierProduit(
+        id,
+        {
+            nom:
+                nouveauNom.trim()
+        }
+    );
+
+    document
+        .getElementById(
+            "popupProduitsBDD"
+        )
+        .remove();
+
+    ouvrirGestionProduits();
+
+};
+
+window.supprimerProduitBDD =
+async function(id) {
+
+    const produits =
+        await chargerProduits();
+
+    const produit =
+        produits.find(
+            p => p.id === id
+        );
+
+    if (!produit) {
+        return;
+    }
+
+    const confirmation =
+        confirm(
+            `Supprimer "${produit.nom}" ?`
+        );
+
+    if (!confirmation) {
+        return;
+    }
+
+    await supprimerProduit(
+        id
+    );
+
+    document
+        .getElementById(
+            "popupProduitsBDD"
+        )
+        .remove();
+
+    ouvrirGestionProduits();
 
 };
