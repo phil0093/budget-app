@@ -71,17 +71,38 @@ body {
 
 .saisie input[type="date"] {
 
-    max-width: 100%;
-
     width: 100%;
 
-    font-size: 14px;
+    box-sizing: border-box;
+
+    padding: 8px 10px;
+
+    min-height: 42px;
+
+    font-size: 16px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 4px;
+
+}
+@supports (-webkit-touch-callout: none) {
+
+    .saisie input[type="date"] {
+
+        -webkit-appearance: none;
+
+        appearance: none;
+
+        min-height: 44px;
+
+    }
 
 }
 
 .saisie button {
     width: 100%;
-    padding: 10px;
+    padding: 8px 10px;
 }
 
 .rdvAccueil {
@@ -820,6 +841,31 @@ body {
     z-index: 5000;
 }
 
+#modalRdvLecture .modalCalendrierContenu {
+
+    background: #f7fbff;
+
+    border: 2px solid #90c4df;
+
+    box-shadow:
+        0 8px 20px rgba(
+            0,
+            0,
+            0,
+            0.15
+        );
+
+}
+
+#modalRdvLecture input {
+
+    background: #eef6fb;
+
+    color: #333;
+
+    border: 1px solid #c8dfea;
+
+}
 .modalCalendrierContenu {
 
     background: white;
