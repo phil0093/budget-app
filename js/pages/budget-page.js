@@ -7,7 +7,8 @@ import {
     ajouterDepenseFirestore,
     chargerDepenses,
     supprimerDepenseFirestore,
-    modifierDepenseFirestore
+    modifierDepenseFirestore,
+    chargerToutesLesDepenses
 } from "../services/depenses.js";
 
 import {
@@ -127,7 +128,7 @@ window.afficherDepenses = async function(reset = true) {
     }
     
     const depenses =
-        await chargerDepenses(moisCourant);
+        await chargerToutesLesDepenses();
 
     if (depenses.length === 0) {
 
