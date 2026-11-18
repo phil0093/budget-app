@@ -90,11 +90,18 @@ body {
 
     border-radius: 10px;
 
-    padding: 10px;
+    padding: 12px;
 
     margin-bottom: 8px;
 
     cursor: pointer;
+
+    box-shadow: 0 2px 5px rgba(
+        0,
+        0,
+        0,
+        0.08
+    );
 
 }
 .rdvAccueil:hover {
@@ -102,6 +109,12 @@ body {
     background: #f0f7fb;
 
 }
+.rdvAccueil strong {
+
+    color: #14597a;
+
+}
+
 #budgetActions {
     display: flex;
     gap: 8px;
