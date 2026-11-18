@@ -565,24 +565,20 @@ window.gererMois = async function() {
 
         <h2>Gestion du mois</h2>
 
-        <div class="selection-mois">
-
-            <label for="moisSelectionne">
-                Mois :
-            </label>
+        <div class="zoneSelectionMois">
 
             <input
                 type="month"
                 id="moisSelectionne"
                 value="${moisCourant}">
-
+        
+            <button
+                class="btnOuvrirMois"
+                onclick="ouvrirMoisSelectionne()">
+                📂 Ouvrir
+            </button>
+        
         </div>
-
-        <br>
-
-        <button onclick="ouvrirMoisSelectionne()">
-            Ouvrir
-        </button>
 
     `;
 };
