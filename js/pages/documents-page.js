@@ -18,7 +18,8 @@ import { masquerZones } from "../utils.js";
 import {
     ref,
     uploadBytes,
-    getDownloadURL
+    getDownloadURL,
+    deleteObject
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
 
