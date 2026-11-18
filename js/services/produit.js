@@ -39,11 +39,15 @@ export async function ajouterProduit(
         ),
         {
             nom,
-            rayon
+            rayon,
+            dateAjout:
+                new Date()
+                    .toISOString()
         }
     );
 
 }
+
 export async function modifierProduit(
     id,
     donnees
@@ -55,10 +59,18 @@ export async function modifierProduit(
             "produits",
             id
         ),
-        donnees
+        {
+            ...donnees,
+
+            dateAjout:
+                new Date()
+                    .toISOString()
+        }
     );
 
 }
+
+
 export async function supprimerProduit(
     id
 ) {
