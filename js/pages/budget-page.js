@@ -8,7 +8,7 @@ import {
     chargerDepenses,
     supprimerDepenseFirestore,
     modifierDepenseFirestore,
-    chargerToutesLesDepenses
+    chargerDernieresDepenses
 } from "../services/depenses.js";
 
 import {
@@ -128,7 +128,9 @@ window.afficherDepenses = async function(reset = true) {
     }
     
     const depenses =
-        await chargerToutesLesDepenses();
+        await chargerDernieresDepenses(
+            nbDepensesAffichees
+        );
 
     if (depenses.length === 0) {
 
@@ -141,7 +143,7 @@ window.afficherDepenses = async function(reset = true) {
     }
 
     const depensesAfficher =
-        depenses.slice(0, nbDepensesAffichees);
+        depenses;
 
     const html = depensesAfficher.map(d => `
 
