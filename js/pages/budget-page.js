@@ -177,13 +177,19 @@ window.afficherDepenses = async function(reset = true) {
 
                 <button
                     class="btn-action"
-                    onclick="modifierDepense('${d.id}')">
+                    onclick="modifierDepense(
+                        '${d.id}',
+                        '${d.mois}'
+                    )">
                     ✏️
                 </button>
 
                 <button
                     class="btn-action"
-                    onclick="supprimerDepense('${d.id}')">
+                    onclick="supprimerDepense(
+                        '${d.id}',
+                        '${d.mois}'
+                    )">
                     🗑️
                 </button>
 
@@ -442,11 +448,15 @@ async function(id) {
 
 };
 
-window.modifierDepense = async function(id) {
+window.modifierDepense =
+async function(
+    id,
+    mois
+) {
 
     const depenses =
         await chargerDepenses(
-            moisCourant
+            mois
         );
 
     const depense =
@@ -464,7 +474,9 @@ window.modifierDepense = async function(id) {
             depense.libelle
         );
 
-    if (nouveauLibelle === null) {
+    if (
+        nouveauLibelle === null
+    ) {
         return;
     }
 
@@ -474,15 +486,19 @@ window.modifierDepense = async function(id) {
             depense.montant
         );
 
-    if (nouveauMontant === null) {
+    if (
+        nouveauMontant === null
+    ) {
         return;
     }
 
     await modifierDepenseFirestore(
-        moisCourant,
+        mois,
         id,
         {
-            libelle: nouveauLibelle,
+            libelle:
+                nouveauLibelle,
+
             montant:
                 parseFloat(
                     nouveauMontant
@@ -496,7 +512,11 @@ window.modifierDepense = async function(id) {
 
 };
 
-window.supprimerDepense = async function(id) {
+window.supprimerDepense =
+async function(
+    id,
+    mois
+) {
 
     const confirmation =
         confirm(
@@ -510,7 +530,7 @@ window.supprimerDepense = async function(id) {
     try {
 
         await supprimerDepenseFirestore(
-            moisCourant,
+            mois,
             id
         );
 
@@ -518,7 +538,8 @@ window.supprimerDepense = async function(id) {
 
         await afficherDepenses();
 
-    } catch (e) {
+    }
+    catch (e) {
 
         console.error(e);
 
@@ -566,7 +587,8 @@ window.gererMois = async function() {
     `;
 };
 
-window.ouvrirMoisSelectionne = async function() {
+window.ouvrirMoisSelectionne =
+async function() {
 
     moisGestion =
         document.getElementById(
@@ -580,47 +602,12 @@ window.ouvrirMoisSelectionne = async function() {
 
     if (!existe) {
 
-        document.getElementById(
-            "contenu"
-        ).innerHTML = `
+        await initialiserMois();
 
-            <h2>${moisGestion}</h2>
+    }
+    else {
 
-            <p>
-                Ce mois n'est pas encore initialisé.
-            </p>
-
-            <button
-                class="btn-plus"
-                onclick="initialiserMois()">
-
-                Initialiser le mois
-
-            </button>
-
-        `;
-
-    } else {
-
-        document.getElementById(
-            "contenu"
-        ).innerHTML = `
-
-            <h2>${moisGestion}</h2>
-
-            <p>
-                Ce mois est déjà initialisé.
-            </p>
-
-            <button
-                class="btn-plus"
-                onclick="modifierMois()">
-
-                Modifier le mois
-
-            </button>
-
-        `;
+        await modifierMois();
 
     }
 
