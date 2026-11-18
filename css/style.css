@@ -84,6 +84,24 @@ body {
     padding: 10px;
 }
 
+.rdvAccueil {
+
+    background: white;
+
+    border-radius: 10px;
+
+    padding: 10px;
+
+    margin-bottom: 8px;
+
+    cursor: pointer;
+
+}
+.rdvAccueil:hover {
+
+    background: #f0f7fb;
+
+}
 #budgetActions {
     display: flex;
     gap: 8px;
