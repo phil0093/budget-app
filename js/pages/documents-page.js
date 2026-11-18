@@ -378,26 +378,30 @@ function() {
             class="popupFond"
         >
 
-            <div
-                class="popupContenu"
-            >
-
-                <h3>
-                    Ajouter un document
-                </h3>
-
+            <h3>
+                Ajouter un document
+            </h3>
+            
+            <div class="ligneDocumentPopup">
+            
                 <input
                     id="titreDocument"
+                    class="titreDocumentPopup"
                     type="text"
                     placeholder="Titre"
                 >
-
+            
                 <input
                     id="dateDocument"
+                    class="dateDocumentPopup"
                     type="date"
                     value="${aujourdHui}"
                 >
-
+            
+            </div>
+            
+            <div class="zoneFichierDocument">
+            
                 <input
                     id="fichierDocument"
                     type="file"
@@ -409,27 +413,33 @@ function() {
                         .heic
                     "
                 >
-
+            
+            </div>
+            
+            <div class="actionsCoursePopup">
+            
                 <button
+                    class="btnAjouterCoursePopup"
                     onclick="
                         enregistrerDocument()
                     "
                 >
-                    Enregistrer
+                    ✅ Enregistrer
                 </button>
-
+            
                 <button
+                    class="btnFermerCoursePopup"
                     onclick="
                         document
-                        .getElementById(
-                            'popupDocument'
-                        )
-                        .remove()
+                            .getElementById(
+                                'popupDocument'
+                            )
+                            .remove()
                     "
                 >
-                    Fermer
+                    ❌ Fermer
                 </button>
-
+            
             </div>
 
         </div>
@@ -566,26 +576,30 @@ async function(id) {
             class="popupFond"
         >
 
-            <div
-                class="popupContenu"
-            >
-
-                <h3>
-                    Modifier le document
-                </h3>
-
+            <h3>
+                Modifier le document
+            </h3>
+            
+            <div class="ligneDocumentPopup">
+            
                 <input
                     id="modTitreDocument"
+                    class="titreDocumentPopup"
                     type="text"
                     value="${docActuel.titre}"
                 >
-
+            
                 <input
                     id="modDateDocument"
+                    class="dateDocumentPopup"
                     type="date"
                     value="${docActuel.date}"
                 >
-
+            
+            </div>
+            
+            <div class="zoneFichierDocument">
+            
                 <input
                     id="modFichierDocument"
                     type="file"
@@ -597,18 +611,30 @@ async function(id) {
                         .heic
                     "
                 >
-
+            
+                <div class="nomFichierActuel">
+            
+                    📄 ${docActuel.nomFichier || "Document actuel"}
+            
+                </div>
+            
+            </div>
+            
+            <div class="actionsCoursePopup">
+            
                 <button
+                    class="btnAjouterCoursePopup"
                     onclick="
                         validerModificationDocument(
                             '${id}'
                         )
                     "
                 >
-                    Enregistrer
+                    ✅ Enregistrer
                 </button>
-
+            
                 <button
+                    class="btnFermerCoursePopup"
                     onclick="
                         document
                             .getElementById(
@@ -617,9 +643,9 @@ async function(id) {
                             .remove()
                     "
                 >
-                    Annuler
+                    ❌ Fermer
                 </button>
-
+            
             </div>
 
         </div>
