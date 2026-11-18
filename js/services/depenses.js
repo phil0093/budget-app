@@ -90,8 +90,10 @@ export async function chargerDernieresDepenses(
     let date =
         new Date();
 
-    while (
-        toutesDepenses.length < nombre
+    for (
+        let i = 0;
+        i < 60;
+        i++
     ) {
 
         const mois =
@@ -136,19 +138,14 @@ export async function chargerDernieresDepenses(
 
             );
 
-        } catch {
+        }
+        catch {
 
         }
 
         date.setMonth(
             date.getMonth() - 1
         );
-
-        if (
-            date.getFullYear() < 2020
-        ) {
-            break;
-        }
 
     }
 
@@ -159,6 +156,16 @@ export async function chargerDernieresDepenses(
             )
     );
 
-    return toutesDepenses;
+    return {
+        depenses:
+            toutesDepenses.slice(
+                0,
+                nombre
+            ),
+
+        total:
+            toutesDepenses.length
+    };
 
 }
+
