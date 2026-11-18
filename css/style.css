@@ -182,35 +182,36 @@ body {
 }
 
 #budgetActions {
+
     display: flex;
+
     gap: 8px;
-    width: 100%;
+
     margin-top: 15px;
+
     margin-bottom: 20px;
+
 }
 
 #budgetActions button {
+
     flex: 1;
 
-    min-height: 50px;
-
     border: none;
-    border-radius: 10px;
 
-    background: #14597a;
-    color: white;
+    border-radius: 8px;
 
-    padding: 12px 8px;
+    padding: 10px;
 
-    font-size: 14px;
+    font-size: 12px;
+
     font-weight: bold;
+
+    color: white;
 
     cursor: pointer;
 
-    transition: background 0.2s;
-
 }
-
 #budgetActions button:hover {
 
     background: #0e425a;
@@ -288,6 +289,26 @@ body {
 
 .btn-plus:hover {
     background: #0e425a;
+}
+.btnBudgetDepenses {
+
+    background: #2980b9;
+
+}
+.btnBudgetDepenses:hover {
+
+    background: #216694;
+
+}
+.btnBudgetRecurrentes {
+
+    background: #27ae60;
+
+}
+.btnBudgetMois:hover {
+
+    background: #ca6b16;
+
 }
 
 .titre-budget {
