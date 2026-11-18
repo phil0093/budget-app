@@ -377,71 +377,75 @@ function() {
             id="popupDocument"
             class="popupFond"
         >
-
-            <h3>
-                Ajouter un document
-            </h3>
-            
-            <div class="ligneDocumentPopup">
-            
-                <input
-                    id="titreDocument"
-                    class="titreDocumentPopup"
-                    type="text"
-                    placeholder="Titre"
-                >
-            
-                <input
-                    id="dateDocument"
-                    class="dateDocumentPopup"
-                    type="date"
-                    value="${aujourdHui}"
-                >
-            
+        
+            <div
+                class="popupContenu"
+            >
+        
+                <h3>
+                    Ajouter un document
+                </h3>
+                
+                <div class="ligneDocumentPopup">
+                
+                    <input
+                        id="titreDocument"
+                        class="titreDocumentPopup"
+                        type="text"
+                        placeholder="Titre"
+                    >
+                
+                    <input
+                        id="dateDocument"
+                        class="dateDocumentPopup"
+                        type="date"
+                        value="${aujourdHui}"
+                    >
+                
+                </div>
+                
+                <div class="zoneFichierDocument">
+                
+                    <input
+                        id="fichierDocument"
+                        type="file"
+                        accept="
+                            .pdf,
+                            .jpg,
+                            .jpeg,
+                            .png,
+                            .heic
+                        "
+                    >
+                
+                </div>
+                
+                <div class="actionsCoursePopup">
+                
+                    <button
+                        class="btnAjouterCoursePopup"
+                        onclick="
+                            enregistrerDocument()
+                        "
+                    >
+                        ✅ Enregistrer
+                    </button>
+                
+                    <button
+                        class="btnFermerCoursePopup"
+                        onclick="
+                            document
+                                .getElementById(
+                                    'popupDocument'
+                                )
+                                .remove()
+                        "
+                    >
+                        ❌ Fermer
+                    </button>
+                
+                </div>
             </div>
-            
-            <div class="zoneFichierDocument">
-            
-                <input
-                    id="fichierDocument"
-                    type="file"
-                    accept="
-                        .pdf,
-                        .jpg,
-                        .jpeg,
-                        .png,
-                        .heic
-                    "
-                >
-            
-            </div>
-            
-            <div class="actionsCoursePopup">
-            
-                <button
-                    class="btnAjouterCoursePopup"
-                    onclick="
-                        enregistrerDocument()
-                    "
-                >
-                    ✅ Enregistrer
-                </button>
-            
-                <button
-                    class="btnFermerCoursePopup"
-                    onclick="
-                        document
-                            .getElementById(
-                                'popupDocument'
-                            )
-                            .remove()
-                    "
-                >
-                    ❌ Fermer
-                </button>
-            
-            </div>
-
         </div>
 
         `
@@ -575,79 +579,83 @@ async function(id) {
             id="popupModificationDocument"
             class="popupFond"
         >
-
-            <h3>
-                Modifier le document
-            </h3>
-            
-            <div class="ligneDocumentPopup">
-            
-                <input
-                    id="modTitreDocument"
-                    class="titreDocumentPopup"
-                    type="text"
-                    value="${docActuel.titre}"
-                >
-            
-                <input
-                    id="modDateDocument"
-                    class="dateDocumentPopup"
-                    type="date"
-                    value="${docActuel.date}"
-                >
-            
-            </div>
-            
-            <div class="zoneFichierDocument">
-            
-                <input
-                    id="modFichierDocument"
-                    type="file"
-                    accept="
-                        .pdf,
-                        .jpg,
-                        .jpeg,
-                        .png,
-                        .heic
-                    "
-                >
-            
-                <div class="nomFichierActuel">
-            
-                    📄 ${docActuel.nomFichier || "Document actuel"}
-            
+        
+            <div
+                class="popupContenu"
+            >
+        
+                <h3>
+                    Modifier le document
+                </h3>
+                
+                <div class="ligneDocumentPopup">
+                
+                    <input
+                        id="modTitreDocument"
+                        class="titreDocumentPopup"
+                        type="text"
+                        value="${docActuel.titre}"
+                    >
+                
+                    <input
+                        id="modDateDocument"
+                        class="dateDocumentPopup"
+                        type="date"
+                        value="${docActuel.date}"
+                    >
+                
                 </div>
-            
-            </div>
-            
-            <div class="actionsCoursePopup">
-            
-                <button
-                    class="btnAjouterCoursePopup"
-                    onclick="
-                        validerModificationDocument(
-                            '${id}'
-                        )
-                    "
-                >
-                    ✅ Enregistrer
-                </button>
-            
-                <button
-                    class="btnFermerCoursePopup"
-                    onclick="
-                        document
-                            .getElementById(
-                                'popupModificationDocument'
+                
+                <div class="zoneFichierDocument">
+                
+                    <input
+                        id="modFichierDocument"
+                        type="file"
+                        accept="
+                            .pdf,
+                            .jpg,
+                            .jpeg,
+                            .png,
+                            .heic
+                        "
+                    >
+                
+                    <div class="nomFichierActuel">
+                
+                        📄 ${docActuel.nomFichier || "Document actuel"}
+                
+                    </div>
+                
+                </div>
+                
+                <div class="actionsCoursePopup">
+                
+                    <button
+                        class="btnAjouterCoursePopup"
+                        onclick="
+                            validerModificationDocument(
+                                '${id}'
                             )
-                            .remove()
-                    "
-                >
-                    ❌ Fermer
-                </button>
-            
+                        "
+                    >
+                        ✅ Enregistrer
+                    </button>
+                
+                    <button
+                        class="btnFermerCoursePopup"
+                        onclick="
+                            document
+                                .getElementById(
+                                    'popupModificationDocument'
+                                )
+                                .remove()
+                        "
+                    >
+                        ❌ Fermer
+                    </button>
+                
+                </div>
             </div>
-
         </div>
 
         `
