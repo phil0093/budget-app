@@ -3,7 +3,10 @@ import { db } from "../firebase-config.js";
 import {
     collection,
     getDocs,
-    addDoc
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    doc
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
@@ -38,6 +41,36 @@ export async function ajouterDossier(
             nom,
             parent
         }
+    );
+
+}
+export async function modifierDossier(
+    id,
+    nom
+) {
+
+    await updateDoc(
+        doc(
+            db,
+            "dossiers",
+            id
+        ),
+        {
+            nom
+        }
+    );
+
+}
+export async function supprimerDossier(
+    id
+) {
+
+    await deleteDoc(
+        doc(
+            db,
+            "dossiers",
+            id
+        )
     );
 
 }
