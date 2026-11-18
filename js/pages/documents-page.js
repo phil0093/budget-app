@@ -1,6 +1,8 @@
 import {
     chargerDossiers,
-    ajouterDossier
+    ajouterDossier,
+    modifierDossier,
+    supprimerDossier
 }
 from "../services/document-folder.js";
 
@@ -160,15 +162,45 @@ async function() {
                 d => d.parent === dossierActif
             )
             .map(d => `
-                <div
-                    class="carteDossier"
-                    onclick="
-                        ouvrirDossier(
-                            '${d.id}'
-                        )
-                    "
-                >
-                    📁 ${d.nom}
+                <div class="carteDossier">
+
+                    <div
+                        class="documentInfos"
+                        onclick="
+                            ouvrirDossier(
+                                '${d.id}'
+                            )
+                        "
+                    >
+                        📁 ${d.nom}
+                    </div>
+                
+                    <div class="documentActions">
+                
+                        <button
+                            class="btn-action"
+                            onclick="
+                                renommerDossier(
+                                    '${d.id}'
+                                )
+                            "
+                        >
+                            ✏️
+                        </button>
+                
+                        <button
+                            class="btn-action"
+                            onclick="
+                                supprimerDossierUI(
+                                    '${d.id}'
+                                )
+                            "
+                        >
+                            🗑️
+                        </button>
+                
+                    </div>
+                
                 </div>
             `)
             .join("");
@@ -232,16 +264,48 @@ async function() {
             d => !d.parent
         )
         .map(dossier => `
-            <div
-                class="carteDossier"
-                onclick="
-                    ouvrirDossier(
-                        '${dossier.id}'
-                    )
-                "
-            >
-                📁 ${dossier.nom}
+        
+            <div class="carteDossier">
+    
+                <div
+                    class="documentInfos"
+                    onclick="
+                        ouvrirDossier(
+                            '${dossier.id}'
+                        )
+                    "
+                >
+                    📁 ${dossier.nom}
+                </div>
+    
+                <div class="documentActions">
+    
+                    <button
+                        class="btn-action"
+                        onclick="
+                            renommerDossier(
+                                '${dossier.id}'
+                            )
+                        "
+                    >
+                        ✏️
+                    </button>
+    
+                    <button
+                        class="btn-action"
+                        onclick="
+                            supprimerDossierUI(
+                                '${dossier.id}'
+                            )
+                        "
+                    >
+                        🗑️
+                    </button>
+    
+                </div>
+    
             </div>
+    
         `)
         .join("");
     
@@ -316,6 +380,156 @@ async function(dossierId) {
     dossierActif =
         dossierId;
 
+    await afficherDocuments();
+
+};
+
+window.renommerDossier =
+async function(id) {
+
+    const dossier =
+        dossiers.find(
+            d => d.id === id
+        );
+
+    if (!dossier) {
+        return;
+    }
+
+    const nouveauNom =
+        prompt(
+            "Nouveau nom du dossier",
+            dossier.nom
+        );
+
+    if (
+        !nouveauNom ||
+        nouveauNom.trim() === ""
+    ) {
+        return;
+    }
+
+    await modifierDossier(
+        id,
+        nouveauNom.trim()
+    );
+
+    await afficherDocuments();
+
+};
+
+async function supprimerDossierRecursif(
+    dossierId
+) {
+
+    const sousDossiers =
+        dossiers.filter(
+            d =>
+                d.parent ===
+                dossierId
+        );
+
+    for (
+        const sousDossier
+        of sousDossiers
+    ) {
+
+        await supprimerDossierRecursif(
+            sousDossier.id
+        );
+
+    }
+
+    const documentsDossier =
+        documents.filter(
+            d =>
+                d.dossierId ===
+                dossierId
+        );
+
+    for (
+        const documentCourant
+        of documentsDossier
+    ) {
+
+        if (
+            documentCourant.cheminStorage
+        ) {
+
+            try {
+
+                await deleteObject(
+                    ref(
+                        storage,
+                        documentCourant.cheminStorage
+                    )
+                );
+
+            }
+            catch (e) {
+
+                console.warn(e);
+
+            }
+
+        }
+
+        await supprimerDocument(
+            documentCourant.id
+        );
+
+    }
+
+    await supprimerDossier(
+        dossierId
+    );
+
+}
+
+window.supprimerDossierUI =
+async function(id) {
+
+    const dossier =
+        dossiers.find(
+            d => d.id === id
+        );
+
+    if (!dossier) {
+        return;
+    }
+
+    const confirmation =
+        confirm(
+            `Supprimer "${dossier.nom}" ?\n\nTous les sous-dossiers, documents et fichiers seront définitivement supprimés.`
+        );
+
+    if (!confirmation) {
+        return;
+    }
+
+    await supprimerDossierRecursif(
+        id
+    );
+    
+    dossiers =
+        await chargerDossiers();
+    
+    documents =
+        await chargerDocuments();
+    
+    const dossierActuelExiste =
+        dossiers.some(
+            d => d.id === dossierActif
+        );
+    
+    if (
+        !dossierActuelExiste
+    ) {
+    
+        dossierActif = null;
+    
+    }
+    
     await afficherDocuments();
 
 };
