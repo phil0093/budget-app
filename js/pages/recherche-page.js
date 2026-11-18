@@ -23,6 +23,15 @@ import {
 }
 from "../services/depenses.js";
 
+function normaliserTexte(texte) {
+
+    return (texte || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+}
+
 window.ouvrirRechercheGlobale =
 async function() {
 
@@ -137,9 +146,13 @@ async function() {
 
     documents
     .filter(doc =>
-        doc.titre
-        ?.toLowerCase()
-        .includes(texte)
+        normaliserTexte(
+            doc.titre
+        ).includes(
+            normaliserTexte(
+                texte
+            )
+        )
     )
     .forEach(doc => {
 
@@ -174,9 +187,13 @@ async function() {
 
     rdvs
     .filter(rdv =>
-        rdv.nom
-        ?.toLowerCase()
-        .includes(texte)
+        normaliserTexte(
+            rdv.nom
+        ).includes(
+            normaliserTexte(
+                texte
+            )
+        )
     )
     .forEach(rdv => {
 
@@ -185,9 +202,15 @@ async function() {
         <div
             class="resultatRecherche"
             onclick="
+                document
+                    .getElementById(
+                        'popupRecherche'
+                    )
+                    .remove();
+            
                 ouvrirRdvLectureSeule(
                     '${rdv.id}'
-                )
+                );
             "
         >
 
