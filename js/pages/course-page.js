@@ -1183,7 +1183,9 @@ function(rayonDiv) {
 };
 
 window.ouvrirGestionProduits =
-async function() {
+async function(
+    positionScroll = 0
+) {
 
     const popupExistante =
         document.getElementById(
@@ -1318,6 +1320,18 @@ async function() {
         `
     );
 
+    const popup =
+        document.querySelector(
+            "#popupProduitsBDD .popupContenu"
+        );
+    
+    if (popup) {
+    
+        popup.scrollTop =
+            positionScroll;
+    
+    }
+
 };
 
 window.modifierProduitBDD =
@@ -1378,13 +1392,23 @@ async function(id) {
         }
     );
 
+    const popup =
+        document.querySelector(
+            "#popupProduitsBDD .popupContenu"
+        );
+    
+    const positionScroll =
+        popup.scrollTop;
+    
     document
         .getElementById(
             "popupProduitsBDD"
         )
         .remove();
-
-    ouvrirGestionProduits();
+    
+    ouvrirGestionProduits(
+        positionScroll
+    );
 
 };
 
@@ -1416,12 +1440,22 @@ async function(id) {
         id
     );
 
+    const popup =
+        document.querySelector(
+            "#popupProduitsBDD .popupContenu"
+        );
+    
+    const positionScroll =
+        popup.scrollTop;
+    
     document
         .getElementById(
             "popupProduitsBDD"
         )
         .remove();
-
-    ouvrirGestionProduits();
+    
+    ouvrirGestionProduits(
+        positionScroll
+    );
 
 };
