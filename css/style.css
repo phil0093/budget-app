@@ -383,6 +383,12 @@ body {
     background: #73368c;
 
 }
+.recurrenteInactive {
+
+    opacity: 0.55;
+
+}
+
 .coeur {
     color: #e60026;
     margin: 0 7px;
