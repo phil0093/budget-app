@@ -228,7 +228,14 @@ function dessinerCourses() {
         return `
 
             <div
-                class="rayonCourse"
+                class="
+                    rayonCourse
+                    ${
+                        toutesCochees
+                        ? "rayonCourseTermine"
+                        : ""
+                    }
+                "
                 data-rayon="${rayon}"
             >
 
