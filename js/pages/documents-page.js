@@ -147,7 +147,7 @@ async function() {
             .innerHTML = `
     
                 <h2>
-                    📁 ${construireCheminDossier(
+                    📁 / ${construireCheminDossier(
                         dossierActif
                     )}
                 </h2>
