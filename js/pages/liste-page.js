@@ -1,7 +1,8 @@
 import {
     chargerListes,
     sauvegarderListe,
-    supprimerListe
+    supprimerListe,
+    renommerListe
 }
 from "../services/liste.js";
 import {masquerZones} from "../utils.js";
@@ -20,21 +21,33 @@ window.afficherListe = async function() {
         "zoneBudget",
         "budgetActions"
     );
-    
-    listes = await chargerListes();
 
     if (listes.length === 0) {
 
-        await sauvegarderListe("Ma liste", Array(20).fill().map(
-                () => ({
-                    texte: "",
-                    coche: false
-                })
-            )
-        );
-
-        listes = await chargerListes();
+        document.getElementById(
+            "contenu"
+        ).innerHTML = `
+    
+            <h2>
+                📝 Listes
+            </h2>
+    
+            <button
+                class="btnNouvelleListe"
+                onclick="
+                    nouvelleListe()
+                "
+            >
+                ➕ Nouvelle liste
+            </button>
+    
+        `;
+    
+        return;
+    
     }
+    
+    listes = await chargerListes();
 
     if (!listeActive) {
         listeActive = listes[0].nom;
@@ -125,29 +138,47 @@ function dessinerListe() {
 
         <h2>Listes</h2>
 
-        <select
-            class="selectListe"
-            onchange="changerListe(this.value)">
-
-            ${options}
-
-        </select>
-
         <button
             class="btnNouvelleListe"
             onclick="nouvelleListe()">
-
+        
             ➕ Nouvelle liste
-
-        </button>
-
-        <button
-            class="btnSupprimerListe"
-            onclick="supprimerListeActive()">
-        
-            🗑️ Supprimer la liste
         
         </button>
+        
+        <div class="enteteCourses">
+        
+            <select
+                class="selectListe"
+                onchange="
+                    changerListe(
+                        this.value
+                    )
+                ">
+                ${options}
+            </select>
+        
+            <button
+                class="btnModifierListe"
+                onclick="
+                    renommerListeActive()
+                "
+                title="Renommer la liste"
+            >
+                ✏️
+            </button>
+        
+            <button
+                class="btnCorbeilleListe"
+                onclick="
+                    supprimerListeActive()
+                "
+                title="Supprimer la liste"
+            >
+                🗑️
+            </button>
+        
+        </div>
 
         <div class="listeContainer">
 
@@ -385,11 +416,12 @@ window.supprimerListeActive = async function(confirmer = true) {
 
     if (listes.length === 0) {
 
-        await sauvegarderListe("Ma liste", [{texte: "", coche: false}]);
-
-        listes =
-            await chargerListes();
-
+        listeActive = "";
+    
+        afficherListe();
+    
+        return;
+    
     }
 
     listeActive =listes[0].nom;
@@ -441,3 +473,51 @@ async function verifierSuppressionAuto() {
     await supprimerListeActive(false);
 
 }
+
+window.renommerListeActive =
+async function() {
+
+    const nouveauNom =
+        prompt(
+            "Nouveau nom de la liste",
+            listeActive
+        );
+
+    if (
+        !nouveauNom ||
+        nouveauNom === listeActive
+    ) {
+        return;
+    }
+
+    const existe =
+        listes.some(
+            l =>
+                l.nom ===
+                nouveauNom
+        );
+
+    if (existe) {
+
+        alert(
+            "Une liste porte déjà ce nom."
+        );
+
+        return;
+
+    }
+
+    await renommerListe(
+        listeActive,
+        nouveauNom
+    );
+
+    listes =
+        await chargerListes();
+
+    listeActive =
+        nouveauNom;
+
+    dessinerListe();
+
+};
