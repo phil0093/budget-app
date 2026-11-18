@@ -314,7 +314,8 @@ async function chargerRdvsCalendrier() {
 
 }
 
-function couleurRdv(rdv) {
+window.couleurRdv =
+function(rdv) {
 
     const participants =
         rdv.participants || [];
