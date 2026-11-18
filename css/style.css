@@ -1801,6 +1801,10 @@ body {
 
 .btnGestionProduits {
 
+    margin-bottom: 15px;
+
+    padding: 10px;
+
     border: none;
 
     border-radius: 8px;
@@ -1808,6 +1812,8 @@ body {
     background: #8e44ad;
 
     color: white;
+
+    font-size: inherit;
 
     cursor: pointer;
 
