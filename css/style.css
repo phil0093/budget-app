@@ -35,7 +35,25 @@ body {
 
 }
 
+.resultatRecherche {
 
+    background: white;
+
+    padding: 10px;
+
+    margin-bottom: 6px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+}
+
+.resultatRecherche:hover {
+
+    background: #eef6fb;
+
+}
 .solde-card {
     border: 2px solid black;
     margin-bottom: 20px;
