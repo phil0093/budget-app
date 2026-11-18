@@ -645,65 +645,81 @@ async function(jour) {
             id="popupAjoutCourse"
             class="popupFond"
         >
-
+        
             <div
                 class="popupContenu"
             >
-
+        
                 <h3>
                     Ajouter à une liste
                 </h3>
-
+        
                 <select
                     id="listeCoursePopup"
+                    class="selectCoursePopup"
                 >
                     ${options}
                 </select>
-
-                <input
-                    id="produitPopup"
-                    type="text"
-                    placeholder="Produit"
-                    oninput="
-                        rechercherProduitPopup(
-                            this.value
-                        )
-                    "
-                >
-
-                <div
-                    id="suggestionsPopup"
-                ></div>
-
-                <input
-                    id="quantitePopup"
-                    type="number"
-                    min="1"
-                    value="1"
-                >
-
-                <button
-                    onclick="
-                        ajouterProduitListePopup()
-                    "
-                >
-                    Ajouter
-                </button>
-
-                <button
-                    onclick="
-                        document
-                            .getElementById(
-                                'popupAjoutCourse'
-                            )
-                            .remove()
-                    "
-                >
-                    Fermer
-                </button>
-
+        
+                <div class="ligneAjoutCourse">
+        
+                    <div class="zoneProduitPopup">
+        
+                        <input
+                            id="produitPopup"
+                            type="text"
+                            placeholder="Produit"
+                            oninput="
+                                rechercherProduitPopup(
+                                    this.value
+                                )
+                            "
+                        >
+        
+                        <div
+                            id="suggestionsPopup"
+                        ></div>
+        
+                    </div>
+        
+                    <input
+                        id="quantitePopup"
+                        class="quantiteCoursePopup"
+                        type="number"
+                        min="1"
+                        value="1"
+                    >
+        
+                </div>
+        
+                <div class="actionsCoursePopup">
+        
+                    <button
+                        class="btnAjouterCoursePopup"
+                        onclick="
+                            ajouterProduitListePopup()
+                        "
+                    >
+                        ✅ Ajouter
+                    </button>
+        
+                    <button
+                        class="btnFermerCoursePopup"
+                        onclick="
+                            document
+                                .getElementById(
+                                    'popupAjoutCourse'
+                                )
+                                .remove()
+                        "
+                    >
+                        ❌ Fermer
+                    </button>
+        
+                </div>
+        
             </div>
-
+        
         </div>
 
         `
