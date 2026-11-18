@@ -875,7 +875,18 @@ body {
     font-size: 16px;
 }
 
-.btnNouvelleListe,
+.btnNouvelleListe {
+
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: none;
+    color: white;
+    background: #14597a;
+    border-radius: 8px;
+
+}
+
 .btnGestionProduits {
 
     margin-bottom: 15px;
@@ -886,6 +897,8 @@ body {
 
     border-radius: 8px;
 
+    background: #8e44ad;
+
     color: white;
 
     font-size: 12px;
@@ -895,17 +908,6 @@ body {
     cursor: pointer;
 
 }
-.btnNouvelleListe {
-
-    background: #14597a;
-
-}
-.btnGestionProduits {
-
-    background: #8e44ad;
-
-}
-
 
 .ligneVide {
 
