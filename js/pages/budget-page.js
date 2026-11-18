@@ -127,16 +127,22 @@ window.afficherDepenses = async function(reset = true) {
     nbDepensesAffichees = 30;
     }
     
-    const depenses =
+    const resultat =
         await chargerDernieresDepenses(
             nbDepensesAffichees
         );
-
+    
+    const depenses =
+        resultat.depenses;
+    
+    const total =
+        resultat.total;
+    
     if (depenses.length === 0) {
 
         document.getElementById("contenu").innerHTML = `
             <h2>Liste des dépenses</h2>
-            <p>Aucune dépense ce mois-ci.</p>
+            <p>Aucune dépense.</p>
         `;
 
         return;
@@ -189,7 +195,7 @@ window.afficherDepenses = async function(reset = true) {
 
     let boutonPlus = "";
 
-    if (depenses.length > nbDepensesAffichees) {
+    if (total > nbDepensesAffichees) {
 
         boutonPlus = `
             <div class="bouton-plus-container">
