@@ -109,7 +109,7 @@ function construireBlocTodo(titre, zone, todos) {
         todos.map(t => `
 
             <div class="ligneTodo">
-    
+
                 <input
                     type="checkbox"
                     ${t.terminee ? "checked" : ""}
@@ -119,18 +119,33 @@ function construireBlocTodo(titre, zone, todos) {
                         )
                     "
                 >
-    
+            
                 <span
-                    class="${
-                        t.terminee
-                        ? "todoTermine"
-                        : ""
-                    }"
+                    class="
+                        todoTexte
+                        ${
+                            t.terminee
+                            ? "todoTermine"
+                            : ""
+                        }
+                    "
                 >
                     ${t.texte}
                 </span>
-    
+            
+                <button
+                    class="btnModifierTodo"
+                    onclick="
+                        modifierTodoTexte(
+                            '${t.id}'
+                        )
+                    "
+                >
+                    ✏️
+                </button>
+            
             </div>
+
     
         `).join("");
 
@@ -242,6 +257,46 @@ window.toggleTodo = async function(id) {
                 terminee
                 ? new Date().toISOString()
                 : null
+        }
+    );
+
+    await afficherTodo();
+
+};
+
+window.modifierTodoTexte =
+async function(id) {
+
+    const todos =
+        await chargerTodo();
+
+    const todo =
+        todos.find(
+            t => t.id === id
+        );
+
+    if (!todo) {
+        return;
+    }
+
+    const nouveauTexte =
+        prompt(
+            "Modifier la tâche",
+            todo.texte
+        );
+
+    if (
+        nouveauTexte === null ||
+        nouveauTexte.trim() === ""
+    ) {
+        return;
+    }
+
+    await modifierTodo(
+        id,
+        {
+            texte:
+                nouveauTexte.trim()
         }
     );
 
