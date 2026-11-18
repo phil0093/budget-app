@@ -244,7 +244,12 @@ window.afficherRecurrentes = async function() {
 
     const html = recurrentes.map(r => `
 
-        <div class="depense-ligne">
+        <div
+            class="
+                depense-ligne
+                ${!r.actif ? "recurrenteInactive" : ""}
+            "
+        >
 
             <div class="depense-infos">
 
@@ -612,7 +617,11 @@ async function() {
 window.initialiserMois = async function() {
 
     const recurrentes =
-        await chargerRecurrentes();
+        (
+            await chargerRecurrentes()
+        ).filter(
+            r => r.actif
+        );
 
     recurrentesInitialisation =
         recurrentes;
