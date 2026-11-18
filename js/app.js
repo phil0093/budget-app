@@ -167,15 +167,26 @@ async function() {
                 "
             >
 
-                <strong>
-                    ${new Date(
-                        rdv.dateDebut
-                    ).toLocaleDateString(
-                        "fr-FR"
-                    )}
-                    - 
-                    ${rdv.heureDebut}
-                </strong>
+                <div class="enteteRdvAccueil">
+
+                    <span
+                        class="
+                            pastilleRdv
+                            ${couleurRdv(rdv)}
+                        "
+                    ></span>
+                
+                    <strong>
+                        ${new Date(
+                            rdv.dateDebut
+                        ).toLocaleDateString(
+                            "fr-FR"
+                        )}
+                        -
+                        ${rdv.heureDebut}
+                    </strong>
+                
+                </div>
                 
                 <br>
                 
