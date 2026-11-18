@@ -676,6 +676,127 @@ body {
 
 }
 
+.selectCoursePopup {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 10px;
+
+    margin-bottom: 12px;
+
+    border: 1px solid #c8dfea;
+
+    border-radius: 8px;
+
+    background: #eef6fb;
+
+}
+.ligneAjoutCourse {
+
+    display: flex;
+
+    gap: 8px;
+
+    margin-bottom: 15px;
+
+}
+.zoneProduitPopup {
+
+    flex: 1;
+
+    position: relative;
+
+}
+
+#produitPopup {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 10px;
+
+    border: 1px solid #c8dfea;
+
+    border-radius: 8px;
+
+    background: #eef6fb;
+
+}
+.quantiteCoursePopup {
+
+    width: 70px;
+
+    flex-shrink: 0;
+
+    text-align: center;
+
+    padding: 10px;
+
+    border: 1px solid #c8dfea;
+
+    border-radius: 8px;
+
+    background: #eef6fb;
+
+}
+.actionsCoursePopup {
+
+    display: flex;
+
+    gap: 8px;
+
+}
+.btnAjouterCoursePopup {
+
+    flex: 1;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #27ae60;
+
+    color: white;
+
+    font-weight: bold;
+
+    padding: 10px;
+
+    cursor: pointer;
+
+}
+.btnAjouterCoursePopup:hover {
+
+    background: #1f8a4d;
+
+}
+.btnFermerCoursePopup {
+
+    flex: 1;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #c0392b;
+
+    color: white;
+
+    font-weight: bold;
+
+    padding: 10px;
+
+    cursor: pointer;
+
+}
+.btnFermerCoursePopup:hover {
+
+    background: #a93226;
+
+}
 .listeContainer {
     background: white;
     border-radius: 10px;
