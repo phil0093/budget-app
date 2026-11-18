@@ -177,7 +177,7 @@ async function() {
     });
 
   
-      const rdvsMois =
+    const rdvsMois =
         await chargerRdvsMois();
 
     const rdvs =
@@ -222,7 +222,130 @@ async function() {
 
     });
 
-      if (html === "") {
+    const recettes =
+        await chargerRecettes();
+    
+    recettes
+    .filter(recette =>
+    
+        normaliserTexte(
+            recette.titre || ""
+        ).includes(
+            normaliserTexte(texte)
+        )
+    
+        ||
+    
+        normaliserTexte(
+            recette.recette || ""
+        ).includes(
+            normaliserTexte(texte)
+        )
+    
+    )
+    .forEach(recette => {
+    
+        html += `
+    
+        <div
+            class="resultatRecherche"
+            onclick="
+                document
+                    .getElementById(
+                        'popupRecherche'
+                    )
+                    .remove();
+    
+                ouvrirRecetteLecture(
+                    '${recette.id}'
+                );
+            "
+        >
+    
+            🍝 ${recette.titre}
+    
+        </div>
+    
+        `;
+    
+    });
+
+    const notes =
+        await chargerNotes();
+    
+    notes
+    .filter(note =>
+    
+        normaliserTexte(
+            note.titre || ""
+        ).includes(
+            normaliserTexte(texte)
+        )
+    
+        ||
+    
+        normaliserTexte(
+            note.contenu || ""
+        ).includes(
+            normaliserTexte(texte)
+        )
+    
+    )
+    .forEach(note => {
+    
+        html += `
+    
+        <div
+            class="resultatRecherche"
+            onclick="
+                document
+                    .getElementById(
+                        'popupRecherche'
+                    )
+                    .remove();
+    
+                afficherNotes();
+            "
+        >
+    
+            📝 ${note.titre || "Note"}
+    
+        </div>
+    
+        `;
+    
+    });
+
+    const depenses =
+        await chargerDepenses();
+    
+    depenses
+    .filter(depense =>
+    
+        normaliserTexte(
+            depense.libelle || ""
+        ).includes(
+            normaliserTexte(texte)
+        )
+    
+    )
+    .forEach(depense => {
+    
+        html += `
+    
+        <div
+            class="resultatRecherche"
+        >
+    
+            💰 ${depense.libelle}
+    
+        </div>
+    
+        `;
+    
+    });
+    
+  if (html === "") {
 
         html = `
         
