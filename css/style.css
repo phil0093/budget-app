@@ -329,7 +329,60 @@ body {
     font-size: 27px;
     font-weight: bold;
 }
+.zoneSelectionMois {
 
+    display: flex;
+
+    gap: 10px;
+
+    align-items: center;
+
+    margin-top: 15px;
+
+}
+#moisSelectionne {
+
+    flex: 1;
+
+    padding: 10px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 8px;
+
+    background: white;
+
+    font-size: 15px;
+
+    box-sizing: border-box;
+
+}
+.btnOuvrirMois {
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #8e44ad;
+
+    color: white;
+
+    padding: 10px 15px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+}
+.btnOuvrirMois:hover {
+
+    background: #73368c;
+
+}
 .coeur {
     color: #e60026;
     margin: 0 7px;
