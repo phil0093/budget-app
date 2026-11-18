@@ -625,7 +625,9 @@ body {
 
 .popupContenu {
 
-    background: white;
+    background: #f7fbff;
+
+    border: 2px solid #90c4df;
 
     padding: 20px;
 
@@ -635,14 +637,38 @@ body {
     max-width: 500px;
 
     box-shadow:
-        0 4px 15px rgba(
+        0 8px 20px rgba(
             0,
             0,
             0,
-            0.2
+            0.15
         );
 
 }
+
+.popupContenu h2,
+.popupContenu h3 {
+
+    color: #14597a;
+
+    border-bottom: 2px solid #90c4df;
+
+    padding-bottom: 8px;
+
+    margin-top: 0;
+
+}
+
+.popupContenu input,
+.popupContenu textarea,
+.popupContenu select {
+
+    background: #eef6fb;
+
+    border: 1px solid #c8dfea;
+
+}
+
 .suggestionsProduits,
 #suggestionsPopup {
 
@@ -961,7 +987,9 @@ body {
 }
 .modalCalendrierContenu {
 
-    background: white;
+    background: #f7fbff;
+
+    border: 2px solid #90c4df;
 
     padding: 20px;
 
@@ -974,9 +1002,18 @@ body {
     max-height: 90vh;
 
     overflow-y: auto;
+
     overflow-x: hidden;
-    
+
     box-sizing: border-box;
+
+    box-shadow:
+        0 8px 20px rgba(
+            0,
+            0,
+            0,
+            0.15
+        );
 
 }
 
