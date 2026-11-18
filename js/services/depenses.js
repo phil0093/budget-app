@@ -128,11 +128,9 @@ export async function chargerDernieresDepenses(
 
                 ...snapshot.docs.map(
                     doc => ({
-
                         id: doc.id,
-
+                        mois,
                         ...doc.data()
-
                     })
                 )
 
