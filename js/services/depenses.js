@@ -80,3 +80,53 @@ export async function modifierDepenseFirestore(
     );
 
 }
+
+export async function chargerToutesLesDepenses() {
+
+    const budgetsSnapshot =
+        await getDocs(
+            collection(
+                db,
+                "budgets"
+            )
+        );
+
+    let toutesDepenses = [];
+
+    for (const budgetDoc of budgetsSnapshot.docs) {
+
+        const depensesSnapshot =
+            await getDocs(
+                query(
+                    collection(
+                        db,
+                        "budgets",
+                        budgetDoc.id,
+                        "depenses"
+                    ),
+                    orderBy(
+                        "date",
+                        "desc"
+                    )
+                )
+            );
+
+        toutesDepenses.push(
+            ...depensesSnapshot.docs.map(
+                doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                })
+            )
+        );
+
+    }
+
+    return toutesDepenses.sort(
+        (a, b) =>
+            b.date.localeCompare(
+                a.date
+            )
+    );
+
+}
