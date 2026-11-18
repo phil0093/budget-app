@@ -511,7 +511,7 @@ async function() {
         );
 
     await ajouterDocument({
-    
+
         titre,
     
         date,
@@ -525,7 +525,9 @@ async function() {
         nomFichier:
             fichier.name,
     
-        url
+        url,
+    
+        cheminStorage
     
     });
 
@@ -551,10 +553,39 @@ async function(id) {
         return;
     }
 
+    const docActuel =
+        documents.find(
+            d => d.id === id
+        );
+    
+    if (
+        docActuel?.cheminStorage
+    ) {
+    
+        try {
+    
+            await deleteObject(
+                ref(
+                    storage,
+                    docActuel.cheminStorage
+                )
+            );
+    
+        }
+        catch (e) {
+    
+            console.warn(
+                "Impossible de supprimer le fichier Storage",
+                e
+            );
+    
+        }
+    
+    }
+    
     await supprimerDocument(
         id
     );
-
     await afficherDocuments();
 
 };
@@ -715,6 +746,31 @@ async function(id) {
                 cheminStorage
             );
 
+        if (
+            docActuel.cheminStorage
+        ) {
+        
+            try {
+        
+                await deleteObject(
+                    ref(
+                        storage,
+                        docActuel.cheminStorage
+                    )
+                );
+        
+            }
+            catch (e) {
+        
+                console.warn(
+                    "Ancien fichier non supprimé",
+                    e
+                );
+        
+            }
+        
+        }
+        
         await uploadBytes(
             storageRef,
             fichier
@@ -730,6 +786,9 @@ async function(id) {
 
         donnees.type =
             fichier.type;
+
+        donnees.cheminStorage =
+            cheminStorage;
 
     }
 
