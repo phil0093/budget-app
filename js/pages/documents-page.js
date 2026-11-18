@@ -99,24 +99,54 @@ async function() {
                     dossierActif
             )
             .map(doc => `
-                <div
-                    class="carteDocument"
-                    onclick="
-                        window.open(
-                            '${doc.url}',
-                            '_blank'
-                        )
-                    "
-                >
-        
-                    📄 ${doc.titre}
-        
-                    <br>
-        
-                    <small>
-                        ${doc.date}
-                    </small>
-        
+                <div class="carteDocument">
+
+                    <div
+                        class="documentInfos"
+                        onclick="
+                            window.open(
+                                '${doc.url}',
+                                '_blank'
+                            )
+                        "
+                    >
+                
+                        📄 ${doc.titre}
+                
+                        <br>
+                
+                        <small>
+                            ${doc.date}
+                        </small>
+                
+                    </div>
+                
+                    <div class="documentActions">
+                
+                        <button
+                            class="btn-action"
+                            onclick="
+                                modifierDocument(
+                                    '${doc.id}'
+                                )
+                            "
+                        >
+                            ✏️
+                        </button>
+                
+                        <button
+                            class="btn-action"
+                            onclick="
+                                supprimerDocumentUI(
+                                    '${doc.id}'
+                                )
+                            "
+                        >
+                            🗑️
+                        </button>
+                
+                    </div>
+                
                 </div>
             `)
             .join("");
