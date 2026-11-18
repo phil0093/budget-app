@@ -52,7 +52,7 @@ export async function modifierDossier(
     await updateDoc(
         doc(
             db,
-            "dossiers",
+            "documentFolders",
             id
         ),
         {
@@ -68,7 +68,7 @@ export async function supprimerDossier(
     await deleteDoc(
         doc(
             db,
-            "dossiers",
+            "documentFolders",
             id
         )
     );
