@@ -1807,6 +1807,12 @@ body {
 
     cursor: pointer;
 
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
 }
 .carteDocument:hover {
 
@@ -1875,5 +1881,21 @@ body {
 .btnAjoutDocument:hover {
 
     background: #216694;
+
+}
+.documentInfos {
+
+    flex: 1;
+
+    cursor: pointer;
+
+}
+.documentActions {
+
+    display: flex;
+
+    gap: 5px;
+
+    margin-left: 10px;
 
 }
