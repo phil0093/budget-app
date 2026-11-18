@@ -69,6 +69,16 @@ body {
     margin-bottom: 10px;
 }
 
+.saisie input[type="date"] {
+
+    max-width: 100%;
+
+    width: 100%;
+
+    font-size: 14px;
+
+}
+
 .saisie button {
     width: 100%;
     padding: 10px;
