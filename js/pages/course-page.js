@@ -1204,15 +1204,19 @@ async function(
     const htmlProduits =
         produits
         .sort(
-            (a, b) =>
-                a.nom.localeCompare(
-                    b.nom,
-                    "fr",
-                    {
-                        sensitivity:
-                            "base"
-                    }
-                )
+            (a, b) => {
+        
+                const dateA =
+                    a.dateAjout || "";
+        
+                const dateB =
+                    b.dateAjout || "";
+        
+                return dateB.localeCompare(
+                    dateA
+                );
+        
+            }
         )
         .map(produit => `
 
