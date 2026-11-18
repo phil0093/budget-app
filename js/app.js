@@ -9,6 +9,7 @@ import "./pages/course-page.js";
 import "./pages/documents-page.js";
 import {masquerZones} from "./utils.js";
 import {initialiserNotifications} from "./services/notifications.js";
+import { chargerRdvsMois } from "./services/calendrier.js";
 
 if ("serviceWorker" in navigator) {
 
@@ -84,21 +85,107 @@ function() {
 
 };
 
-window.afficherAccueil = function() {
+window.afficherAccueil =
+async function() {
 
     document.getElementById(
         "zoneConnexion"
     ).style.display = "block";
-    
+
     document.getElementById(
         "zoneBudget"
     ).style.display = "block";
 
     masquerZones("budgetActions");
 
+    const rdvsMois =
+        await chargerRdvsMois();
+
+    const tousLesRdvs =
+        Object.values(rdvsMois)
+        .flat();
+
+    const aujourdHui =
+        new Date();
+
+    const dans7Jours =
+        new Date();
+
+    dans7Jours.setDate(
+        aujourdHui.getDate() + 7
+    );
+
+    const rdvsAVenir =
+        tousLesRdvs
+        .filter(rdv => {
+
+            const date =
+                new Date(
+                    rdv.dateDebut
+                );
+
+            return (
+                date >= aujourdHui &&
+                date <= dans7Jours
+            );
+
+        })
+        .sort((a, b) => {
+
+            const dateA =
+                `${a.dateDebut} ${a.heureDebut}`;
+
+            const dateB =
+                `${b.dateDebut} ${b.heureDebut}`;
+
+            return dateA.localeCompare(
+                dateB
+            );
+
+        });
+
+    const htmlRdvs =
+        rdvsAVenir
+        .map(rdv => `
+
+            <div
+                class="rdvAccueil"
+                onclick="
+                    ouvrirRdvLectureSeule(
+                        '${rdv.id}'
+                    )
+                "
+            >
+
+                <strong>
+                    ${rdv.dateDebut}
+                    -
+                    ${rdv.heureDebut}
+                </strong>
+
+                <br>
+
+                ${rdv.nom}
+
+            </div>
+
+        `)
+        .join("");
+
     document.getElementById(
         "contenu"
-    ).innerHTML = "";
+    ).innerHTML = `
+
+        <h2>
+            📅 Prochains rendez-vous
+        </h2>
+
+        ${
+            htmlRdvs ||
+            "<p>Aucun rendez-vous sur les 7 prochains jours.</p>"
+        }
+
+    `;
 
     document
         .getElementById("sidebar")
