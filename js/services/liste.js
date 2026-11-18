@@ -6,7 +6,9 @@ import {
     getDocs,
     deleteDoc,
     doc,
-    setDoc
+    setDoc,
+    getDoc,
+    updateDoc
 } from
 "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
@@ -53,6 +55,49 @@ export async function supprimerListe(nom) {
             db,
             "listes",
             nom
+        )
+    );
+
+}
+
+export async function renommerListe(
+    ancienNom,
+    nouveauNom
+) {
+
+    const ancienDoc =
+        await getDoc(
+            doc(
+                db,
+                "listes",
+                ancienNom
+            )
+        );
+
+    if (!ancienDoc.exists()) {
+        return;
+    }
+
+    const data =
+        ancienDoc.data();
+
+    await setDoc(
+        doc(
+            db,
+            "listes",
+            nouveauNom
+        ),
+        {
+            ...data,
+            nom: nouveauNom
+        }
+    );
+
+    await deleteDoc(
+        doc(
+            db,
+            "listes",
+            ancienNom
         )
     );
 
