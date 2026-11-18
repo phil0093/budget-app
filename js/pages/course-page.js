@@ -2,7 +2,8 @@ import {
     chargerCourses,
     sauvegarderCourse,
     supprimerCourse,
-    mettreAJourCoche
+    mettreAJourCoche,
+    renommerCourse
 }
 from "../services/course.js";
 
@@ -384,6 +385,54 @@ async function() {
     courseActive =
         courses[0].nom;
     
+    dessinerCourses();
+
+};
+
+window.renommerCourseActive =
+async function() {
+
+    const nouveauNom =
+        prompt(
+            "Nouveau nom de la liste",
+            courseActive
+        );
+
+    if (
+        !nouveauNom ||
+        nouveauNom === courseActive
+    ) {
+        return;
+    }
+
+    const dejaExistante =
+        courses.some(
+            c =>
+                c.nom ===
+                nouveauNom
+        );
+
+    if (dejaExistante) {
+
+        alert(
+            "Une liste porte déjà ce nom."
+        );
+
+        return;
+
+    }
+
+    await renommerCourse(
+        courseActive,
+        nouveauNom
+    );
+
+    courses =
+        await chargerCourses();
+
+    courseActive =
+        nouveauNom;
+
     dessinerCourses();
 
 };
