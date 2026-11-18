@@ -1612,6 +1612,32 @@ body {
     margin-bottom: 0;
 
 }
+.btnModifierListe {
+
+    width: 42px;
+
+    height: 42px;
+
+    flex-shrink: 0;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #2980b9;
+
+    color: white;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+}
+.btnModifierListe:hover {
+
+    background: #216694;
+
+}
 .btnCorbeilleListe {
 
     width: 42px;
