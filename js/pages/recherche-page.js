@@ -21,7 +21,7 @@ from "../services/calendrier.js";
 import {
     chargerDepenses
 }
-from "../services/budget.js";
+from "../services/depenses.js";
 
 window.ouvrirRechercheGlobale =
 async function() {
