@@ -265,40 +265,39 @@ function dessinerCourses() {
                 🛒 Courses
             </h2>
 
-            <select
-                class="selectListe"
-                onchange="
-                    changerCourse(
-                        this.value
-                    )
-                "
-            >
-
-                ${options}
-
-            </select>
-
             <button
                 class="btnNouvelleListe"
                 onclick="
                     nouvelleCourse()
                 "
             >
-
                 ➕ Nouvelle liste
-
             </button>
-
-            <button
-                class="btnSupprimerListe"
-                onclick="
-                    supprimerCourseActive()
-                "
-            >
-
-                🗑️ Supprimer la liste
-
-            </button>
+            
+            <div class="enteteCourses">
+            
+                <select
+                    class="selectListe"
+                    onchange="
+                        changerCourse(
+                            this.value
+                        )
+                    "
+                >
+                    ${options}
+                </select>
+            
+                <button
+                    class="btnCorbeilleListe"
+                    onclick="
+                        supprimerCourseActive()
+                    "
+                    title="Supprimer la liste"
+                >
+                    🗑️
+                </button>
+            
+            </div>
 
             ${rayonsHtml}
 
