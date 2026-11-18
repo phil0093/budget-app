@@ -320,7 +320,7 @@ async function(dossierId) {
 };
 
 window.retourDocuments =
-function() {
+async function() {
 
     if (!dossierActif) {
 
@@ -628,6 +628,7 @@ async function(id) {
     );
 
 };
+
 window.validerModificationDocument =
 async function(id) {
 
