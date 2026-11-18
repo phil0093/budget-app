@@ -865,3 +865,91 @@ window.supprimerRdvCalendrier = async function(date, id) {
     dessinerCalendrier();
 
 };
+
+window.ouvrirRdvLectureSeule =
+async function(id) {
+
+    const rdvsMois =
+        await chargerRdvsMois();
+
+    const rdv =
+        Object.values(rdvsMois)
+        .flat()
+        .find(r => r.id === id);
+
+    if (!rdv) {
+        return;
+    }
+
+    document.body.insertAdjacentHTML(
+        "beforeend",
+        `
+
+        <div
+            id="modalRdvLecture"
+            class="modalCalendrier"
+        >
+
+            <div
+                class="modalCalendrierContenu"
+            >
+
+                <h2>
+                    📅 Rendez-vous
+                </h2>
+
+                <p>
+                    <strong>Nom :</strong>
+                    ${rdv.nom}
+                </p>
+
+                <p>
+                    <strong>Date début :</strong>
+                    ${rdv.dateDebut}
+                </p>
+
+                <p>
+                    <strong>Heure début :</strong>
+                    ${rdv.heureDebut}
+                </p>
+
+                <p>
+                    <strong>Date fin :</strong>
+                    ${rdv.dateFin}
+                </p>
+
+                <p>
+                    <strong>Heure fin :</strong>
+                    ${rdv.heureFin}
+                </p>
+
+                <p>
+                    <strong>Lieu :</strong>
+                    ${rdv.lieu || ""}
+                </p>
+
+                <p>
+                    <strong>Participants :</strong>
+                    ${(rdv.participants || []).join(", ")}
+                </p>
+
+                <button
+                    onclick="
+                        document
+                        .getElementById(
+                            'modalRdvLecture'
+                        )
+                        .remove()
+                    "
+                >
+                    Fermer
+                </button>
+
+            </div>
+
+        </div>
+
+        `
+    );
+
+};
