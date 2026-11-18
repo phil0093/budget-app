@@ -3,7 +3,10 @@ import { db } from "../firebase-config.js";
 import {
     collection,
     getDocs,
-    addDoc
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    doc
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
@@ -38,6 +41,34 @@ export async function ajouterProduit(
             nom,
             rayon
         }
+    );
+
+}
+export async function modifierProduit(
+    id,
+    donnees
+) {
+
+    await updateDoc(
+        doc(
+            db,
+            "produits",
+            id
+        ),
+        donnees
+    );
+
+}
+export async function supprimerProduit(
+    id
+) {
+
+    await deleteDoc(
+        doc(
+            db,
+            "produits",
+            id
+        )
     );
 
 }
