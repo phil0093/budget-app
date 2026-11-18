@@ -107,12 +107,21 @@ async function() {
 
     const aujourdHui =
         new Date();
-
+    
+    aujourdHui.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+    
     const dans7Jours =
-        new Date();
-
+        new Date(
+            aujourdHui
+        );
+    
     dans7Jours.setDate(
-        aujourdHui.getDate() + 7
+        dans7Jours.getDate() + 7
     );
 
     const rdvsAVenir =
@@ -121,7 +130,8 @@ async function() {
 
             const date =
                 new Date(
-                    rdv.dateDebut
+                    rdv.dateDebut +
+                    "T00:00:00"
                 );
 
             return (
