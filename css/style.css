@@ -875,21 +875,35 @@ body {
     font-size: 16px;
 }
 
-.btnNouvelleListe {
+.btnNouvelleListe,
+.btnGestionProduits {
 
-    width: 100%;
     margin-bottom: 15px;
 
     padding: 10px;
 
     border: none;
 
+    border-radius: 8px;
+
     color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+}
+.btnNouvelleListe {
 
     background: #14597a;
 
-    border-radius: 8px;
 }
+.btnGestionProduits {
+
+    background: #8e44ad;
+
+}
+
 
 .ligneVide {
 
@@ -1799,25 +1813,6 @@ body {
 
 }
 
-.btnGestionProduits {
-
-    margin-bottom: 15px;
-
-    padding: 10px;
-
-    border: none;
-
-    border-radius: 8px;
-
-    background: #8e44ad;
-
-    color: white;
-
-    font-size: inherit;
-
-    cursor: pointer;
-
-}
 .btnGestionProduits:hover {
 
     background: #73368c;
