@@ -1784,6 +1784,72 @@ body {
 
 }
 
+.actionsListes {
+
+    display: flex;
+
+    gap: 8px;
+
+    margin-bottom: 15px;
+
+}
+.actionsListes button {
+
+    flex: 1;
+
+}
+
+.btnGestionProduits {
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #8e44ad;
+
+    color: white;
+
+    cursor: pointer;
+
+}
+.btnGestionProduits:hover {
+
+    background: #73368c;
+
+}
+.ligneProduitBDD {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 8px 0;
+
+    border-bottom: 1px solid #eee;
+
+}
+.infosProduitBDD {
+
+    flex: 1;
+
+}
+.infosProduitBDD small {
+
+    display: block;
+
+    color: #666;
+
+}
+.actionsProduitBDD {
+
+    display: flex;
+
+    gap: 5px;
+
+}
+
 .carteDossier {
 
     background: white;
