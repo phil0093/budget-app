@@ -187,15 +187,17 @@ body {
 
     gap: 8px;
 
-    margin-top: 15px;
+    margin: 15px auto 20px auto;
 
-    margin-bottom: 20px;
+    width: 100%;
 
 }
 
 #budgetActions button {
 
     flex: 1;
+
+    max-width: 200px;
 
     border: none;
 
@@ -212,6 +214,7 @@ body {
     cursor: pointer;
 
 }
+
 #budgetActions button:hover {
 
     background: #0e425a;
@@ -303,6 +306,16 @@ body {
 .btnBudgetRecurrentes {
 
     background: #27ae60;
+
+}
+.btnBudgetRecurrentes:hover {
+
+    background: #1f8a4d;
+
+}
+.btnBudgetMois {
+
+    background: #e67e22;
 
 }
 .btnBudgetMois:hover {
