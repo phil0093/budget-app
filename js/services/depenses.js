@@ -81,52 +81,84 @@ export async function modifierDepenseFirestore(
 
 }
 
-export async function chargerToutesLesDepenses() {
-
-    const budgetsSnapshot =
-        await getDocs(
-            collection(
-                db,
-                "budgets"
-            )
-        );
+export async function chargerDernieresDepenses(
+    nombre = 30
+) {
 
     let toutesDepenses = [];
 
-    for (const budgetDoc of budgetsSnapshot.docs) {
+    let date =
+        new Date();
 
-        const depensesSnapshot =
-            await getDocs(
-                query(
-                    collection(
-                        db,
-                        "budgets",
-                        budgetDoc.id,
-                        "depenses"
-                    ),
-                    orderBy(
-                        "date",
-                        "desc"
+    while (
+        toutesDepenses.length < nombre
+    ) {
+
+        const mois =
+            date
+            .toISOString()
+            .substring(0, 7);
+
+        try {
+
+            const snapshot =
+                await getDocs(
+
+                    query(
+
+                        collection(
+                            db,
+                            "budgets",
+                            mois,
+                            "depenses"
+                        ),
+
+                        orderBy(
+                            "date",
+                            "desc"
+                        )
+
                     )
+
+                );
+
+            toutesDepenses.push(
+
+                ...snapshot.docs.map(
+                    doc => ({
+
+                        id: doc.id,
+
+                        ...doc.data()
+
+                    })
                 )
+
             );
 
-        toutesDepenses.push(
-            ...depensesSnapshot.docs.map(
-                doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                })
-            )
+        } catch {
+
+        }
+
+        date.setMonth(
+            date.getMonth() - 1
         );
+
+        if (
+            date.getFullYear() < 2020
+        ) {
+            break;
+        }
 
     }
 
-    return toutesDepenses.sort(
+    toutesDepenses.sort(
         (a, b) =>
             b.date.localeCompare(
                 a.date
             )
     );
+
+    return toutesDepenses;
 
 }
