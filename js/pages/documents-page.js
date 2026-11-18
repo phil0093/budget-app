@@ -6,7 +6,9 @@ from "../services/document-folder.js";
 
 import {
     chargerDocuments,
-    ajouterDocument
+    ajouterDocument,
+    modifierDocument,
+    supprimerDocument
 }
 from "../services/document.js";
 
@@ -126,7 +128,7 @@ async function() {
                         <button
                             class="btn-action"
                             onclick="
-                                modifierDocument(
+                                modifierDocumentUI(
                                     '${doc.id}'
                                 )
                             "
@@ -282,7 +284,7 @@ async function() {
         nom
     );
 
-    afficherDocuments();
+    await afficherDocuments();
 
 };
 
@@ -303,7 +305,7 @@ async function() {
         dossierActif
     );
 
-    afficherDocuments();
+    await afficherDocuments();
 
 };
 
@@ -313,7 +315,7 @@ async function(dossierId) {
     dossierActif =
         dossierId;
 
-    afficherDocuments();
+    await afficherDocuments();
 
 };
 
@@ -322,7 +324,7 @@ function() {
 
     if (!dossierActif) {
 
-        afficherDocuments();
+        await afficherDocuments();
 
         return;
 
@@ -345,7 +347,7 @@ function() {
 
     }
 
-    afficherDocuments();
+    await afficherDocuments();
 
 };
 
@@ -519,6 +521,194 @@ async function() {
         )
         .remove();
 
-    afficherDocuments();
+    await afficherDocuments();
+
+};
+
+window.supprimerDocumentUI =
+async function(id) {
+
+    const confirmation =
+        confirm(
+            "Supprimer ce document ?"
+        );
+
+    if (!confirmation) {
+        return;
+    }
+
+    await supprimerDocument(
+        id
+    );
+
+    await afficherDocuments();
+
+};
+
+window.modifierDocumentUI =
+async function(id) {
+
+    const docActuel =
+        documents.find(
+            d => d.id === id
+        );
+
+    if (!docActuel) {
+        return;
+    }
+
+    document.body.insertAdjacentHTML(
+        "beforeend",
+        `
+
+        <div
+            id="popupModificationDocument"
+            class="popupFond"
+        >
+
+            <div
+                class="popupContenu"
+            >
+
+                <h3>
+                    Modifier le document
+                </h3>
+
+                <input
+                    id="modTitreDocument"
+                    type="text"
+                    value="${docActuel.titre}"
+                >
+
+                <input
+                    id="modDateDocument"
+                    type="date"
+                    value="${docActuel.date}"
+                >
+
+                <input
+                    id="modFichierDocument"
+                    type="file"
+                    accept="
+                        .pdf,
+                        .jpg,
+                        .jpeg,
+                        .png,
+                        .heic
+                    "
+                >
+
+                <button
+                    onclick="
+                        validerModificationDocument(
+                            '${id}'
+                        )
+                    "
+                >
+                    Enregistrer
+                </button>
+
+                <button
+                    onclick="
+                        document
+                            .getElementById(
+                                'popupModificationDocument'
+                            )
+                            .remove()
+                    "
+                >
+                    Annuler
+                </button>
+
+            </div>
+
+        </div>
+
+        `
+    );
+
+};
+window.validerModificationDocument =
+async function(id) {
+
+    const docActuel =
+        documents.find(
+            d => d.id === id
+        );
+
+    if (!docActuel) {
+        return;
+    }
+
+    const titre =
+        document
+            .getElementById(
+                "modTitreDocument"
+            )
+            .value
+            .trim();
+
+    const date =
+        document
+            .getElementById(
+                "modDateDocument"
+            )
+            .value;
+
+    const fichier =
+        document
+            .getElementById(
+                "modFichierDocument"
+            )
+            .files[0];
+
+    const donnees = {
+
+        titre,
+        date
+
+    };
+
+    if (fichier) {
+
+        const cheminStorage =
+            `documents/${dossierActif}/${Date.now()}-${fichier.name}`;
+
+        const storageRef =
+            ref(
+                storage,
+                cheminStorage
+            );
+
+        await uploadBytes(
+            storageRef,
+            fichier
+        );
+
+        donnees.url =
+            await getDownloadURL(
+                storageRef
+            );
+
+        donnees.nomFichier =
+            fichier.name;
+
+        donnees.type =
+            fichier.type;
+
+    }
+
+    await modifierDocument(
+        id,
+        donnees
+    );
+
+    document
+        .getElementById(
+            "popupModificationDocument"
+        )
+        .remove();
+
+    await afficherDocuments();
 
 };
