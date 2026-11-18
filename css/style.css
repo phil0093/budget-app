@@ -970,6 +970,29 @@ body {
 
 }
 
+.todoTexte {
+
+    flex: 1;
+
+}
+.btnModifierTodo {
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    padding: 0 4px;
+
+}
+.btnModifierTodo:hover {
+
+    transform: scale(1.15);
+
+}
 .calendrierHeader {
 
     display: flex;
