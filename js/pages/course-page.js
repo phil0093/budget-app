@@ -275,7 +275,7 @@ function dessinerCourses() {
             </button>
             
             <div class="enteteCourses">
-            
+
                 <select
                     class="selectListe"
                     onchange="
@@ -286,6 +286,16 @@ function dessinerCourses() {
                 >
                     ${options}
                 </select>
+            
+                <button
+                    class="btnModifierListe"
+                    onclick="
+                        renommerCourseActive()
+                    "
+                    title="Renommer la liste"
+                >
+                    ✏️
+                </button>
             
                 <button
                     class="btnCorbeilleListe"
