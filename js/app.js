@@ -188,10 +188,9 @@ async function() {
                 
                 </div>
                 
-                <br>
-                
-                ${rdv.nom}
-
+                <div class="nomRdvAccueil">
+                    ${rdv.nom}
+                </div>
 
             </div>
 
