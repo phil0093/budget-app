@@ -11,6 +11,7 @@ let listes = [];
 let listeActive = "";
 
 window.afficherListe = async function() {
+
     document
         .getElementById("sidebar")
         .classList
@@ -22,16 +23,20 @@ window.afficherListe = async function() {
         "budgetActions"
     );
 
+    listes = await chargerListes();
+
     if (listes.length === 0) {
+
+        listeActive = "";
 
         document.getElementById(
             "contenu"
         ).innerHTML = `
-    
+
             <h2>
                 📝 Listes
             </h2>
-    
+
             <button
                 class="btnNouvelleListe"
                 onclick="
@@ -40,17 +45,23 @@ window.afficherListe = async function() {
             >
                 ➕ Nouvelle liste
             </button>
-    
-        `;
-    
-        return;
-    
-    }
-    
-    listes = await chargerListes();
 
-    if (!listeActive) {
-        listeActive = listes[0].nom;
+        `;
+
+        return;
+
+    }
+
+    if (
+        !listeActive ||
+        !listes.some(
+            l => l.nom === listeActive
+        )
+    ) {
+
+        listeActive =
+            listes[0].nom;
+
     }
 
     dessinerListe();
