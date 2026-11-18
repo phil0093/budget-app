@@ -115,6 +115,51 @@ body {
 
 }
 
+.enteteRdvAccueil {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 4px;
+
+}
+.pastilleRdv {
+
+    width: 12px;
+
+    height: 12px;
+
+    border-radius: 50%;
+
+    display: inline-block;
+
+    flex-shrink: 0;
+
+}
+.pastilleRdv.rdvPhilippe {
+
+    background: #1976d2;
+
+}
+.pastilleRdv.rdvMarion {
+
+    background: #e91e63;
+
+}
+.pastilleRdv.rdvLouis {
+
+    background: #4caf50;
+
+}
+.pastilleRdv.rdvPartage {
+
+    background: #ff9800;
+
+}
+
 #budgetActions {
     display: flex;
     gap: 8px;
