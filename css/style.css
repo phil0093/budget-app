@@ -1779,13 +1779,15 @@ body {
 
     border-radius: 10px;
 
-    padding: 12px;
+    padding: 10px 12px;
 
     margin-bottom: 8px;
 
-    cursor: pointer;
+    display: flex;
 
-    font-weight: bold;
+    justify-content: space-between;
+
+    align-items: center;
 
 }
 
@@ -1942,6 +1944,16 @@ body {
     border-radius: 8px;
 
 }
+.carteDossier .documentInfos {
+
+    flex: 1;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+}
+
 .nomFichierActuel {
 
     margin-top: 8px;
