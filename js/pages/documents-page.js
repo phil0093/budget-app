@@ -25,6 +25,45 @@ let dossiers = [];
 let dossierActif = null;
 let documents = [];
 
+function construireCheminDossier(dossierId) {
+
+    const chemin = [];
+
+    let courant =
+        dossiers.find(
+            d => d.id === dossierId
+        );
+
+    while (courant) {
+
+        chemin.unshift(
+            courant.nom
+        );
+
+        courant =
+            dossiers.find(
+                d => d.id === courant.parent
+            );
+
+    }
+
+    if (chemin.length <= 2) {
+
+        return chemin.join(
+            " / "
+        );
+    
+    }
+    
+    return (
+        "... / " +
+        chemin.slice(-2).join(
+            " / "
+        )
+    );
+
+}
+
 window.afficherDocuments =
 async function() {
 
@@ -108,7 +147,9 @@ async function() {
             .innerHTML = `
     
                 <h2>
-                    📁 ${dossier.nom}
+                    📁 ${construireCheminDossier(
+                        dossierActif
+                    )}
                 </h2>
     
                 <div class="actionsDocuments">
@@ -249,7 +290,30 @@ async function(dossierId) {
 window.retourDocuments =
 function() {
 
-    dossierActif = null;
+    if (!dossierActif) {
+
+        afficherDocuments();
+
+        return;
+
+    }
+
+    const dossier =
+        dossiers.find(
+            d => d.id === dossierActif
+        );
+
+    if (!dossier || !dossier.parent) {
+
+        dossierActif = null;
+
+    }
+    else {
+
+        dossierActif =
+            dossier.parent;
+
+    }
 
     afficherDocuments();
 
