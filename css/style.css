@@ -1477,7 +1477,18 @@ body {
         );
 
 }
+.rayonCourseTermine {
 
+    background: #ececec;
+
+    opacity: 0.9;
+
+}
+.rayonCourseTermine .ligneCourse input {
+
+    background: #f5f5f5;
+
+}
 .rayonCourse h3 {
 
     margin: 0 0 4px 0;
