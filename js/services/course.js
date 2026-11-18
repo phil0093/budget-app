@@ -104,3 +104,45 @@ export async function mettreAJourCoche(
     );
 
 }
+export async function renommerCourse(
+    ancienNom,
+    nouveauNom
+) {
+
+    const ancienDoc =
+        await getDoc(
+            doc(
+                db,
+                "courses",
+                ancienNom
+            )
+        );
+
+    if (!ancienDoc.exists()) {
+        return;
+    }
+
+    const data =
+        ancienDoc.data();
+
+    await setDoc(
+        doc(
+            db,
+            "courses",
+            nouveauNom
+        ),
+        {
+            ...data,
+            nom: nouveauNom
+        }
+    );
+
+    await deleteDoc(
+        doc(
+            db,
+            "courses",
+            ancienNom
+        )
+    );
+
+}
