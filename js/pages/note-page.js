@@ -163,8 +163,13 @@ async function(id) {
 window.afficherNoteRecherche =
 async function(id) {
 
-    const notes =
+    const toutesNotes =
         await chargerNotes();
+    
+    const note =
+        toutesNotes.find(
+            n => n.id === id
+        );
 
     const note =
         notes.find(
