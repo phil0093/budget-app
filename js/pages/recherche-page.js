@@ -79,6 +79,18 @@ async function() {
                 >
 
                 <div
+                    id="spinnerRecherche"
+                    class="spinnerRecherche"
+                    style="
+                        display:none;
+                        text-align:center;
+                        padding:10px;
+                    "
+                >
+                    ⏳ Recherche...
+                </div>
+
+                <div
                     id="resultatsRecherche"
                     style="
                         margin-top:15px;
@@ -122,18 +134,33 @@ async function(
     forcerRecherche = false
 ) {
 
+    const spinner =
+        document.getElementById(
+            "spinnerRecherche"
+        );
+    
+    spinner.style.display =
+        "block";
+    
     const texte =
-        document
-        .getElementById(
-            "champRecherche"
-        )
-        .value
-        .trim();
-        .toLowerCase();
+        normaliserTexte(
+            document
+            .getElementById(
+                "champRecherche"
+            )
+            .value
+            .trim()
+        );
+
     if (
         !forcerRecherche &&
         texte.length < 4
     ) {
+
+        zone.innerHTML = "";
+        
+        spinner.style.display =
+            "none";
     
         return;
     
@@ -377,8 +404,18 @@ async function(
 
     }
 
-    zone.innerHTML = html;
-
+    if (
+        texte === ""
+    ) {
+    
+        zone.innerHTML = "";
+    
+        spinner.style.display =
+            "none";
+    
+        return;
+    
+    }
 };
 
 window.verifierRecherche =
