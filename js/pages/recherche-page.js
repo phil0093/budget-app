@@ -286,9 +286,11 @@ async function(
     
         recette.ingredients?.some(
             ingredient =>
+    
                 normaliserTexte(
                     ingredient.ingredient || ""
                 ).includes(texte)
+    
         )
     
     )
