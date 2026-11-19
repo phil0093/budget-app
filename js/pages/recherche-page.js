@@ -28,6 +28,8 @@ import {
 }
 from "../services/todo.js";
 
+let derniereRecherche = "";
+
 function normaliserTexte(texte) {
 
     return (texte || "")
@@ -76,9 +78,26 @@ async function() {
                         verifierRecherche()
                     "
                     onblur="
-                        effectuerRecherche(
-                            true
-                        )
+                        const texte =
+                            document
+                            .getElementById(
+                                'champRecherche'
+                            )
+                            .value
+                            .trim();
+                    
+                        if (
+                            texte !== derniereRecherche
+                        ) {
+                    
+                            derniereRecherche =
+                                texte;
+                    
+                            effectuerRecherche(
+                                true
+                            );
+                    
+                        }
                     "
                     autofocus
                 >
@@ -447,8 +466,12 @@ function() {
         .trim();
 
     if (
-        texte.length >= 4
+        texte.length >= 4 &&
+        texte !== derniereRecherche
     ) {
+
+        derniereRecherche =
+            texte;
 
         effectuerRecherche();
 
