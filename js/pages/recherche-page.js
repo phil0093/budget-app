@@ -23,6 +23,11 @@ import {
 }
 from "../services/depenses.js";
 
+import {
+    chargerTodo
+}
+from "../services/todo.js";
+
 function normaliserTexte(texte) {
 
     return (texte || "")
@@ -268,17 +273,22 @@ async function(
     .filter(recette =>
     
         normaliserTexte(
-            recette.titre || ""
-        ).includes(
-            normaliserTexte(texte)
-        )
+            recette.nom || ""
+        ).includes(texte)
     
         ||
     
         normaliserTexte(
-            recette.recette || ""
-        ).includes(
-            normaliserTexte(texte)
+            recette.etapes || ""
+        ).includes(texte)
+    
+        ||
+    
+        recette.ingredients?.some(
+            ingredient =>
+                normaliserTexte(
+                    ingredient.ingredient || ""
+                ).includes(texte)
         )
     
     )
@@ -288,20 +298,9 @@ async function(
     
         <div
             class="resultatRecherche"
-            onclick="
-                document
-                    .getElementById(
-                        'popupRecherche'
-                    )
-                    .remove();
-    
-                ouvrirRecetteLecture(
-                    '${recette.id}'
-                );
-            "
         >
     
-            🍝 ${recette.titre}
+            🍝 ${recette.nom}
     
         </div>
     
@@ -309,6 +308,33 @@ async function(
     
     });
 
+    const todos =
+        await chargerTodo();
+    
+    todos
+    .filter(todo =>
+    
+        normaliserTexte(
+            todo.texte || ""
+        ).includes(texte)
+    
+    )
+    .forEach(todo => {
+    
+        html += `
+    
+        <div
+            class="resultatRecherche"
+        >
+    
+            ✅ ${todo.texte}
+    
+        </div>
+    
+        `;
+    
+    });
+    
     const notes =
         await chargerNotes();
     
