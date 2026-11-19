@@ -529,6 +529,38 @@ body {
 
 }
 
+.spinnerRecherche {
+
+    width: 24px;
+
+    height: 24px;
+
+    margin: 10px auto;
+
+    border: 3px solid #ddd;
+
+    border-top: 3px solid #14597a;
+
+    border-radius: 50%;
+
+    animation:
+        rotationRecherche
+        0.8s linear infinite;
+
+}
+@keyframes rotationRecherche {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
 .tableMenus {
     width: 100%;
     border-collapse: collapse;
