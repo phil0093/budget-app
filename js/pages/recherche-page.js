@@ -68,7 +68,12 @@ async function() {
                     type="text"
                     placeholder="Rechercher..."
                     oninput="
-                        effectuerRecherche()
+                        verifierRecherche()
+                    "
+                    onblur="
+                        effectuerRecherche(
+                            true
+                        )
                     "
                     autofocus
                 >
@@ -113,7 +118,9 @@ async function() {
 };
 
 window.effectuerRecherche =
-async function() {
+async function(
+    forcerRecherche = false
+) {
 
     const texte =
         document
@@ -121,9 +128,17 @@ async function() {
             "champRecherche"
         )
         .value
-        .trim()
+        .trim();
         .toLowerCase();
-
+    if (
+        !forcerRecherche &&
+        texte.length < 4
+    ) {
+    
+        return;
+    
+    }
+        
     const zone =
         document.getElementById(
             "resultatsRecherche"
@@ -363,5 +378,26 @@ async function() {
     }
 
     zone.innerHTML = html;
+
+};
+
+window.verifierRecherche =
+function() {
+
+    const texte =
+        document
+        .getElementById(
+            "champRecherche"
+        )
+        .value
+        .trim();
+
+    if (
+        texte.length >= 4
+    ) {
+
+        effectuerRecherche();
+
+    }
 
 };
