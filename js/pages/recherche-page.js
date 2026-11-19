@@ -400,8 +400,10 @@ async function(
                         'popupRecherche'
                     )
                     .remove();
-    
-                afficherNotes();
+            
+                afficherNoteRecherche(
+                    '${note.id}'
+                );
             "
         >
     
