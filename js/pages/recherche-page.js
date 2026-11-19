@@ -81,14 +81,8 @@ async function() {
                 <div
                     id="spinnerRecherche"
                     class="spinnerRecherche"
-                    style="
-                        display:none;
-                        text-align:center;
-                        padding:10px;
-                    "
-                >
-                    ⏳ Recherche...
-                </div>
+                    style="display:none;"
+                ></div>
 
                 <div
                     id="resultatsRecherche"
@@ -134,14 +128,16 @@ async function(
     forcerRecherche = false
 ) {
 
+    const zone =
+        document.getElementById(
+            "resultatsRecherche"
+        );
+
     const spinner =
         document.getElementById(
             "spinnerRecherche"
         );
-    
-    spinner.style.display =
-        "block";
-    
+
     const texte =
         normaliserTexte(
             document
@@ -158,18 +154,13 @@ async function(
     ) {
 
         zone.innerHTML = "";
-        
+
         spinner.style.display =
             "none";
-    
+
         return;
-    
+
     }
-        
-    const zone =
-        document.getElementById(
-            "resultatsRecherche"
-        );
 
     if (
         texte === ""
@@ -177,9 +168,15 @@ async function(
 
         zone.innerHTML = "";
 
+        spinner.style.display =
+            "none";
+
         return;
 
     }
+
+    spinner.style.display =
+        "block";
 
     let html = "";
 
@@ -392,30 +389,22 @@ async function(
     
     });
     
-  if (html === "") {
+    if (html === "") {
 
         html = `
-        
+    
             <p>
                 Aucun résultat
             </p>
-        
+    
         `;
-
-    }
-
-    if (
-        texte === ""
-    ) {
-    
-        zone.innerHTML = "";
-    
-        spinner.style.display =
-            "none";
-    
-        return;
     
     }
+    
+    zone.innerHTML = html;
+    
+    spinner.style.display =
+        "none";
 };
 
 window.verifierRecherche =
