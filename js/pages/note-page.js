@@ -160,3 +160,77 @@ async function(id) {
     dessinerNotes();
 
 };
+window.afficherNoteRecherche =
+async function(id) {
+
+    const notes =
+        await chargerNotes();
+
+    const note =
+        notes.find(
+            n => n.id === id
+        );
+
+    if (!note) {
+
+        return;
+
+    }
+
+    document.body.insertAdjacentHTML(
+        "beforeend",
+
+        `
+
+        <div
+            id="popupNoteLecture"
+            class="modalCalendrier"
+        >
+
+            <div
+                class="modalCalendrierContenu"
+            >
+
+                <h2>
+
+                    ${note.titre || "Note"}
+
+                </h2>
+
+                <div
+                    class="lectureRecette"
+                >
+
+                    ${(note.contenu || "")
+                        .replaceAll(
+                            "\n",
+                            "<br>"
+                        )
+                    }
+
+                </div>
+
+                <br>
+
+                <button
+                    onclick="
+                        document
+                            .getElementById(
+                                'popupNoteLecture'
+                            )
+                            .remove()
+                    "
+                >
+
+                    Fermer
+
+                </button>
+
+            </div>
+
+        </div>
+
+        `
+    );
+
+};
