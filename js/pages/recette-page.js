@@ -676,3 +676,145 @@ async function(id) {
     dessinerRecettes();
 
 };
+
+window.afficherRecetteRecherche =
+async function(id) {
+
+    const recette =
+        recettes.find(
+            r => r.id === id
+        );
+
+    if (!recette) {
+
+        return;
+
+    }
+
+    const ingredients =
+        (recette.ingredients || [])
+        .map(ing => `
+
+            <tr>
+
+                <td>
+                    ${ing.quantite || ""}
+                </td>
+
+                <td>
+                    ${ing.ingredient || ""}
+                </td>
+
+            </tr>
+
+        `)
+        .join("");
+
+    document.body.insertAdjacentHTML(
+        "beforeend",
+
+        `
+
+        <div
+            id="popupRecette"
+            class="modalCalendrier"
+        >
+
+            <div
+                class="modalCalendrierContenu"
+            >
+
+                <h2>
+                    ${recette.nom}
+                </h2>
+
+                <p>
+
+                    <b>Type :</b>
+
+                    ${recette.type || ""}
+
+                </p>
+
+                <div
+                    class="infosRecettePopup"
+                >
+
+                    <span>
+
+                        👥
+                        ${recette.portions || ""}
+
+                    </span>
+
+                    <span>
+
+                        ⏱️
+                        ${recette.tempsPreparation || 0}
+                        min
+
+                    </span>
+
+                    <span>
+
+                        🔥
+                        ${recette.tempsCuisson || 0}
+                        min
+
+                    </span>
+
+                </div>
+
+                <h3>
+                    🛒 Ingrédients
+                </h3>
+
+                <table
+                    class="tableIngredients"
+                >
+
+                    ${ingredients}
+
+                </table>
+
+                <h3>
+                    👨‍🍳 Étapes
+                </h3>
+
+                <div
+                    class="lectureRecette"
+                >
+
+                    ${(recette.etapes || "")
+                        .replaceAll(
+                            "\n",
+                            "<br>"
+                        )
+                    }
+
+                </div>
+
+                <br>
+
+                <button
+                    onclick="
+                        document
+                            .getElementById(
+                                'popupRecette'
+                            )
+                            .remove()
+                    "
+                >
+
+                    Fermer
+
+                </button>
+
+            </div>
+
+        </div>
+
+        `
+    );
+
+};
