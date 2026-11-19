@@ -680,8 +680,11 @@ async function(id) {
 window.afficherRecetteRecherche =
 async function(id) {
 
+    const toutesRecettes =
+        await chargerRecettes();
+    
     const recette =
-        recettes.find(
+        toutesRecettes.find(
             r => r.id === id
         );
 
