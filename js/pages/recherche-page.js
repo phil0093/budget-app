@@ -319,10 +319,21 @@ async function(
     
         <div
             class="resultatRecherche"
+            onclick="
+                document
+                    .getElementById(
+                        'popupRecherche'
+                    )
+                    .remove();
+        
+                afficherRecetteRecherche(
+                    '${recette.id}'
+                );
+            "
         >
-    
+        
             🍝 ${recette.nom}
-    
+        
         </div>
     
         `;
