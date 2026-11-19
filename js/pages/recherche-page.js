@@ -19,7 +19,7 @@ import {
 from "../services/calendrier.js";
 
 import {
-    chargerDepenses
+    chargerDernieresDepenses
 }
 from "../services/depenses.js";
 
@@ -316,8 +316,13 @@ async function() {
     
     });
 
+    const resultatDepenses =
+        await chargerDernieresDepenses(
+            500
+        );
+    
     const depenses =
-        await chargerDepenses();
+        resultatDepenses.depenses;
     
     depenses
     .filter(depense =>
