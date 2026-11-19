@@ -28,7 +28,7 @@ import {
 }
 from "../services/todo.js";
 
-let derniereRecherche = "";
+let timerRecherche;
 
 function normaliserTexte(texte) {
 
@@ -77,28 +77,7 @@ async function() {
                     oninput="
                         verifierRecherche()
                     "
-                    onblur="
-                        const texte =
-                            document
-                            .getElementById(
-                                'champRecherche'
-                            )
-                            .value
-                            .trim();
-                    
-                        if (
-                            texte !== derniereRecherche
-                        ) {
-                    
-                            derniereRecherche =
-                                texte;
-                    
-                            effectuerRecherche(
-                                true
-                            );
-                    
-                        }
-                    "
+                    onblur=""
                     autofocus
                 >
 
@@ -478,16 +457,32 @@ function() {
         .value
         .trim();
 
+    clearTimeout(
+        timerRecherche
+    );
+
     if (
-        texte.length >= 4 &&
-        texte !== derniereRecherche
+        texte.length < 4
     ) {
 
-        derniereRecherche =
-            texte;
+        document
+            .getElementById(
+                "resultatsRecherche"
+            )
+            .innerHTML = "";
 
-        effectuerRecherche();
+        return;
 
     }
+
+    timerRecherche =
+        setTimeout(
+            () => {
+
+                effectuerRecherche();
+
+            },
+            500
+        );
 
 };
