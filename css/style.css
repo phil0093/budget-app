@@ -559,7 +559,11 @@ body {
     }
 
 }
+.lectureNote {
 
+    white-space: pre-wrap;
+
+}
 
 .tableMenus {
     width: 100%;
