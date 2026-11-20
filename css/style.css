@@ -2208,6 +2208,17 @@ body {
     white-space: nowrap;
 
 }
+.btnAjouterCoursePopup:disabled {
+
+    background: #95a5a6;
+
+    color: white;
+
+    opacity: 0.8;
+
+    cursor: not-allowed;
+
+}
 .titreDocumentPopup,
 .dateDocumentPopup {
 
