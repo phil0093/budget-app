@@ -34,12 +34,6 @@ export async function ajouterProduit(
 
     nom = nom.trim();
 
-    if (
-        nom.length < 4
-    ) {
-        return;
-    }
-
     const snapshot =
         await getDocs(
             collection(
