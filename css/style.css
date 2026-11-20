@@ -12,10 +12,15 @@ body {
 }
 
 .coeur {
-    color: #e60026;
-    margin: 0 7px;
-    font-size: 30px;
+
+    color: #ff4f7b;
+
+    margin: 0 10px;
+
+    font-size: 34px;
+
 }
+
 .coeurTitre {
 
     font-size: 32px;
@@ -24,55 +29,109 @@ body {
 
 .titreAccueil {
 
-    font-size: 36px;
+    font-size: 40px;
 
     font-weight: 800;
 
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 
-    color: #111;
+    color: #2f3542;
+
+    text-shadow:
+        0 1px 1px
+        rgba(
+            255,
+            255,
+            255,
+            0.6
+        );
 
 }
 #menuButton,
 #searchButton {
 
-    width: 52px;
+    width: 56px;
 
-    height: 52px;
+    height: 56px;
 
     border: none;
 
-    border-radius: 16px;
+    border-radius: 18px;
 
-    background: linear-gradient(
-        135deg,
-        #14597a,
-        #1e7ca8
+    background: rgba(
+        75,
+        108,
+        183,
+        0.82
     );
+
+    backdrop-filter: blur(8px);
 
     color: white;
 
-    font-size: 22px;
+    font-size: 24px;
 
     box-shadow:
-        0 4px 12px
-        rgba(0,0,0,0.18);
+        0 4px 15px
+        rgba(
+            0,
+            0,
+            0,
+            0.12
+        );
 
     cursor: pointer;
 
     transition:
-        transform 0.2s,
-        box-shadow 0.2s;
+        all 0.25s ease;
 
 }
 #menuButton:hover,
 #searchButton:hover {
 
-    transform: translateY(-2px);
+    transform:
+        translateY(-2px);
+
+    background: rgba(
+        95,
+        128,
+        203,
+        0.92
+    );
 
     box-shadow:
-        0 6px 16px
-        rgba(0,0,0,0.25);
+        0 6px 18px
+        rgba(
+            0,
+            0,
+            0,
+            0.18
+        );
+
+}
+
+
+#menuButton {
+
+    position: fixed;
+
+    top: 10px;
+
+    left: 10px;
+
+    z-index: 1001;
+
+}
+
+#searchButton {
+
+    position: fixed;
+
+    top: 10px;
+
+    right: 10px;
+
+    z-index: 1001;
 
 }
 
