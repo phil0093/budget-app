@@ -14,8 +14,6 @@ const auth = getAuth(app);
 export { auth };
 
 const provider = new GoogleAuthProvider();
-
-// Remplace ces adresses par les vraies
 const utilisateursAutorises = [
     "philippefrossard0093@hotmail.fr",
     "marion.gathelier@laposte.net"
@@ -103,13 +101,6 @@ onAuthStateChanged(auth, user => {
             logoutBtn.style.display = "inline-block";
 
         }
-
-        console.log(
-            "Connecté :",
-            user.displayName,
-            user.email,
-            user.uid
-        );
 
     } else {
 
