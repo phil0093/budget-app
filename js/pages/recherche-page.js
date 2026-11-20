@@ -188,18 +188,27 @@ async function(
 
     documents
     .filter(doc =>
+    
         normaliserTexte(
-            doc.titre
+            doc.titre || ""
         ).includes(
             normaliserTexte(
                 texte
             )
         )
+    
+    )
+    .sort(
+        (a, b) =>
+            (b.date || "")
+                .localeCompare(
+                    a.date || ""
+                )
     )
     .forEach(doc => {
-
+    
         html += `
-        
+    
         <div
             class="resultatRecherche"
             onclick="
@@ -209,16 +218,48 @@ async function(
                 )
             "
         >
-
-            📄 ${doc.titre}
-
+    
+            <strong>
+    
+                📄 ${doc.titre}
+    
+            </strong>
+    
+            <br>
+    
+            <small>
+    
+                📅 ${doc.date || ""}
+    
+                •
+    
+                📎 ${doc.nomFichier || ""}
+    
+                •
+    
+                ${
+                    doc.type
+                        ? doc.type
+                            .replace(
+                                "application/",
+                                ""
+                            )
+                            .replace(
+                                "image/",
+                                ""
+                            )
+                            .toUpperCase()
+                        : ""
+                }
+    
+            </small>
+    
         </div>
-
+    
         `;
-
+    
     });
 
-  
     const rdvsMois =
         await chargerRdvsMois();
 
