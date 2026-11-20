@@ -97,12 +97,12 @@ async function() {
         "zoneBudget"
     ).style.display = "block";
 
+    masquerZones("budgetActions");
+    
     document.getElementById(
         "searchButton"
     ).style.display = "block";
     
-    masquerZones("budgetActions");
-
     const rdvsMois =
         await chargerRdvsMois();
 
