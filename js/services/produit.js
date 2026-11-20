@@ -32,6 +32,45 @@ export async function ajouterProduit(
     rayon
 ) {
 
+    nom = nom.trim();
+
+    if (
+        nom.length < 4
+    ) {
+        return;
+    }
+
+    const snapshot =
+        await getDocs(
+            collection(
+                db,
+                "produits"
+            )
+        );
+
+    const existe =
+        snapshot.docs.some(doc => {
+
+            const data = doc.data();
+
+            return (
+                data.rayon === rayon
+                &&
+                data.nom
+                    .trim()
+                    .toLowerCase()
+                    ===
+                nom
+                    .trim()
+                    .toLowerCase()
+            );
+
+        });
+
+    if (existe) {
+        return;
+    }
+
     await addDoc(
         collection(
             db,
