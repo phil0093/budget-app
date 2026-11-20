@@ -25,6 +25,8 @@ from "../services/produit.js";
 let courses = [];
 let courseActive = "";
 let produits = [];
+let selectionSuggestionProduit =
+    false;
 
 window.afficherCourses =
 async function() {
@@ -564,6 +566,14 @@ async function() {
 window.gererLigneCourse =
 async function(champProduit, rayon) {
 
+    if (
+        selectionSuggestionProduit
+    ) {
+    
+        return;
+    
+    }
+    
     const valeur =
         champProduit.value.trim();
 
@@ -1085,6 +1095,9 @@ function(
     nomProduit
 ) {
 
+    selectionSuggestionProduit =
+        true;
+
     const champ =
         document.getElementById(
             `produit-${idLigne}`
@@ -1107,6 +1120,13 @@ function(
         suggestions.innerHTML = "";
 
     }
+
+    setTimeout(() => {
+
+        selectionSuggestionProduit =
+            false;
+
+    }, 100);
 
 };
 
