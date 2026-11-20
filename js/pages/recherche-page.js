@@ -403,6 +403,13 @@ async function(
         resultatDepenses.depenses;
     
     depenses
+    .sort(
+        (a, b) =>
+            (b.date || "")
+                .localeCompare(
+                    a.date || ""
+                )
+    );
     .filter(depense =>
     
         normaliserTexte(
@@ -420,7 +427,33 @@ async function(
             class="resultatRecherche"
         >
     
-            💰 ${depense.libelle}
+            <strong>
+                💰 ${depense.libelle}
+            </strong>
+    
+            <br>
+    
+            <small>
+    
+                📅 ${
+                    depense.date
+                        ? new Date(
+                            depense.date
+                        ).toLocaleDateString(
+                            "fr-FR"
+                        )
+                        : ""
+                }
+    
+                •
+    
+                ${
+                    Number(
+                        depense.montant || 0
+                    ).toFixed(2)
+                } €
+    
+            </small>
     
         </div>
     
