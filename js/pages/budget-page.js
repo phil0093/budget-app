@@ -123,110 +123,141 @@ window.ajouterDepense = async function () {
 
 window.afficherDepenses = async function(reset = true) {
 
-    if (reset) {
-    nbDepensesAffichees = 30;
-    }
-    
-    const resultat =
-        await chargerDernieresDepenses(
-            nbDepensesAffichees
-        );
-    
-    const depenses =
-        resultat.depenses;
-    
-    const total =
-        resultat.total;
-    
-    if (depenses.length === 0) {
+    document.getElementById(
+        "contenu"
+    ).innerHTML = `
+        <div
+            style="
+                display:flex;
+                justify-content:center;
+                padding:50px;
+            "
+        >
+            <div
+                class="spinnerRecherche"
+            ></div>
+        </div>
+    `;
 
+    try {
+        if (reset) {
+        nbDepensesAffichees = 30;
+        }
+        
+        const resultat =
+            await chargerDernieresDepenses(
+                nbDepensesAffichees
+            );
+        
+        const depenses =
+            resultat.depenses;
+        
+        const total =
+            resultat.total;
+        
+        if (depenses.length === 0) {
+    
+            document.getElementById("contenu").innerHTML = `
+                <h2>Liste des dépenses</h2>
+                <p>Aucune dépense.</p>
+            `;
+    
+            return;
+        }
+    
+        const depensesAfficher =
+            depenses;
+    
+        const html = depensesAfficher.map(d => `
+    
+            <div class="depense-ligne">
+    
+                <div class="depense-infos">
+    
+                    <div class="depense-libelle">
+                        ${d.libelle}
+                    </div>
+    
+                    <div class="depense-details">
+                        ${d.date}
+                    </div>
+    
+                </div>
+    
+                <div class="depense-montant">
+                    ${d.montant.toLocaleString("fr-FR", {
+                        minimumFractionDigits: 2
+                    })} €
+                </div>
+    
+                <div class="depense-actions">
+    
+                    <button
+                        class="btn-action"
+                        onclick="modifierDepense(
+                            '${d.id}',
+                            '${d.mois}'
+                        )">
+                        ✏️
+                    </button>
+    
+                    <button
+                        class="btn-action"
+                        onclick="supprimerDepense(
+                            '${d.id}',
+                            '${d.mois}'
+                        )">
+                        🗑️
+                    </button>
+    
+                </div>
+    
+            </div>
+    
+        `).join("");
+    
+        let boutonPlus = "";
+    
+        if (total > nbDepensesAffichees) {
+    
+            boutonPlus = `
+                <div class="bouton-plus-container">
+    
+                    <button
+                        class="btn-plus"
+                        onclick="chargerPlusDepenses()">
+    
+                        ⬇️ Afficher 30 de plus
+    
+                    </button>
+    
+                </div>
+            `;
+        }
+    
         document.getElementById("contenu").innerHTML = `
             <h2>Liste des dépenses</h2>
-            <p>Aucune dépense.</p>
+    
+            <div class="liste-depenses">
+                ${html}
+            </div>
+    
+            ${boutonPlus}
+        `;
+     }
+    catch (e) {
+
+        console.error(e);
+
+        document.getElementById(
+            "contenu"
+        ).innerHTML = `
+            <p>
+                Erreur lors du chargement des dépenses.
+            </p>
         `;
 
-        return;
     }
-
-    const depensesAfficher =
-        depenses;
-
-    const html = depensesAfficher.map(d => `
-
-        <div class="depense-ligne">
-
-            <div class="depense-infos">
-
-                <div class="depense-libelle">
-                    ${d.libelle}
-                </div>
-
-                <div class="depense-details">
-                    ${d.date}
-                </div>
-
-            </div>
-
-            <div class="depense-montant">
-                ${d.montant.toLocaleString("fr-FR", {
-                    minimumFractionDigits: 2
-                })} €
-            </div>
-
-            <div class="depense-actions">
-
-                <button
-                    class="btn-action"
-                    onclick="modifierDepense(
-                        '${d.id}',
-                        '${d.mois}'
-                    )">
-                    ✏️
-                </button>
-
-                <button
-                    class="btn-action"
-                    onclick="supprimerDepense(
-                        '${d.id}',
-                        '${d.mois}'
-                    )">
-                    🗑️
-                </button>
-
-            </div>
-
-        </div>
-
-    `).join("");
-
-    let boutonPlus = "";
-
-    if (total > nbDepensesAffichees) {
-
-        boutonPlus = `
-            <div class="bouton-plus-container">
-
-                <button
-                    class="btn-plus"
-                    onclick="chargerPlusDepenses()">
-
-                    ⬇️ Afficher 30 de plus
-
-                </button>
-
-            </div>
-        `;
-    }
-
-    document.getElementById("contenu").innerHTML = `
-        <h2>Liste des dépenses</h2>
-
-        <div class="liste-depenses">
-            ${html}
-        </div>
-
-        ${boutonPlus}
-    `;
 };
 
 window.afficherRecurrentes = async function() {
