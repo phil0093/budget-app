@@ -198,16 +198,11 @@ async function(id) {
                 </h2>
 
                 <div
-                    class="lectureRecette"
+                    class="lectureNote"
                 >
 
-                    ${(note.contenu || "")
-                        .replaceAll(
-                            "\n",
-                            "<br>"
-                        )
-                    }
-
+                    ${note.contenu || ""}
+                    
                 </div>
 
                 <br>
