@@ -59,4 +59,8 @@ export function masquerZones(...ids) {
 
     });
 
+    document.getElementById(
+        "searchButton"
+    ).style.display = "none";
+
 }
