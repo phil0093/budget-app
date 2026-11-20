@@ -77,8 +77,6 @@ async function() {
                     oninput="
                         verifierRecherche()
                     "
-                    onblur=""
-                    autofocus
                 >
 
                 <div
@@ -123,7 +121,22 @@ async function() {
 
         `
     );
+    
+    setTimeout(() => {
 
+        const champ =
+            document.getElementById(
+                "champRecherche"
+            );
+    
+        if (champ) {
+    
+            champ.focus();
+            champ.select();
+    
+        }
+    
+    }, 50);
 };
 
 window.effectuerRecherche =
