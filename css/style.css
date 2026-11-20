@@ -4,6 +4,32 @@ body {
     margin: 0;
 }
 
+.titre-budget {
+
+    text-align: center;
+
+    font-size: 38px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    color: #2d3748;
+
+    margin-top: 15px;
+
+    margin-bottom: 25px;
+    
+    text-shadow:
+        0 1px 1px
+        rgba(
+            255,
+            255,
+            255,
+            0.6
+        );
+
+}
 
 .container {
     max-width: 700px;
@@ -15,9 +41,9 @@ body {
 
     color: #ff4f7b;
 
-    margin: 0 10px;
+    margin: 0 12px;
 
-    font-size: 34px;
+    font-size: 36px;
 
 }
 
@@ -27,26 +53,7 @@ body {
 
 }
 
-.titreAccueil {
 
-    font-size: 40px;
-
-    font-weight: 800;
-
-    letter-spacing: 2px;
-
-    color: #2f3542;
-
-    text-shadow:
-        0 1px 1px
-        rgba(
-            255,
-            255,
-            255,
-            0.6
-        );
-
-}
 #menuButton,
 #searchButton {
 
@@ -568,11 +575,7 @@ body {
 
 }
 
-.titre-budget {
-    text-align: center;
-    font-size: 27px;
-    font-weight: bold;
-}
+
 .zoneSelectionMois {
 
     display: flex;
