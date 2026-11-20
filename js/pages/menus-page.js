@@ -512,21 +512,19 @@ async function(date, repas, nom, recetteId) {
         `suggestions-${repas}-${date}`
     ).innerHTML = "";
 
-    await sauvegarderMenuLigne(date);
-
-    const menus =
-        await chargerMenus();
-    
-    recettes =
-        await chargerRecettes();
-    
-    afficherMenus();
+    await sauvegarderMenuLigne(
+        date,
+        true
+    );
 
 };
 
 
 window.sauvegarderMenuLigne =
-async function(date) {
+async function(
+    date,
+    rafraichir = false
+) {
 
     const midi =
         document.getElementById(
@@ -581,26 +579,24 @@ async function(date) {
     await sauverMenu(
         date,
         {
-
             midi,
-
             soir,
-
             recettesMidi:
                 recettesLieesMenus[
                     `${date}-midi`
                 ] || [],
-
             recettesSoir:
                 recettesLieesMenus[
                     `${date}-soir`
                 ] || []
-
         }
     );
-
-    afficherMenus();
-
+    
+    if (rafraichir) {
+    
+        await afficherMenus();
+    
+    }
 };
 
 window.ouvrirPopupAjoutCourse =
