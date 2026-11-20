@@ -59,8 +59,16 @@ export function masquerZones(...ids) {
 
     });
 
-    document.getElementById(
-        "searchButton"
-    ).style.display = "none";
+    const searchButton =
+        document.getElementById(
+            "searchButton"
+        );
+
+    if (searchButton) {
+
+        searchButton.style.display =
+            "none";
+
+    }
 
 }
