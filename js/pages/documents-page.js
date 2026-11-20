@@ -634,6 +634,15 @@ function() {
                     >
                 
                 </div>
+
+                <div
+                    id="spinnerDocument"
+                    class="spinnerRecherche"
+                    style="
+                        display:none;
+                        margin-top:15px;
+                    "
+                ></div>
                 
                 <div class="actionsCoursePopup">
                 
@@ -706,53 +715,106 @@ async function() {
 
     }
 
-    const cheminStorage =
-        `documents/${dossierActif}/${Date.now()}-${fichier.name}`;
+    document.getElementById(
+        "spinnerDocument"
+    ).style.display =
+        "block";
 
-    const storageRef =
-        ref(
-            storage,
+    const boutonEnregistrer =
+        document.querySelector(
+            "#popupDocument .btnAjouterCoursePopup"
+        );
+    
+    boutonEnregistrer.disabled =
+        true;
+    boutonEnregistrer.textContent =
+        "⏳ Enregistrement...";
+    
+    try {
+
+        const cheminStorage =
+            `documents/${dossierActif}/${Date.now()}-${fichier.name}`;
+    
+        const storageRef =
+            ref(
+                storage,
+                cheminStorage
+            );
+    
+        await uploadBytes(
+            storageRef,
+            fichier
+        );
+    
+        const url =
+            await getDownloadURL(
+                storageRef
+            );
+    
+        await ajouterDocument({
+    
+            titre,
+    
+            date,
+    
+            dossierId:
+                dossierActif,
+    
+            type:
+                fichier.type,
+    
+            nomFichier:
+                fichier.name,
+    
+            url,
+    
             cheminStorage
+    
+        });
+    
+        document
+            .getElementById(
+                "popupDocument"
+            )
+            .remove();
+    
+        await afficherDocuments();
+    
+    }
+    catch (e) {
+
+        console.error(e);
+    
+        alert(
+            "Erreur lors de l'enregistrement du document."
         );
+    
+    }
+    finally {
 
-    await uploadBytes(
-        storageRef,
-        fichier
-    );
+        const spinner =
+            document.getElementById(
+                "spinnerDocument"
+            );
+    
+        if (spinner) {
+    
+            spinner.style.display =
+                "none";
+    
+        }
+    
+        if (boutonEnregistrer) {
+    
+            boutonEnregistrer.disabled =
+                false;
 
-    const url =
-        await getDownloadURL(
-            storageRef
-        );
-
-    await ajouterDocument({
-
-        titre,
+            boutonEnregistrer.textContent =
+                "✅ Enregistrer";
     
-        date,
+        }
     
-        dossierId:
-            dossierActif,
-    
-        type:
-            fichier.type,
-    
-        nomFichier:
-            fichier.name,
-    
-        url,
-    
-        cheminStorage
-    
-    });
-
-    document
-        .getElementById(
-            "popupDocument"
-        )
-        .remove();
-
-    await afficherDocuments();
+    }
 
 };
 
