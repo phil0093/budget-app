@@ -171,11 +171,6 @@ async function(id) {
             n => n.id === id
         );
 
-    const note =
-        notes.find(
-            n => n.id === id
-        );
-
     if (!note) {
 
         return;
