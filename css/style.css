@@ -11,6 +11,126 @@ body {
     padding: 20px;
 }
 
+.coeur {
+    color: #e60026;
+    margin: 0 7px;
+    font-size: 30px;
+}
+.coeurTitre {
+
+    font-size: 32px;
+
+}
+
+.titreAccueil {
+
+    font-size: 36px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    color: #111;
+
+}
+#menuButton,
+#searchButton {
+
+    width: 52px;
+
+    height: 52px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    background: linear-gradient(
+        135deg,
+        #14597a,
+        #1e7ca8
+    );
+
+    color: white;
+
+    font-size: 22px;
+
+    box-shadow:
+        0 4px 12px
+        rgba(0,0,0,0.18);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+
+}
+#menuButton:hover,
+#searchButton:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 16px
+        rgba(0,0,0,0.25);
+
+}
+
+.sidebar {
+
+    position: fixed;
+
+    top: 0;
+    left: -260px;
+
+    width: 250px;
+
+    height: 100%;
+
+    background: white;
+
+    box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+
+    transition: left 0.3s;
+
+    padding-top: 60px;
+
+    z-index: 1000;
+
+}
+
+.sidebar.open {
+
+    left: 0;
+
+}
+
+.sidebar button {
+
+    display: block;
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    background: white;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+}
+
+.sidebar button:hover {
+
+    background: #f0f0f0;
+
+}
+
 .sousMenu {
 
     display: none;
@@ -35,6 +155,37 @@ body {
 
 }
 
+.spinnerRecherche {
+
+    width: 24px;
+
+    height: 24px;
+
+    margin: 10px auto;
+
+    border: 3px solid #ddd;
+
+    border-top: 3px solid #14597a;
+
+    border-radius: 50%;
+
+    animation:
+        rotationRecherche
+        0.8s linear infinite;
+
+}
+@keyframes rotationRecherche {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
 .resultatRecherche {
 
     background: white;
@@ -52,6 +203,11 @@ body {
 .resultatRecherche:hover {
 
     background: #eef6fb;
+
+}
+.lectureNote {
+
+    white-space: pre-wrap;
 
 }
 .solde-card {
@@ -415,153 +571,6 @@ body {
 .recurrenteInactive {
 
     opacity: 0.55;
-
-}
-
-.coeur {
-    color: #e60026;
-    margin: 0 7px;
-    font-size: 30px;
-}
-#menuButton {
-
-    position: fixed;
-
-    top: 10px;
-    left: 10px;
-
-    z-index: 1001;
-
-    border: none;
-
-    background: #14597a;
-
-    color: white;
-
-    padding: 10px 15px;
-
-    border-radius: 10px;
-
-    cursor: pointer;
-
-    font-size: 22px;
-
-}
-
-.sidebar {
-
-    position: fixed;
-
-    top: 0;
-    left: -260px;
-
-    width: 250px;
-
-    height: 100%;
-
-    background: white;
-
-    box-shadow: 2px 0 10px rgba(0,0,0,0.2);
-
-    transition: left 0.3s;
-
-    padding-top: 60px;
-
-    z-index: 1000;
-
-}
-
-.sidebar.open {
-
-    left: 0;
-
-}
-
-.sidebar button {
-
-    display: block;
-
-    width: 100%;
-
-    padding: 15px;
-
-    border: none;
-
-    background: white;
-
-    text-align: left;
-
-    cursor: pointer;
-
-    font-size: 16px;
-
-}
-
-.sidebar button:hover {
-
-    background: #f0f0f0;
-
-}
-
-#searchButton {
-
-    position: fixed;
-
-    top: 10px;
-
-    right: 10px;
-
-    z-index: 1001;
-
-    border: none;
-
-    background: #14597a;
-
-    color: white;
-
-    padding: 10px 15px;
-
-    border-radius: 10px;
-
-    cursor: pointer;
-
-    font-size: 22px;
-
-}
-
-.spinnerRecherche {
-
-    width: 24px;
-
-    height: 24px;
-
-    margin: 10px auto;
-
-    border: 3px solid #ddd;
-
-    border-top: 3px solid #14597a;
-
-    border-radius: 50%;
-
-    animation:
-        rotationRecherche
-        0.8s linear infinite;
-
-}
-@keyframes rotationRecherche {
-
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-
-}
-.lectureNote {
-
-    white-space: pre-wrap;
 
 }
 
