@@ -827,23 +827,16 @@ async function(checkbox) {
 
 };
 
-window.majRayonCoche =
-function(ligne) {
+window.majRayonCoche = function(ligne) {
 
     const rayonDiv =
-        ligne.closest(
-            ".rayonCourse"
-        );
+        ligne.closest(".rayonCourse");
 
     const titreRayon =
-        rayonDiv.querySelector(
-            "h3"
-        );
+        rayonDiv.querySelector("h3");
 
     const produits =
-        rayonDiv.querySelectorAll(
-            ".ligneCourse"
-        );
+        rayonDiv.querySelectorAll(".ligneCourse");
 
     let total = 0;
     let coches = 0;
@@ -875,29 +868,34 @@ function(ligne) {
                 coches++;
 
             }
-
         }
-
     });
 
-    if (
+    const rayonTermine =
         total === 0 ||
-        total === coches
-    ) {
-    
+        total === coches;
+
+    if (rayonTermine) {
+
         titreRayon.classList.add(
             "rayonTermine"
         );
-    
-    }
-    else {
-    
+
+        rayonDiv.classList.add(
+            "rayonCourseTermine"
+        );
+
+    } else {
+
         titreRayon.classList.remove(
             "rayonTermine"
         );
-    
-    }
 
+        rayonDiv.classList.remove(
+            "rayonCourseTermine"
+        );
+
+    }
 };
 
 window.ajouterLigneVide =
@@ -1121,11 +1119,20 @@ function(
 
     }
 
-    setTimeout(() => {
-
+    const rayon =
+        champ.closest(".ligneCourse")
+             .dataset.rayon;
+    
+    setTimeout(async () => {
+    
         selectionSuggestionProduit =
             false;
-
+    
+        await gererLigneCourse(
+            champ,
+            rayon
+        );
+    
     }, 100);
 
 };
@@ -1182,22 +1189,31 @@ function(rayonDiv) {
 
     });
 
-    if (
+    const rayonTermine =
         total === 0 ||
-        total === coches
-    ) {
-
+        total === coches;
+    
+    if (rayonTermine) {
+    
         titreRayon.classList.add(
             "rayonTermine"
         );
-
+    
+        rayonDiv.classList.add(
+            "rayonCourseTermine"
+        );
+    
     }
     else {
-
+    
         titreRayon.classList.remove(
             "rayonTermine"
         );
-
+    
+        rayonDiv.classList.remove(
+            "rayonCourseTermine"
+        );
+    
     }
 
 };
