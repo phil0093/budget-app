@@ -409,7 +409,7 @@ async function(
                 .localeCompare(
                     a.date || ""
                 )
-    );
+    )
     .filter(depense =>
     
         normaliserTexte(
