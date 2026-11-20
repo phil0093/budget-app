@@ -233,10 +233,6 @@ async function(
     
                 •
     
-                📎 ${doc.nomFichier || ""}
-    
-                •
-    
                 ${
                     doc.type
                         ? doc.type
