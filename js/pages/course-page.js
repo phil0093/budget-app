@@ -567,8 +567,10 @@ window.gererLigneCourse =
 async function(champProduit, rayon) {
 
     if (
-        selectionSuggestionProduit
+        champProduit.dataset.suggestionChoisie === "true"
     ) {
+    
+        delete champProduit.dataset.suggestionChoisie;
     
         return;
     
@@ -1107,7 +1109,9 @@ function(
 
     champ.value =
         nomProduit;
-
+    champ.dataset.suggestionChoisie = 
+        "true";
+    
     const suggestions =
         document.getElementById(
             `suggestions-${idLigne}`
@@ -1123,12 +1127,14 @@ function(
         champ.closest(".ligneCourse")
              .dataset.rayon;
     
-    setTimeout(async () => {
+    setTimeout(() => {
+
+        delete champ.dataset.suggestionChoisie;
     
         selectionSuggestionProduit =
             false;
     
-        await gererLigneCourse(
+        gererLigneCourse(
             champ,
             rayon
         );
