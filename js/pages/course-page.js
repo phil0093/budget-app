@@ -209,10 +209,12 @@ function dessinerCourses() {
                                 )
                             "
                             onblur="
-                                gererLigneCourse(
-                                    this,
-                                    '${rayon}'
-                                )
+                                setTimeout(() => {
+                                    gererLigneCourse(
+                                        this,
+                                        '${rayon}'
+                                    );
+                                }, 200)
                             "
                         >
                         
@@ -570,17 +572,7 @@ async function(champProduit, rayon) {
         "BLUR",
         champProduit.value
     );
-    
-    if (
-        champProduit.dataset.suggestionChoisie === "true"
-    ) {
-    
-        delete champProduit.dataset.suggestionChoisie;
-    
-        return;
-    
-    }
-    
+        
     const valeur =
         champProduit.value.trim();
 
@@ -972,10 +964,12 @@ function(rayon) {
                     )
                 "
                 onblur="
-                    gererLigneCourse(
-                        this,
-                        '${rayon}'
-                    )
+                    setTimeout(() => {
+                        gererLigneCourse(
+                            this,
+                            '${rayon}'
+                        );
+                    }, 200)
                 "
             >
             
@@ -1104,9 +1098,6 @@ function(
         "CLICK SUGGESTION",
         nomProduit
     );
-    
-    selectionSuggestionProduit =
-        true;
 
     const champ =
         document.getElementById(
@@ -1117,11 +1108,8 @@ function(
         return;
     }
 
-    champ.value =
-        nomProduit;
-    champ.dataset.suggestionChoisie = 
-        "true";
-    
+    champ.value = nomProduit;
+
     const suggestions =
         document.getElementById(
             `suggestions-${idLigne}`
@@ -1132,24 +1120,6 @@ function(
         suggestions.innerHTML = "";
 
     }
-
-    const rayon =
-        champ.closest(".ligneCourse")
-             .dataset.rayon;
-    
-    setTimeout(() => {
-
-        delete champ.dataset.suggestionChoisie;
-    
-        selectionSuggestionProduit =
-            false;
-    
-        gererLigneCourse(
-            champ,
-            rayon
-        );
-    
-    }, 100);
 
 };
 
