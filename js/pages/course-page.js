@@ -566,6 +566,11 @@ async function() {
 window.gererLigneCourse =
 async function(champProduit, rayon) {
 
+    console.log(
+        "BLUR",
+        champProduit.value
+    );
+    
     if (
         champProduit.dataset.suggestionChoisie === "true"
     ) {
@@ -1095,6 +1100,11 @@ function(
     nomProduit
 ) {
 
+    console.log(
+        "CLICK SUGGESTION",
+        nomProduit
+    );
+    
     selectionSuggestionProduit =
         true;
 
