@@ -568,11 +568,6 @@ async function() {
 window.gererLigneCourse =
 async function(champProduit, rayon) {
 
-    console.log(
-        "BLUR",
-        champProduit.value
-    );
-        
     const valeur =
         champProduit.value.trim();
 
@@ -1093,11 +1088,6 @@ function(
     idLigne,
     nomProduit
 ) {
-
-    console.log(
-        "CLICK SUGGESTION",
-        nomProduit
-    );
 
     const champ =
         document.getElementById(
