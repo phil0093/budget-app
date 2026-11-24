@@ -129,36 +129,72 @@ async function() {
         dans7Jours.getDate() + 7
     );
 
+    const maintenant =
+        new Date();
+
+    const aujourdHuiTexte =
+                maintenant.getFullYear() +
+                "-" +
+                String(
+                    maintenant.getMonth() + 1
+                ).padStart(2, "0") +
+                "-" +
+                String(
+                    maintenant.getDate()
+                ).padStart(2, "0");
+
     const rdvsAVenir =
         tousLesRdvs
         .filter(rdv => {
-
-            const date =
+    
+            const dateDebut =
                 new Date(
                     rdv.dateDebut +
                     "T00:00:00"
                 );
+    
+            if (
+                dateDebut < aujourdHui ||
+                dateDebut > dans7Jours
+            ) {
+                return false;
+            }
+            
+            const estAujourdHui =
+                rdv.dateDebut === aujourdHuiTexte;
+    
+            if (!estAujourdHui) {
+                return true;
+            }
 
-            return (
-                date >= aujourdHui &&
-                date <= dans7Jours
-            );
-
+            if (
+                rdv.heureFin === "00:00"
+            ) {
+                return true;
+            }
+    
+            const finRdv =
+                new Date(
+                    `${rdv.dateDebut}T${rdv.heureFin}:00`
+                );
+    
+            return finRdv >= maintenant;
+    
         })
         .sort((a, b) => {
 
             const dateA =
                 `${a.dateDebut} ${a.heureDebut}`;
-
+    
             const dateB =
                 `${b.dateDebut} ${b.heureDebut}`;
-
+    
             return dateA.localeCompare(
                 dateB
             );
-
+    
         });
-
+    
     const htmlRdvs =
         rdvsAVenir
         .map(rdv => `
