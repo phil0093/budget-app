@@ -589,65 +589,76 @@ window.ouvrirRdv = function(date, rdv = null) {
                     id="rdvLieu"
                     value="${rdv?.lieu || ""}">
 
-                <div class="participants">
+                <div class="blocOptionsRdv">
 
-                    <label>
-                        <input
-                            type="checkbox"
-                            id="philippe"
-                            ${
-                                rdv?.participants?.includes("Philippe")
-                                    ? "checked"
-                                    : ""
-                            }>
-                        Philippe
-                    </label>
-
-                    <label>
-                        <input
-                            type="checkbox"
-                            id="marion"
-                            ${
-                                rdv?.participants?.includes("Marion")
-                                    ? "checked"
-                                    : ""
-                            }>
-                        Marion
-                    </label>
-
-                    <label>
-                        <input
-                            type="checkbox"
-                            id="louis"
-                            ${
-                                rdv?.participants?.includes("Louis")
-                                    ? "checked"
-                                    : ""
-                            }>
-                        Louis
-                    </label>
-
-                </div>
-
-                <div class="participants">
-
-                    <label>
-                        <input
-                            type="checkbox"
-                            id="jourFerie"
-                            ${rdv?.jourFerie ? "checked" : ""}
-                        >
-                        Jour férié
-                    </label>
+                    <div class="cadreOptionsRdv">
                 
-                    <label>
-                        <input
-                            type="checkbox"
-                            id="anniversaire"
-                            ${rdv?.anniversaire ? "checked" : ""}
-                        >
-                        Anniversaire
-                    </label>
+                        <h4>👥 Participants</h4>
+                
+                        <label>
+                            <input
+                                type="checkbox"
+                                id="philippe"
+                                ${
+                                    rdv?.participants?.includes("Philippe")
+                                        ? "checked"
+                                        : ""
+                                }
+                            >
+                            Philippe
+                        </label>
+                
+                        <label>
+                            <input
+                                type="checkbox"
+                                id="marion"
+                                ${
+                                    rdv?.participants?.includes("Marion")
+                                        ? "checked"
+                                        : ""
+                                }
+                            >
+                            Marion
+                        </label>
+                
+                        <label>
+                            <input
+                                type="checkbox"
+                                id="louis"
+                                ${
+                                    rdv?.participants?.includes("Louis")
+                                        ? "checked"
+                                        : ""
+                                }
+                            >
+                            Louis
+                        </label>
+                
+                    </div>
+                
+                    <div class="cadreOptionsRdv">
+                
+                        <h4>🎉 Évènement</h4>
+                
+                        <label>
+                            <input
+                                type="checkbox"
+                                id="jourFerie"
+                                ${rdv?.jourFerie ? "checked" : ""}
+                            >
+                            Jour férié
+                        </label>
+                
+                        <label>
+                            <input
+                                type="checkbox"
+                                id="anniversaire"
+                                ${rdv?.anniversaire ? "checked" : ""}
+                            >
+                            Anniversaire
+                        </label>
+                
+                    </div>
                 
                 </div>
 
