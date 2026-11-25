@@ -604,6 +604,12 @@ window.ouvrirRdv = function(date, rdv = null) {
                                         ? "checked"
                                         : ""
                                 }
+                                onchange="
+                                    if(this.checked){
+                                        document.getElementById('jourFerie').checked = false;
+                                        document.getElementById('anniversaire').checked = false;
+                                    }
+                                "
                             >
                             Philippe
                         </label>
@@ -617,6 +623,12 @@ window.ouvrirRdv = function(date, rdv = null) {
                                         ? "checked"
                                         : ""
                                 }
+                                onchange="
+                                    if(this.checked){
+                                        document.getElementById('jourFerie').checked = false;
+                                        document.getElementById('anniversaire').checked = false;
+                                    }
+                                "
                             >
                             Marion
                         </label>
@@ -630,6 +642,12 @@ window.ouvrirRdv = function(date, rdv = null) {
                                         ? "checked"
                                         : ""
                                 }
+                                onchange="
+                                    if(this.checked){
+                                        document.getElementById('jourFerie').checked = false;
+                                        document.getElementById('anniversaire').checked = false;
+                                    }
+                                "
                             >
                             Louis
                         </label>
@@ -645,6 +663,14 @@ window.ouvrirRdv = function(date, rdv = null) {
                                 type="checkbox"
                                 id="jourFerie"
                                 ${rdv?.jourFerie ? "checked" : ""}
+                                onchange="
+                                    if(this.checked){
+                                        document.getElementById('philippe').checked = false;
+                                        document.getElementById('marion').checked = false;
+                                        document.getElementById('louis').checked = false;
+                                        document.getElementById('anniversaire').checked = false;
+                                    }
+                                "
                             >
                             Jour férié
                         </label>
@@ -654,6 +680,14 @@ window.ouvrirRdv = function(date, rdv = null) {
                                 type="checkbox"
                                 id="anniversaire"
                                 ${rdv?.anniversaire ? "checked" : ""}
+                                onchange="
+                                    if(this.checked){
+                                        document.getElementById('philippe').checked = false;
+                                        document.getElementById('marion').checked = false;
+                                        document.getElementById('louis').checked = false;
+                                        document.getElementById('jourFerie').checked = false;
+                                    }
+                                "
                             >
                             Anniversaire
                         </label>
@@ -805,6 +839,22 @@ window.sauverRdv = async function(date, id="") {
         document.getElementById(
             "anniversaire"
         ).checked;
+
+    const evenement =
+        jourFerie || anniversaire;
+    
+    if (
+        evenement &&
+        participants.length > 0
+    ) {
+    
+        alert(
+            "Un évènement ne peut pas avoir de participants."
+        );
+    
+        return;
+    
+    }
     
     const rdv = {
         nom,
