@@ -269,7 +269,38 @@ async function chargerRdvsCalendrier() {
                 afficherSurJour(rdv, dateIso)
             );
 
-        rdvs.sort((a, b) => a.heureDebut.localeCompare(b.heureDebut));
+        rdvs.sort((a, b) => {
+
+            const ordre = rdv => {
+        
+                if (rdv.jourFerie) {
+                    return 1;
+                }
+        
+                if (rdv.anniversaire) {
+                    return 2;
+                }
+        
+                return 3;
+        
+            };
+        
+            const ordreA = ordre(a);
+            const ordreB = ordre(b);
+        
+            if (ordreA !== ordreB) {
+        
+                return ordreA - ordreB;
+        
+            }
+        
+            return (
+                a.heureDebut || ""
+            ).localeCompare(
+                b.heureDebut || ""
+            );
+        
+        });
 
         const rdvsVisibles =
             rdvs.slice(0, 3);
@@ -390,7 +421,38 @@ window.afficherTousLesRdvs = async function(date) {
         );
 
 
-    rdvs.sort((a, b) =>a.heureDebut.localeCompare(b.heureDebut));
+    rdvs.sort((a, b) => {
+
+        const ordre = rdv => {
+    
+            if (rdv.jourFerie) {
+                return 1;
+            }
+    
+            if (rdv.anniversaire) {
+                return 2;
+            }
+    
+            return 3;
+    
+        };
+    
+        const ordreA = ordre(a);
+        const ordreB = ordre(b);
+    
+        if (ordreA !== ordreB) {
+    
+            return ordreA - ordreB;
+    
+        }
+    
+        return (
+            a.heureDebut || ""
+        ).localeCompare(
+            b.heureDebut || ""
+        );
+    
+    });
 
     const liste =
         rdvs.map(r => `
