@@ -317,6 +317,14 @@ async function chargerRdvsCalendrier() {
 window.couleurRdv =
 function(rdv) {
 
+    if (rdv.jourFerie) {
+        return "rdvJourFerie";
+    }
+    
+    if (rdv.anniversaire) {
+        return "rdvAnniversaire";
+    }
+    
     const participants =
         rdv.participants || [];
 
@@ -621,6 +629,28 @@ window.ouvrirRdv = function(date, rdv = null) {
 
                 </div>
 
+                <div class="participants">
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="jourFerie"
+                            ${rdv?.jourFerie ? "checked" : ""}
+                        >
+                        Jour férié
+                    </label>
+                
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="anniversaire"
+                            ${rdv?.anniversaire ? "checked" : ""}
+                        >
+                        Anniversaire
+                    </label>
+                
+                </div>
+
                 <div class="actionsRdv">
 
                     <button
@@ -755,6 +785,16 @@ window.sauverRdv = async function(date, id="") {
         participants.push("Louis");
     }
 
+    const jourFerie =
+        document.getElementById(
+            "jourFerie"
+        ).checked;
+    
+    const anniversaire =
+        document.getElementById(
+            "anniversaire"
+        ).checked;
+    
     const rdv = {
         nom,
         dateDebut,
@@ -764,7 +804,9 @@ window.sauverRdv = async function(date, id="") {
         recurrence,
         finRecurrence,
         lieu: document.getElementById("rdvLieu").value,
-        participants
+        participants,
+        jourFerie,
+        anniversaire
     };
 
     if (id) {
@@ -934,6 +976,16 @@ async function(id) {
                     ${(rdv.participants || []).join(", ")}
                 </p>
 
+                <p>
+                    <strong>Jour férié :</strong>
+                    ${rdv.jourFerie ? "Oui" : "Non"}
+                </p>
+                
+                <p>
+                    <strong>Anniversaire :</strong>
+                    ${rdv.anniversaire ? "Oui" : "Non"}
+                </p>
+                
                 <button
                     onclick="
                         document
