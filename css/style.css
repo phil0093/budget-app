@@ -431,6 +431,13 @@ body {
     background: #ff9800;
 
 }
+.pastilleRdv.rdvJourFerie {
+    background: #9e9e9e;
+}
+
+.pastilleRdv.rdvAnniversaire {
+    background: #d8c3a5;
+}
 
 #budgetActions {
 
@@ -1439,6 +1446,13 @@ body {
 
     background: #ff9800;
 
+}
+.rdvJourFerie {
+    background: #9e9e9e;
+}
+
+.rdvAnniversaire {
+    background: #d8c3a5;
 }
 
 .miniRdvPlus {
