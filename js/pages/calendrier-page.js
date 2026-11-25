@@ -170,9 +170,8 @@ function dessinerCalendrier() {
             <button onclick="moisPrecedent()">
                 ◀
             </button>
-
+        
             <h2>
-
                 ${moisCalendrier.toLocaleDateString(
                     "fr-FR",
                     {
@@ -180,13 +179,29 @@ function dessinerCalendrier() {
                         year: "numeric"
                     }
                 )}
-
             </h2>
-
+        
             <button onclick="moisSuivant()">
                 ▶
             </button>
-
+        
+        </div>
+        
+        <div
+            style="
+                display:flex;
+                justify-content:center;
+                margin-bottom:15px;
+            "
+        >
+        
+            <button
+                class="btnImportFeries"
+                onclick="importerJoursFeries()"
+            >
+                📅 Importer les jours fériés
+            </button>
+        
         </div>
 
         <div class="grilleCalendrier">
@@ -1065,5 +1080,93 @@ async function(id) {
 
         `
     );
+
+};
+
+window.importerJoursFeries =
+async function() {
+
+    const anneeCourante =
+        new Date()
+            .getFullYear();
+
+    let nbAjoutes = 0;
+
+    for (
+        let annee = anneeCourante;
+        annee <= anneeCourante + 3;
+        annee++
+    ) {
+
+        const reponse =
+            await fetch(
+                `https://calendrier.api.gouv.fr/jours-feries/metropole/${annee}.json`
+            );
+
+        const joursFeries =
+            await reponse.json();
+
+        for (
+            const [date, nom]
+            of Object.entries(
+                joursFeries
+            )
+        ) {
+
+            const rdvs =
+                await chargerRdvJour(
+                    date
+                );
+
+            const existe =
+                rdvs.some(
+                    r =>
+                        r.jourFerie === true
+                        &&
+                        r.nom === nom
+                );
+
+            if (existe) {
+                continue;
+            }
+
+            await ajouterRdv(
+                date,
+                {
+                    nom,
+
+                    dateDebut: date,
+
+                    dateFin: date,
+
+                    heureDebut: "00:00",
+
+                    heureFin: "00:00",
+
+                    lieu: "",
+
+                    participants: [],
+
+                    recurrence: "",
+
+                    finRecurrence: "",
+
+                    jourFerie: true,
+
+                    anniversaire: false
+                }
+            );
+
+            nbAjoutes++;
+
+        }
+
+    }
+
+    alert(
+        `${nbAjoutes} jour(s) férié(s) ajouté(s).`
+    );
+
+    dessinerCalendrier();
 
 };
