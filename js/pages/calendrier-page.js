@@ -1086,6 +1086,23 @@ async function(id) {
 window.importerJoursFeries =
 async function() {
 
+    document.getElementById(
+        "contenu"
+    ).innerHTML = `
+        <div
+            style="
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                min-height:300px;
+            "
+        >
+            <div
+                class="spinnerRecherche"
+            ></div>
+        </div>
+    `;
+
     const anneeCourante =
         new Date()
             .getFullYear();
@@ -1108,9 +1125,7 @@ async function() {
 
         for (
             const [date, nom]
-            of Object.entries(
-                joursFeries
-            )
+            of Object.entries(joursFeries)
         ) {
 
             const rdvs =
@@ -1134,33 +1149,21 @@ async function() {
                 date,
                 {
                     nom,
-
                     dateDebut: date,
-
                     dateFin: date,
-
                     heureDebut: "00:00",
-
                     heureFin: "00:00",
-
                     lieu: "",
-
                     participants: [],
-
                     recurrence: "",
-
                     finRecurrence: "",
-
                     jourFerie: true,
-
                     anniversaire: false
                 }
             );
 
             nbAjoutes++;
-
         }
-
     }
 
     alert(
