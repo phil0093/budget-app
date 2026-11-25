@@ -1373,6 +1373,46 @@ body {
     margin-top: 5px;
 }
 
+.blocOptionsRdv {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.cadreOptionsRdv {
+    flex: 1;
+    background: #eef6fb;
+    border: 1px solid #c8dfea;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.cadreOptionsRdv h4 {
+    margin: 0 0 10px 0;
+    color: #14597a;
+    font-size: 14px;
+}
+
+.cadreOptionsRdv label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-weight: normal;
+}
+
+.cadreOptionsRdv input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+@media (max-width: 600px) {
+
+    .blocOptionsRdv {
+        flex-direction: column;
+    }
+
+}
 .participants {
 
     margin-top: 10px;
