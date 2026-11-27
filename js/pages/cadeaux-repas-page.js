@@ -199,7 +199,10 @@ function dessinerSection(
                                                 class="titreCadeauRepas"
                                             >
     
-                                                ${item.description}
+                                                ${(item.description || "")
+                                                    .replaceAll("\r\n", "<br>")
+                                                    .replaceAll("\n", "<br>")
+                                                }
     
                                             </div>
     
