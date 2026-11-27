@@ -1,4 +1,10 @@
-
+import {
+    chargerCadeauxRepas,
+    ajouterCadeauRepas,
+    supprimerCadeauRepas
+}
+from "../services/cadeaux-repas.js";
+import {masquerZones} from "../utils.js";
 
 let elementsOuverts =
     new Set();
