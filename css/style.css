@@ -2424,7 +2424,11 @@ body {
 .infosCadeauRepas {
 
     flex: 1;
+
     text-align: left;
+
+    align-self: flex-start;
+
 }
 
 .titreCadeauRepas {
