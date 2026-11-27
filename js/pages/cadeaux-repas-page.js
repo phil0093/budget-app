@@ -293,23 +293,31 @@ function(type) {
                 
                 </div>
                 
-                <label>
-                    Date
-                </label>
+                <div class="ligneInfosCadeauRepas">
+
+                    <div>
                 
-                <input
-                    id="crDate"
-                    type="date"
-                >
+                        <label>Date</label>
                 
-                <label>
-                    Evènement
-                </label>
+                        <input
+                            id="crDate"
+                            type="date"
+                        >
                 
-                <input
-                    id="crEvenement"
-                    placeholder="Evènement"
-                >
+                    </div>
+                
+                    <div>
+                
+                        <label>Evènement</label>
+                
+                        <input
+                            id="crEvenement"
+                            placeholder="Evènement"
+                        >
+                
+                    </div>
+                
+                </div>
 
                 <label>
                     Cadeau / Repas
