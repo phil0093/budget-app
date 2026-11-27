@@ -264,9 +264,21 @@ function(type) {
 
                 </h3>
 
-                <label>
-                    Personne(s)
-                </label>
+                <div class="entetePersonnes">
+
+                    <label>
+                        Personne(s)
+                    </label>
+                
+                    <button
+                        class="btnAjouterPersonne"
+                        type="button"
+                        onclick="ajouterChampPersonne()"
+                    >
+                        +
+                    </button>
+                
+                </div>
                 
                 <div id="listePersonnes">
                 
@@ -275,44 +287,38 @@ function(type) {
                         <input
                             id="personne-0"
                             placeholder="Personne"
-                            oninput="
-                                afficherSuggestionsPersonnes(
-                                    this,
-                                    0
-                                )
-                            "
                         >
-                        
-                        <div
-                            id="suggestionsPersonnes-0"
-                            class="suggestionsProduits"
-                        ></div>
                 
                     </div>
                 
                 </div>
                 
-                <button
-                    class="btnAjouterCoursePopup"
-                    type="button"
-                    onclick="ajouterChampPersonne()"
-                >
-                    ➕ Ajouter une personne
-                </button>
-
+                <label>
+                    Date
+                </label>
+                
                 <input
                     id="crDate"
                     type="date"
                 >
-
+                
+                <label>
+                    Evènement
+                </label>
+                
                 <input
                     id="crEvenement"
                     placeholder="Evènement"
                 >
 
+                <label>
+                    Cadeau / Repas
+                </label>
+                
                 <textarea
                     id="crDescription"
-                    placeholder="Cadeau / Repas"
+                    class="descriptionCadeauRepas"
+                    placeholder="Description"
                 ></textarea>
 
                 <div class="actionsCoursePopup">
