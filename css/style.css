@@ -2404,3 +2404,18 @@ body {
     color: #14597a;
 
 }
+.ligneInfosCadeauRepas {
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+
+}
+
+.ligneInfosCadeauRepas > div {
+
+    flex: 1;
+
+}
