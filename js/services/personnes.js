@@ -25,9 +25,7 @@ export async function chargerPersonnes() {
 
 }
 
-export async function ajouterPersonne(
-    nom
-) {
+export async function ajouterPersonne(nom) {
 
     await addDoc(
         collection(
