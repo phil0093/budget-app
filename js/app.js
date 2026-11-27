@@ -7,6 +7,7 @@ import "./pages/note-page.js";
 import "./pages/recette-page.js";
 import "./pages/course-page.js";
 import "./pages/documents-page.js";
+import "./pages/cadeaux-repas-page.js";
 import "./pages/recherche-page.js";
 import {masquerZones} from "./utils.js";
 import {initialiserNotifications} from "./services/notifications.js";
