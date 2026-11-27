@@ -4,10 +4,18 @@ import {
     supprimerCadeauRepas
 }
 from "../services/cadeaux-repas.js";
+
+import {
+    chargerPersonnes,
+    ajouterPersonne
+}
+from "../services/personnes.js";
+
 import {masquerZones} from "../utils.js";
 
 let elementsOuverts =
     new Set();
+let personnes = [];
 
 window.afficherCadeauxRepas =
 async function() {
@@ -26,6 +34,9 @@ async function() {
     const donnees =
         await chargerCadeauxRepas();
 
+    personnes =
+        await chargerPersonnes();
+    
     dessinerCadeauxRepas(
         donnees
     );
@@ -253,10 +264,41 @@ function(type) {
 
                 </h3>
 
-                <input
-                    id="crPersonne"
-                    placeholder="Personne"
+                <label>
+                    Personne(s)
+                </label>
+                
+                <div id="listePersonnes">
+                
+                    <div class="lignePersonne">
+                
+                        <input
+                            id="personne-0"
+                            placeholder="Personne"
+                            oninput="
+                                afficherSuggestionsPersonnes(
+                                    this,
+                                    0
+                                )
+                            "
+                        >
+                        
+                        <div
+                            id="suggestionsPersonnes-0"
+                            class="suggestionsProduits"
+                        ></div>
+                
+                    </div>
+                
+                </div>
+                
+                <button
+                    class="btnAjouterCoursePopup"
+                    type="button"
+                    onclick="ajouterChampPersonne()"
                 >
+                    ➕ Ajouter une personne
+                </button>
 
                 <input
                     id="crDate"
@@ -313,31 +355,61 @@ function(type) {
 window.enregistrerCadeauRepas =
 async function(type) {
 
-    await ajouterCadeauRepas({
+    const personnes =
+        [
+            ...new Set(
+                [
+                    ...document.querySelectorAll(
+                        "#listePersonnes input"
+                    )
+                ]
+                .map(x => x.value.trim())
+                .filter(x => x !== "")
+            )
+        ];
 
-        type,
 
-        personne:
-            document.getElementById(
-                "crPersonne"
-            ).value,
-
-        date:
-            document.getElementById(
-                "crDate"
-            ).value,
-
-        evenement:
-            document.getElementById(
-                "crEvenement"
-            ).value,
-
-        description:
-            document.getElementById(
-                "crDescription"
-            ).value
-
-    });
+    if (
+        personnes.length === 0
+    ) {
+    
+        alert(
+            "Veuillez saisir au moins une personne."
+        );
+    
+        return;
+    
+    }
+    
+    for (
+        const personne
+        of personnes
+    ) {
+    
+        await ajouterCadeauRepas({
+    
+            type,
+    
+            personne,
+    
+            date:
+                document.getElementById(
+                    "crDate"
+                ).value,
+    
+            evenement:
+                document.getElementById(
+                    "crEvenement"
+                ).value,
+    
+            description:
+                document.getElementById(
+                    "crDescription"
+                ).value
+    
+        });
+    
+    }
 
     document
         .getElementById(
@@ -368,3 +440,116 @@ async function(id) {
 
 };
 
+window.ajouterChampPersonne =
+function() {
+
+    const nb =
+        document.querySelectorAll(
+            ".lignePersonne"
+        ).length;
+
+    document
+        .getElementById(
+            "listePersonnes"
+        )
+        .insertAdjacentHTML(
+            "beforeend",
+            `
+
+            <div
+                class="lignePersonne"
+                style="
+                    margin-top:8px;
+                "
+            >
+
+                <input
+                    id="personne-${nb}"
+                    placeholder="Personne"
+                >
+
+            </div>
+
+            `
+        );
+
+};
+
+window.afficherSuggestionsPersonnes =
+function(
+    champ,
+    index
+) {
+
+    const texte =
+        champ.value
+        .trim()
+        .toLowerCase();
+
+    const conteneur =
+        document.getElementById(
+            `suggestionsPersonnes-${index}`
+        );
+
+    if (!conteneur) {
+        return;
+    }
+
+    if (texte === "") {
+
+        conteneur.innerHTML = "";
+
+        return;
+
+    }
+
+    const suggestions =
+        personnes
+        .filter(
+            p =>
+                p.nom
+                .toLowerCase()
+                .startsWith(
+                    texte
+                )
+        )
+        .slice(0, 5);
+
+    conteneur.innerHTML =
+        suggestions
+        .map(p => `
+
+            <div
+                class="suggestionProduit"
+                onclick="
+                    choisirPersonne(
+                        ${index},
+                        '${p.nom.replace(/'/g, "\\'")}'
+                    )
+                "
+            >
+
+                ${p.nom}
+
+            </div>
+
+        `)
+        .join("");
+
+};
+
+window.choisirPersonne =
+function(
+    index,
+    nom
+) {
+
+    document.getElementById(
+        `personne-${index}`
+    ).value = nom;
+
+    document.getElementById(
+        `suggestionsPersonnes-${index}`
+    ).innerHTML = "";
+
+};
