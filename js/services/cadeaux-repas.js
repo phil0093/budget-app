@@ -6,7 +6,8 @@ import {
     getDocs,
     addDoc,
     deleteDoc,
-    doc
+    doc,
+    updateDoc
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
@@ -35,6 +36,22 @@ export async function ajouterCadeauRepas(
         collection(
             db,
             "cadeauxRepas"
+        ),
+        donnees
+    );
+
+}
+
+export async function modifierCadeauRepas(
+    id,
+    donnees
+) {
+
+    await updateDoc(
+        doc(
+            db,
+            "cadeauxRepas",
+            id
         ),
         donnees
     );
