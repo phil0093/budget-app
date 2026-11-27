@@ -2124,7 +2124,7 @@ body {
 
     justify-content: space-between;
 
-    align-items: center;
+    align-items: flex-start;
 
 }
 .carteDocument:hover {
@@ -2432,10 +2432,11 @@ body {
 }
 
 .titreCadeauRepas {
-
+    display: block;
+    
     font-size: 13px;
 
-    font-weight: 600;
+    font-weight: normal;
 
     color: #222;
 
@@ -2445,7 +2446,7 @@ body {
 
     text-align: left;
 
-    line-height: 1.35;
+    line-height: 1.3;
 
 }
 
