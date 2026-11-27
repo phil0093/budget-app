@@ -2468,20 +2468,19 @@ body {
 
 .btnAjoutSection {
 
+    width: 160px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     border: none;
-
     border-radius: 8px;
-
     background: #14597a;
-
     color: white;
-
-    padding: 8px 12px;
-
     font-size: 12px;
-
     font-weight: bold;
-
     cursor: pointer;
 
 }
