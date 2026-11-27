@@ -238,17 +238,14 @@ function dessinerSection(
 window.toggleCadeauxRepas =
 function(personne) {
 
-    if (
+    const etaitOuvert =
         elementsOuverts.has(
-            personne
-        )
-    ) {
-
-        elementsOuverts.delete(
             personne
         );
 
-    } else {
+    elementsOuverts.clear();
+
+    if (!etaitOuvert) {
 
         elementsOuverts.add(
             personne
