@@ -2417,38 +2417,44 @@ body {
 .ligneInfosCadeauRepas > div {
 
     flex: 1;
+    text-align: left;
 
 }
 
 .infosCadeauRepas {
 
     flex: 1;
-
+    text-align: left;
 }
 
 .titreCadeauRepas {
 
-    font-size: 16px;
+    font-size: 13px;
 
-    font-weight: bold;
+    font-weight: 600;
 
     color: #222;
 
-    margin-bottom: 3px;
+    margin-bottom: 6px;
 
     white-space: pre-wrap;
 
-    word-break: break-word;
+    text-align: left;
+
+    line-height: 1.35;
 
 }
 
 .detailsCadeauRepas {
 
-    font-size: 12px;
+    font-size: 11px;
 
     color: #777;
 
+    text-align: left;
+
 }
+
 
 .enteteSectionCadeauxRepas {
 
