@@ -2445,3 +2445,49 @@ body {
     color: #777;
 
 }
+
+.enteteSectionCadeauxRepas {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 10px;
+
+}
+
+.enteteSectionCadeauxRepas h3 {
+
+    margin: 0;
+
+    color: #14597a;
+
+}
+
+.btnAjoutSection {
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #14597a;
+
+    color: white;
+
+    padding: 8px 12px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+.btnAjoutSection:hover {
+
+    background: #0e425a;
+
+}
