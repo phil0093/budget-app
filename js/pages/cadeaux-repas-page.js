@@ -299,7 +299,18 @@ function(type) {
                         <input
                             id="personne-0"
                             placeholder="Personne"
+                            oninput="
+                                afficherSuggestionsPersonnes(
+                                    this,
+                                    0
+                                )
+                            "
                         >
+                        
+                        <div
+                            id="suggestionsPersonnes-0"
+                            class="suggestionsProduits"
+                        ></div>
                 
                     </div>
                 
@@ -406,12 +417,30 @@ async function(type) {
         return;
     
     }
+
+    const personnesExistantes =
+        await chargerPersonnes();
     
     for (
         const personne
         of personnes
     ) {
-    
+        const existe =
+            personnesExistantes.some(
+                p =>
+                    p.nom.toLowerCase()
+                    ===
+                    personne.toLowerCase()
+            );
+        
+        if (!existe) {
+        
+            await ajouterPersonne(
+                personne
+            );
+        
+        }
+        
         await ajouterCadeauRepas({
     
             type,
@@ -492,7 +521,18 @@ function() {
                 <input
                     id="personne-${nb}"
                     placeholder="Personne"
+                    oninput="
+                        afficherSuggestionsPersonnes(
+                            this,
+                            ${nb}
+                        )
+                    "
                 >
+                
+                <div
+                    id="suggestionsPersonnes-${nb}"
+                    class="suggestionsProduits"
+                ></div>
 
             </div>
 
@@ -521,7 +561,9 @@ function(
         return;
     }
 
-    if (texte === "") {
+    if (
+        texte.length < 2
+    ) {
 
         conteneur.innerHTML = "";
 
