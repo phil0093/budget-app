@@ -1,7 +1,8 @@
 import {
     chargerCadeauxRepas,
     ajouterCadeauRepas,
-    supprimerCadeauRepas
+    supprimerCadeauRepas,
+    modifierCadeauRepas
 }
 from "../services/cadeaux-repas.js";
 
@@ -207,16 +208,31 @@ function dessinerSection(
     
                                         </div>
     
-                                        <button
-                                            class="btn-action"
-                                            onclick="
-                                                supprimerElementCadeauRepas(
-                                                    '${item.id}'
-                                                )
-                                            "
-                                        >
-                                            🗑️
-                                        </button>
+                                        <div class="actionsProduitBDD">
+
+                                            <button
+                                                class="btn-action"
+                                                onclick="
+                                                    modifierElementCadeauRepas(
+                                                        '${item.id}'
+                                                    )
+                                                "
+                                            >
+                                                ✏️
+                                            </button>
+                                        
+                                            <button
+                                                class="btn-action"
+                                                onclick="
+                                                    supprimerElementCadeauRepas(
+                                                        '${item.id}'
+                                                    )
+                                                "
+                                            >
+                                                🗑️
+                                            </button>
+                                        
+                                        </div>
     
                                     </div>
     
@@ -478,6 +494,73 @@ async function(type) {
             "popupCadeauRepas"
         )
         .remove();
+
+    afficherCadeauxRepas();
+
+};
+
+window.modifierElementCadeauRepas =
+async function(id) {
+
+    const donnees =
+        await chargerCadeauxRepas();
+
+    const element =
+        donnees.find(
+            x => x.id === id
+        );
+
+    if (!element) {
+        return;
+    }
+
+    const nouvelleDescription =
+        prompt(
+            "Cadeau / Repas",
+            element.description
+        );
+
+    if (
+        nouvelleDescription === null
+    ) {
+        return;
+    }
+
+    const nouvelEvenement =
+        prompt(
+            "Evènement",
+            element.evenement
+        );
+
+    if (
+        nouvelEvenement === null
+    ) {
+        return;
+    }
+
+    const nouvelleDate =
+        prompt(
+            "Date",
+            element.date
+        );
+
+    if (
+        nouvelleDate === null
+    ) {
+        return;
+    }
+
+    await modifierCadeauRepas(
+        id,
+        {
+            description:
+                nouvelleDescription,
+            evenement:
+                nouvelEvenement,
+            date:
+                nouvelleDate
+        }
+    );
 
     afficherCadeauxRepas();
 
