@@ -2312,3 +2312,76 @@ body {
     margin-top: 15px;
 
 }
+
+.entetePersonnes {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 8px;
+
+}
+
+.entetePersonnes label {
+
+    margin: 0 !important;
+
+}
+
+.btnAjouterPersonne {
+
+    width: 32px;
+
+    height: 32px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #27ae60;
+
+    color: white;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    padding: 0;
+
+}
+
+.btnAjouterPersonne:hover {
+
+    background: #1f8a4d;
+
+}
+.descriptionCadeauRepas {
+
+    width: 100%;
+
+    min-height: 120px;
+
+    resize: vertical;
+
+    box-sizing: border-box;
+
+    padding: 10px;
+
+    border-radius: 8px;
+
+    margin-top: 5px;
+
+}
+.popupContenu input,
+.popupContenu textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+}
