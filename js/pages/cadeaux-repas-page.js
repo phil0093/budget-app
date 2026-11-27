@@ -200,6 +200,7 @@ function dessinerSection(
                                             >
     
                                                 ${(item.description || "")
+                                                    .trim()
                                                     .replaceAll("\r\n", "<br>")
                                                     .replaceAll("\n", "<br>")
                                                 }
