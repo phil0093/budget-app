@@ -135,81 +135,93 @@ function dessinerSection(
     return `
 
         <h3>${titre}</h3>
-
+    
         ${Object.keys(groupes)
             .sort()
-            .map(personne => `
-
-                <div
-                    class="enteteRecette"
-                    onclick="
-                        toggleCadeauxRepas(
-                            '${personne}'
-                        )
-                    "
-                >
-                    ${personne}
-                </div>
-
-                <div
-                    id="pers-${personne}"
-                    style="
-                        display:${
-                            elementsOuverts.has(
-                                personne
-                            )
-                            ? "block"
-                            : "none"
-                        };
-                    "
-                >
-
-                    ${groupes[personne]
-                        .map(item => `
-
-                            <div
-                                class="carteDocument"
-                            >
-
-                                <div>
-
-                                    <strong>
-                                        ${item.evenement}
-                                    </strong>
-
-                                    <br>
-
-                                    <small>
-                                        ${item.date}
-                                    </small>
-
-                                    <br>
-
-                                    ${item.description}
-
-                                </div>
-
-                                <button
-                                    class="btn-action"
-                                    onclick="
-                                        supprimerElementCadeauRepas(
-                                            '${item.id}'
-                                        )
-                                    "
-                                >
-                                    🗑️
-                                </button>
-
-                            </div>
-
-                        `)
-                        .join("")}
-
-                </div>
-
-            `)
+            .map(personne => {
+    
+                const ouvert =
+                    elementsOuverts.has(
+                        personne
+                    );
+    
+                return `
+    
+                    <div class="carteRecette">
+    
+                        <div
+                            class="enteteRecette"
+                            onclick="
+                                toggleCadeauxRepas(
+                                    '${personne}'
+                                )
+                            "
+                        >
+    
+                            ${ouvert ? "▼" : "▶"}
+    
+                            ${personne}
+    
+                        </div>
+    
+                        ${ouvert ? `
+    
+                            ${groupes[personne]
+                                .map(item => `
+    
+                                    <div
+                                        class="carteDocument"
+                                    >
+    
+                                        <div
+                                            class="infosCadeauRepas"
+                                        >
+    
+                                            <div
+                                                class="titreCadeauRepas"
+                                            >
+    
+                                                ${item.description}
+    
+                                            </div>
+    
+                                            <div
+                                                class="detailsCadeauRepas"
+                                            >
+    
+                                                ${item.date}
+                                                -
+                                                ${item.evenement}
+    
+                                            </div>
+    
+                                        </div>
+    
+                                        <button
+                                            class="btn-action"
+                                            onclick="
+                                                supprimerElementCadeauRepas(
+                                                    '${item.id}'
+                                                )
+                                            "
+                                        >
+                                            🗑️
+                                        </button>
+    
+                                    </div>
+    
+                                `)
+                                .join("")}
+    
+                        ` : ""}
+    
+                    </div>
+    
+                `;
+    
+            })
             .join("")}
-
+    
     `;
 }
 
