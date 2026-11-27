@@ -2436,6 +2436,10 @@ body {
 
     margin-bottom: 3px;
 
+    white-space: pre-wrap;
+
+    word-break: break-word;
+
 }
 
 .detailsCadeauRepas {
