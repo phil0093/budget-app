@@ -2419,3 +2419,29 @@ body {
     flex: 1;
 
 }
+
+.infosCadeauRepas {
+
+    flex: 1;
+
+}
+
+.titreCadeauRepas {
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    color: #222;
+
+    margin-bottom: 3px;
+
+}
+
+.detailsCadeauRepas {
+
+    font-size: 12px;
+
+    color: #777;
+
+}
