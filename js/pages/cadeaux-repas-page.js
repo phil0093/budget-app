@@ -63,10 +63,14 @@ function dessinerCadeauxRepas(donnees) {
 
         <h2>🎁 Cadeaux et repas</h2>
 
-        <div class="actionsListes">
+        <div class="enteteSectionCadeauxRepas">
 
+            <h3>
+                🎁 Cadeaux
+            </h3>
+        
             <button
-                class="btnNouvelleListe"
+                class="btnAjoutSection"
                 onclick="
                     ouvrirPopupCadeauRepas(
                         'cadeau'
@@ -75,21 +79,24 @@ function dessinerCadeauxRepas(donnees) {
             >
                 ➕ Nouveau cadeau
             </button>
-
+        
         </div>
-
+        
         ${dessinerSection(
-            "🎁 Cadeaux",
-            cadeaux,
-            "cadeau"
+            "",
+            cadeaux
         )}
 
         <br>
 
-        <div class="actionsListes">
+        <div class="enteteSectionCadeauxRepas">
 
+            <h3>
+                🍽️ Repas
+            </h3>
+        
             <button
-                class="btnNouvelleListe"
+                class="btnAjoutSection"
                 onclick="
                     ouvrirPopupCadeauRepas(
                         'repas'
@@ -98,13 +105,12 @@ function dessinerCadeauxRepas(donnees) {
             >
                 ➕ Nouveau repas
             </button>
-
+        
         </div>
-
+        
         ${dessinerSection(
-            "🍽️ Repas",
-            repas,
-            "repas"
+            "",
+            repas
         )}
 
     `;
@@ -146,7 +152,7 @@ function dessinerSection(
         });
     return `
 
-        <h3>${titre}</h3>
+        ${titre ? `<h3>${titre}</h3>` : ""}
     
         ${Object.keys(groupes)
             .sort()
