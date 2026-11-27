@@ -2321,10 +2321,14 @@ body {
 
     align-items: center;
 
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 
 }
+#listePersonnes {
 
+    margin-bottom: 18px;
+
+}
 .entetePersonnes label {
 
     margin: 0 !important;
@@ -2333,9 +2337,9 @@ body {
 
 .btnAjouterPersonne {
 
-    width: 32px;
+    width: 24px;
 
-    height: 32px;
+    height: 24px;
 
     border: none;
 
@@ -2345,13 +2349,19 @@ body {
 
     color: white;
 
-    font-size: 20px;
+    font-size: 16px;
 
     font-weight: bold;
 
     cursor: pointer;
 
     padding: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
 
 }
 
@@ -2364,7 +2374,7 @@ body {
 
     width: 100%;
 
-    min-height: 120px;
+    min-height: 140px;
 
     resize: vertical;
 
@@ -2383,5 +2393,14 @@ body {
     width: 100%;
 
     box-sizing: border-box;
+
+}
+.popupContenu label {
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #14597a;
 
 }
