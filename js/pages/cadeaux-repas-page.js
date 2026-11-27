@@ -132,6 +132,16 @@ function dessinerSection(
 
     });
 
+    Object.values(groupes)
+        .forEach(liste => {
+    
+            liste.sort((a, b) =>
+                (b.date || "").localeCompare(
+                    a.date || ""
+                )
+            );
+    
+        });
     return `
 
         <h3>${titre}</h3>
